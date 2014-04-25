@@ -3,8 +3,39 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b7a9aa5a37c6320012aacc6a91680d8d",
+    "hash": "f240f53e6f5848cd4713630fe266e91c",
     "packages": [
+        {
+            "name": "kompakt/release-batch-model",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github-kompakt:kompakt/release-batch-model.git",
+                "reference": "9b82bb53da455586587abfa2e64539ee44460346"
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Kompakt\\ReleaseBatchModel": "lib/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Christian Hoegl",
+                    "email": "chrigu@kompakt.fm"
+                }
+            ],
+            "description": "Release batch model",
+            "homepage": "http://www.kompakt.fm",
+            "keywords": [
+                "commands",
+                "website"
+            ],
+            "time": "2014-04-25 08:57:54"
+        },
         {
             "name": "symfony/event-dispatcher",
             "version": "v2.3.12",
@@ -484,9 +515,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "kompakt/release-batch-model": 20
+    },
     "platform": {
         "php": ">=5.3.2"
     },

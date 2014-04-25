@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the kompakt/release-batch package.
+ * This file is part of the kompakt/generic-release-batch package.
  *
  * (c) Christian Hoegl <chrigu@sirprize.me>
  *
@@ -28,7 +28,7 @@ function freshTmpSubDir($class)
 // "private" functions (should not be used from within tests)
 function resolveTmpSubDir($classOrMethod)
 {
-    return TESTS_KOMPAKT_BATCHTOOLS_TEMP_DIR . '/' . preg_replace('/\\\/', '/', preg_replace('/::/', '/', $classOrMethod));
+    return TESTS_KOMPAKT_GENERICRELEASEBATCH_TEMP_DIR . '/' . preg_replace('/\\\/', '/', preg_replace('/::/', '/', $classOrMethod));
 }
 
 function clearTmpSubDir($pathname)
