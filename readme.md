@@ -23,3 +23,7 @@ Generic release batch definition
 + `vendor/bin/phpunit tests/Kompakt/Tests/GenericReleaseBatch/Packshot/Metadata/Loader/LoaderTest`
 + `vendor/bin/phpunit tests/Kompakt/Tests/GenericReleaseBatch/Packshot/PackshotTest`
 + `vendor/bin/phpunit tests/Kompakt/Tests/GenericReleaseBatch/Packshot/Processor/PackshotProcessorTest`
+
+## License
+
+See LICENSE.
