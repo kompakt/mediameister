@@ -22,11 +22,8 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
             $this->getAudioLoaderFactory(),
             __DIR__
         );
-        
-        $this->assertInstanceOf('Kompakt\GenericReleaseBatch\Packshot\Layout\LayoutInterface', $packshot->getLayout());
-        $this->assertInstanceOf('Kompakt\GenericReleaseBatch\Entity\ReleaseInterface', $packshot->getRelease());
-        $this->assertInstanceOf('Kompakt\GenericReleaseBatch\Packshot\Artwork\Loader\LoaderInterface', $packshot->getArtworkLoader());
-        $this->assertInstanceOf('Kompakt\GenericReleaseBatch\Packshot\Audio\Loader\LoaderInterface', $packshot->getAudioLoader());
+
+        $packshot->getRelease();
     }
 
     protected function getLayoutFactory()
@@ -85,43 +82,17 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
 
     public function getArtworkLoaderFactory()
     {
-        $loader = $this
-            ->getMockBuilder('Kompakt\GenericReleaseBatch\Packshot\Artwork\Loader\LoaderInterface')
-            ->getMock()
-        ;
-
-        $factory = $this
+        return $this
             ->getMockBuilder('Kompakt\GenericReleaseBatch\Packshot\Artwork\Loader\Factory\LoaderFactoryInterface')
             ->getMock()
         ;
-
-        $factory
-            ->expects($this->once())
-            ->method('getInstance')
-            ->will($this->returnValue($loader))
-        ;
-
-        return $factory;
     }
 
     public function getAudioLoaderFactory()
     {
-        $loader = $this
-            ->getMockBuilder('Kompakt\GenericReleaseBatch\Packshot\Audio\Loader\LoaderInterface')
-            ->getMock()
-        ;
-
-        $factory = $this
+        return $this
             ->getMockBuilder('Kompakt\GenericReleaseBatch\Packshot\Audio\Loader\Factory\LoaderFactoryInterface')
             ->getMock()
         ;
-
-        $factory
-            ->expects($this->once())
-            ->method('getInstance')
-            ->will($this->returnValue($loader))
-        ;
-
-        return $factory;
     }
 }
