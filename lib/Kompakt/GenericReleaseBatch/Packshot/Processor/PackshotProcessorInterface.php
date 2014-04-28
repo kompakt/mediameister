@@ -9,7 +9,9 @@
 
 namespace Kompakt\GenericReleaseBatch\Packshot\Processor;
 
+use Kompakt\GenericReleaseBatch\Packshot\PackshotInterface;
+
 interface PackshotProcessorInterface
 {
-    public function process();
+    public function process(PackshotInterface $packshot);
 }

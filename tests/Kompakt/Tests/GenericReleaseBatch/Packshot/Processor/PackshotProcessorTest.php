@@ -16,13 +16,13 @@ class PackshotProcessorTest extends \PHPUnit_Framework_TestCase
     public function testComplete()
     {
         $track = $this
-            ->getMockBuilder('Kompakt\ReleaseBatchModel\TrackInterface')
+            ->getMockBuilder('Kompakt\GenericReleaseBatch\Entity\TrackInterface')
             ->disableOriginalConstructor()
             ->getMock()
         ;
 
         $release = $this
-            ->getMockBuilder('Kompakt\ReleaseBatchModel\ReleaseInterface')
+            ->getMockBuilder('Kompakt\GenericReleaseBatch\Entity\ReleaseInterface')
             ->disableOriginalConstructor()
             ->getMock()
         ;
@@ -51,7 +51,7 @@ class PackshotProcessorTest extends \PHPUnit_Framework_TestCase
             ->getMock()
         ;
 
-        $processor = new PackshotProcessor($dispatcher, $packshot);
-        $processor->process();
+        $processor = new PackshotProcessor($dispatcher);
+        $processor->process($packshot);
     }
 }

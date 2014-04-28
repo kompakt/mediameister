@@ -24,7 +24,7 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
         );
         
         $this->assertInstanceOf('Kompakt\GenericReleaseBatch\Packshot\Layout\LayoutInterface', $packshot->getLayout());
-        $this->assertInstanceOf('Kompakt\ReleaseBatchModel\ReleaseInterface', $packshot->getRelease());
+        $this->assertInstanceOf('Kompakt\GenericReleaseBatch\Entity\ReleaseInterface', $packshot->getRelease());
         $this->assertInstanceOf('Kompakt\GenericReleaseBatch\Packshot\Artwork\Loader\LoaderInterface', $packshot->getArtworkLoader());
         $this->assertInstanceOf('Kompakt\GenericReleaseBatch\Packshot\Audio\Loader\LoaderInterface', $packshot->getAudioLoader());
     }
@@ -53,7 +53,7 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
     protected function getMetadataLoaderFactory()
     {
         $release = $this
-            ->getMockBuilder('Kompakt\ReleaseBatchModel\ReleaseInterface')
+            ->getMockBuilder('Kompakt\GenericReleaseBatch\Entity\ReleaseInterface')
             ->disableOriginalConstructor()
             ->getMock()
         ;

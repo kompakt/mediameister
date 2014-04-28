@@ -9,7 +9,7 @@
 
 namespace Kompakt\GenericReleaseBatch\Packshot\Metadata\Writer\Factory;
 
-use Kompakt\ReleaseBatchModel\ReleaseInterface;
+use Kompakt\GenericReleaseBatch\Entity\ReleaseInterface;
 
 interface WriterFactoryInterface
 {

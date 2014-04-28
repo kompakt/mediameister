@@ -23,8 +23,8 @@ class BatchProcessorFactory implements BatchprocessorFactoryInterface
         $this->dispatcher = $dispatcher;
     }
 
-    public function getInstance(BatchInterface $batch)
+    public function getInstance()
     {
-        return new BatchProcessor($this->dispatcher, $batch);
+        return new BatchProcessor($this->dispatcher);
     }
 }

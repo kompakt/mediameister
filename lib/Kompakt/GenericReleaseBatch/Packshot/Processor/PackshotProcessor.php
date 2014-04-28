@@ -26,15 +26,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class PackshotProcessor implements PackshotProcessorInterface
 {
     protected $dispatcher = null;
-    protected $packshot = null;
 
-    public function __construct(EventDispatcherInterface $dispatcher, PackshotInterface $packshot)
+    public function __construct(EventDispatcherInterface $dispatcher)
     {
         $this->dispatcher = $dispatcher;
-        $this->packshot = $packshot;
     }
 
-    public function process()
+    public function process(PackshotInterface $packshot)
     {
         try {
             $event = new IntroEvent();
@@ -48,7 +46,7 @@ class PackshotProcessor implements PackshotProcessorInterface
             $this->dispatcher->dispatch(Events::INTRO_ERROR, $event);
         }
 
-        foreach ($this->packshot->getRelease()->getTracks() as $track)
+        foreach ($packshot->getRelease()->getTracks() as $track)
         {
             try {
                 $event = new TrackEvent($track);

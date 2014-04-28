@@ -9,7 +9,7 @@
 
 namespace Kompakt\GenericReleaseBatch\Packshot\Processor\Event;
 
-use Kompakt\ReleaseBatchModel\TrackInterface;
+use Kompakt\GenericReleaseBatch\Entity\TrackInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 class TrackOkEvent extends Event

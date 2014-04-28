@@ -28,7 +28,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
         $metadataReaderFactory = $this->getMetadataReaderFactory();
         $loader = new Loader($metadataReaderFactory, $layout);
-        $this->assertInstanceOf('Kompakt\ReleaseBatchModel\ReleaseInterface', $loader->load());
+        $this->assertInstanceOf('Kompakt\GenericReleaseBatch\Entity\ReleaseInterface', $loader->load());
     }
 
     public function testLoadWithOtherMetadataFilename()
@@ -52,13 +52,13 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
         $metadataReaderFactory = $this->getMetadataReaderFactory();
         $loader = new Loader($metadataReaderFactory, $layout);
-        $this->assertInstanceOf('Kompakt\ReleaseBatchModel\ReleaseInterface', $loader->load());
+        $this->assertInstanceOf('Kompakt\GenericReleaseBatch\Entity\ReleaseInterface', $loader->load());
     }
 
     protected function getMetadataReaderFactory()
     {
         $release = $this
-            ->getMockBuilder('Kompakt\ReleaseBatchModel\ReleaseInterface')
+            ->getMockBuilder('Kompakt\GenericReleaseBatch\Entity\ReleaseInterface')
             ->disableOriginalConstructor()
             ->getMock()
         ;

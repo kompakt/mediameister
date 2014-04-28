@@ -25,15 +25,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class BatchProcessor implements BatchProcessorInterface
 {
     protected $dispatcher = null;
-    protected $batch = null;
 
-    public function __construct(EventDispatcherInterface $dispatcher, BatchInterface $batch)
+    public function __construct(EventDispatcherInterface $dispatcher)
     {
         $this->dispatcher = $dispatcher;
-        $this->batch = $batch;
     }
 
-    public function process(PackshotFilterInterface $packshotFilter = null)
+    public function process(BatchInterface $batch, PackshotFilterInterface $packshotFilter = null)
     {
         $timer = new Timer();
         $timer->start();
@@ -59,7 +57,7 @@ class BatchProcessor implements BatchProcessorInterface
             $this->dispatcher->dispatch(Events::BATCH_ERROR, $event);
         }
 
-        foreach($this->batch->getPackshots($packshotFilter) as $packshot)
+        foreach($batch->getPackshots($packshotFilter) as $packshot)
         {
             try {
                 // make sure it's loaded or throws loading exception here

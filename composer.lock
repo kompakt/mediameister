@@ -3,52 +3,21 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f240f53e6f5848cd4713630fe266e91c",
+    "hash": "a101ecf831922d7286313fa6a3782797",
     "packages": [
         {
-            "name": "kompakt/release-batch-model",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "git@github-kompakt:kompakt/release-batch-model.git",
-                "reference": "9b82bb53da455586587abfa2e64539ee44460346"
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Kompakt\\ReleaseBatchModel": "lib/"
-                }
-            },
-            "authors": [
-                {
-                    "name": "Christian Hoegl",
-                    "email": "chrigu@kompakt.fm"
-                }
-            ],
-            "description": "Release batch model",
-            "homepage": "http://www.kompakt.fm",
-            "keywords": [
-                "commands",
-                "website"
-            ],
-            "time": "2014-04-25 08:57:54"
-        },
-        {
             "name": "symfony/event-dispatcher",
-            "version": "v2.3.12",
+            "version": "v2.3.13",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "15645237c6ff70e74a28e8836362d82492765055"
+                "reference": "cb7cd38c081507d10997553c4c522956a4d2afab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/15645237c6ff70e74a28e8836362d82492765055",
-                "reference": "15645237c6ff70e74a28e8836362d82492765055",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/cb7cd38c081507d10997553c4c522956a4d2afab",
+                "reference": "cb7cd38c081507d10997553c4c522956a4d2afab",
                 "shasum": ""
             },
             "require": {
@@ -90,7 +59,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com",
-            "time": "2014-02-11 10:29:24"
+            "time": "2014-04-16 10:30:19"
         }
     ],
     "packages-dev": [
@@ -463,17 +432,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.4.3",
+            "version": "v2.4.4",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd"
+                "reference": "65539ecde838f9c0d18b006b2101e3deb4b5c9ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd",
-                "reference": "77a41c2835ab7cfe8bf6d15e25d3af8f3eb3bacd",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/65539ecde838f9c0d18b006b2101e3deb4b5c9ff",
+                "reference": "65539ecde838f9c0d18b006b2101e3deb4b5c9ff",
                 "shasum": ""
             },
             "require": {
@@ -508,16 +477,16 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-03-12 18:29:58"
+            "time": "2014-04-18 20:37:09"
         }
     ],
     "aliases": [
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "kompakt/release-batch-model": 20
-    },
+    "stability-flags": [
+
+    ],
     "platform": {
         "php": ">=5.3.2"
     },

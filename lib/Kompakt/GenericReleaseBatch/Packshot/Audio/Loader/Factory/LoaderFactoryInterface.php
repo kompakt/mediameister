@@ -9,7 +9,7 @@
 
 namespace Kompakt\GenericReleaseBatch\Packshot\Audio\Loader\Factory;
 
-use Kompakt\ReleaseBatchModel\ReleaseInterface;
+use Kompakt\GenericReleaseBatch\Entity\ReleaseInterface;
 use Kompakt\GenericReleaseBatch\Packshot\Layout\LayoutInterface;
 
 interface LoaderFactoryInterface

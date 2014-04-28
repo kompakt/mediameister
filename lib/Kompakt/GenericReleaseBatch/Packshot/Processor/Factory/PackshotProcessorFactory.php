@@ -9,7 +9,6 @@
 
 namespace Kompakt\GenericReleaseBatch\Packshot\Processor\Factory;
 
-use Kompakt\GenericReleaseBatch\Packshot\PackshotInterface;
 use Kompakt\GenericReleaseBatch\Packshot\Processor\Factory\PackshotProcessorFactoryInterface;
 use Kompakt\GenericReleaseBatch\Packshot\Processor\PackshotProcessor;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -23,8 +22,8 @@ class PackshotProcessorFactory implements PackshotProcessorFactoryInterface
         $this->dispatcher = $dispatcher;
     }
 
-    public function getInstance(PackshotInterface $packshot)
+    public function getInstance()
     {
-        return new PackshotProcessor($this->dispatcher, $packshot);
+        return new PackshotProcessor($this->dispatcher);
     }
 }

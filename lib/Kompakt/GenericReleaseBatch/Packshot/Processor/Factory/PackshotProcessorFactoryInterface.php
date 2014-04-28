@@ -13,5 +13,5 @@ use Kompakt\GenericReleaseBatch\Packshot\PackshotInterface;
 
 interface PackshotProcessorFactoryInterface
 {
-    public function getInstance(PackshotInterface $packshot);
+    public function getInstance();
 }

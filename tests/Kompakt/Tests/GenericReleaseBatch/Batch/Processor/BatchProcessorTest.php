@@ -15,11 +15,8 @@ class BatchProcessorTest extends \PHPUnit_Framework_TestCase
 {
     public function testComplete()
     {
-        $batch = $this->getBatch();
-        $dispatcher = $this->getDispatcher();
-
-        $processor = new BatchProcessor($dispatcher, $batch);
-        $processor->process();
+        $processor = new BatchProcessor($this->getDispatcher());
+        $processor->process($this->getBatch());
     }
 
     protected function getBatch()
