@@ -13,5 +13,5 @@ use Kompakt\GenericReleaseBatch\Batch\BatchInterface;
 
 interface BatchProcessorFactoryInterface
 {
-    public function getInstance(BatchInterface $batch);
+    public function getInstance();
 }
