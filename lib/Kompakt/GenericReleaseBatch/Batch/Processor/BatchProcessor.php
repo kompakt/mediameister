@@ -61,7 +61,7 @@ class BatchProcessor implements BatchProcessorInterface
         {
             try {
                 // make sure it's loaded or throws loading exception here
-                #$packshot->getRelease(); // todo: remove temporal coupling
+                $packshot->load();
 
                 $event = new PackshotReadEvent($packshot);
                 $this->dispatcher->dispatch(Events::PACKSHOT_READ, $event);

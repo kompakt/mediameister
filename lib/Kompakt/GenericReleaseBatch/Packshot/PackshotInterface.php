@@ -9,6 +9,8 @@
 
 namespace Kompakt\GenericReleaseBatch\Packshot;
 
+use Kompakt\GenericReleaseBatch\Entity\ReleaseInterface;
+
 interface PackshotInterface
 {
     public function getName();
@@ -16,4 +18,6 @@ interface PackshotInterface
     public function getRelease();
     public function getArtworkLoader();
     public function getAudioLoader();
+    public function init(ReleaseInterface $release);
+    public function load();
 }
