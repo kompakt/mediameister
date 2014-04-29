@@ -10,11 +10,12 @@
 namespace Kompakt\GenericReleaseBatch\Batch;
 
 use Kompakt\GenericReleaseBatch\Batch\Filter\PackshotFilterInterface;
+use Kompakt\GenericReleaseBatch\Entity\ReleaseInterface;
 
 interface BatchInterface
 {
     public function getDir();
     public function getName();
     public function getPackshots(PackshotFilterInterface $filter = null);
-    public function createPackshot($name, $mode = 0777);
+    public function createPackshot($name, ReleaseInterface $release);
 }

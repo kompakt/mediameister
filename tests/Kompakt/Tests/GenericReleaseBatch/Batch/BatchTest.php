@@ -34,14 +34,38 @@ class BatchTest extends \PHPUnit_Framework_TestCase
         $batch = new Batch($this->getPackshotFactory(), $dir);
         $this->assertCount(0, $batch->getPackshots());
 
-        $batch->createPackshot('my-new-packshot');
+        $batch->createPackshot('my-new-packshot', $this->getRelease());
         $this->assertCount(1, $batch->getPackshots());
     }
 
     protected function getPackshotFactory()
     {
-        return $this
+        $packshot = $this
+            ->getMockBuilder('Kompakt\GenericReleaseBatch\Packshot\Packshot')
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $factory = $this
             ->getMockBuilder('Kompakt\GenericReleaseBatch\Packshot\Factory\PackshotFactoryInterface')
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $factory
+            ->expects($this->any())
+            ->method('getInstance')
+            ->will($this->returnValue($packshot))
+        ;
+
+        return $factory;
+    }
+
+    protected function getRelease()
+    {
+        return $this
+            ->getMockBuilder('Kompakt\GenericReleaseBatch\Entity\ReleaseInterface')
+            ->disableOriginalConstructor()
             ->getMock()
         ;
     }

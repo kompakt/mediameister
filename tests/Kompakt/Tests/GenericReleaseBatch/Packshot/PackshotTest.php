@@ -23,6 +23,7 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
             __DIR__
         );
 
+        $packshot->load();
         $packshot->getRelease();
     }
 

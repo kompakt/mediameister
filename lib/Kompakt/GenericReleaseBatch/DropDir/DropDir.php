@@ -79,7 +79,7 @@ class DropDir implements DropDirInterface
         return null;
     }
 
-    public function createBatch($name, $mode = 0777)
+    public function createBatch($name)
     {
         $baseDir = $dir = sprintf('%s/%s', $this->dir, $this->checkName($name));
         $count = 1;
@@ -94,7 +94,7 @@ class DropDir implements DropDirInterface
                 $dir = sprintf('%s-%s', $baseDir, $count++);
             }
             else {
-                mkdir($dir, $mode);
+                mkdir($dir, 0777);
                 $created = true;
             }
         }

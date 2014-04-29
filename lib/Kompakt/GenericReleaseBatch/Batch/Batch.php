@@ -12,6 +12,7 @@ namespace Kompakt\GenericReleaseBatch\Batch;
 use Kompakt\GenericReleaseBatch\Batch\BatchInterface;
 use Kompakt\GenericReleaseBatch\Batch\Exception\InvalidArgumentException;
 use Kompakt\GenericReleaseBatch\Batch\Filter\PackshotFilterInterface;
+use Kompakt\GenericReleaseBatch\Entity\ReleaseInterface;
 use Kompakt\GenericReleaseBatch\Packshot\Factory\PackshotFactoryInterface;
 
 class Batch implements BatchInterface
@@ -63,7 +64,7 @@ class Batch implements BatchInterface
                 continue;
             }
 
-            $packshot = $this->packshotFactory->getInstance($fileInfo->getPathname());
+            $packshot = $this->packshotFactory->getInstance($fileInfo->getPathname())->load();
 
             if ($filter && (!$filter->add($packshot) || $filter->ignore($packshot)))
             {
@@ -83,13 +84,13 @@ class Batch implements BatchInterface
 
         if ($fileInfo->isDir())
         {
-            return $this->batchFactory->getInstance($pathname);
+            return $this->batchFactory->getInstance($pathname)->load();
         }
 
         return null;
     }
 
-    public function createPackshot($name, $mode = 0777)
+    public function createPackshot($name, ReleaseInterface $release)
     {
         $baseDir = $dir = sprintf('%s/%s', $this->dir, $this->checkName($name));
         $count = 1;
@@ -104,12 +105,12 @@ class Batch implements BatchInterface
                 $dir = sprintf('%s-%s', $baseDir, $count++);
             }
             else {
-                mkdir($dir, $mode);
+                mkdir($dir, 0777);
                 $created = true;
             }
         }
 
-        return $this->packshotFactory->getInstance($dir);
+        return $this->packshotFactory->getInstance($dir)->init($release);
     }
 
     protected function checkName($name)

@@ -9,6 +9,7 @@
 
 namespace Kompakt\GenericReleaseBatch\Packshot;
 
+use Kompakt\GenericReleaseBatch\Entity\ReleaseInterface;
 use Kompakt\GenericReleaseBatch\Packshot\Artwork\Loader\Factory\LoaderFactoryInterface as ArtworkLoaderFactoryInterface;
 use Kompakt\GenericReleaseBatch\Packshot\Audio\Loader\Factory\LoaderFactoryInterface as AudioLoaderFactoryInterface;
 use Kompakt\GenericReleaseBatch\Packshot\Layout\Factory\LayoutFactoryInterface;
@@ -25,7 +26,6 @@ class Packshot implements PackshotInterface
     protected $release = null;
     protected $artworkLoader = null;
     protected $audioLoader = null;
-    protected $loaded = false;
 
     public function __construct(
         LayoutFactoryInterface $layoutFactory,
@@ -72,33 +72,35 @@ class Packshot implements PackshotInterface
     
     public function getRelease()
     {
-        $this->load();
         return $this->release;
     }
 
     public function getArtworkLoader()
     {
-        $this->load();
         return $this->artworkLoader;
     }
 
     public function getAudioLoader()
     {
-        $this->load();
         return $this->audioLoader;
     }
 
-    protected function load()
+    public function init(ReleaseInterface $release)
     {
-        if ($this->loaded)
+        $this->release = $release;
+        $this->load();
+        return $this;
+    }
+
+    public function load()
+    {
+        if (!$this->release)
         {
-            return $this;
+            $this->release = $this->metadataLoaderFactory->getInstance($this->layout)->load();
         }
 
-        $this->loaded = true;
-        $this->release = $this->metadataLoaderFactory->getInstance($this->getLayout())->load();
-        $this->artworkLoader = $this->artworkLoaderFactory->getInstance($this->getLayout(), $this->release);
-        $this->audioLoader = $this->audioLoaderFactory->getInstance($this->getLayout(), $this->release);
+        $this->artworkLoader = $this->artworkLoaderFactory->getInstance($this->layout, $this->release);
+        $this->audioLoader = $this->audioLoaderFactory->getInstance($this->layout, $this->release);
         return $this;
     }
 }
