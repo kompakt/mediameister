@@ -13,5 +13,5 @@ use Kompakt\GenericReleaseBatch\Packshot\PackshotInterface;
 
 interface PackshotTracerInterface
 {
-    public function process(PackshotInterface $packshot);
+    public function trace(PackshotInterface $packshot);
 }

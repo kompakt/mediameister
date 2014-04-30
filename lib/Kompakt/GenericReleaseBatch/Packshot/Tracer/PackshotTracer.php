@@ -32,7 +32,7 @@ class PackshotTracer implements PackshotTracerInterface
         $this->dispatcher = $dispatcher;
     }
 
-    public function process(PackshotInterface $packshot)
+    public function trace(PackshotInterface $packshot)
     {
         try {
             $event = new IntroEvent();

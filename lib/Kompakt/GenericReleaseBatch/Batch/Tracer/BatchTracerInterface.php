@@ -14,5 +14,5 @@ use Kompakt\GenericReleaseBatch\Batch\Filter\PackshotFilterInterface;
 
 interface BatchTracerInterface
 {
-    public function process(BatchInterface $batch, PackshotFilterInterface $filter = null);
+    public function trace(BatchInterface $batch, PackshotFilterInterface $filter = null);
 }

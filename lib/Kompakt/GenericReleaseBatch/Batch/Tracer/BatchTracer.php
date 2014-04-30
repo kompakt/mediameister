@@ -31,7 +31,7 @@ class BatchTracer implements BatchTracerInterface
         $this->dispatcher = $dispatcher;
     }
 
-    public function process(BatchInterface $batch, PackshotFilterInterface $packshotFilter = null)
+    public function trace(BatchInterface $batch, PackshotFilterInterface $packshotFilter = null)
     {
         $timer = new Timer();
         $timer->start();
