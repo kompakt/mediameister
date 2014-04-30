@@ -17,12 +17,12 @@ Generic release batch definition
 + `vendor/bin/phpunit tests/Kompakt/Tests/GenericReleaseBatch`
 + `vendor/bin/phpunit tests/Kompakt/Tests/GenericReleaseBatch/Batch/BatchTest`
 + `vendor/bin/phpunit tests/Kompakt/Tests/GenericReleaseBatch/Batch/Factory/BatchFactoryTest`
-+ `vendor/bin/phpunit tests/Kompakt/Tests/GenericReleaseBatch/Batch/Processor/BatchProcessorTest`
++ `vendor/bin/phpunit tests/Kompakt/Tests/GenericReleaseBatch/Batch/Tracer/BatchTracerTest`
 + `vendor/bin/phpunit tests/Kompakt/Tests/GenericReleaseBatch/DropDir/DropDirTest`
 + `vendor/bin/phpunit tests/Kompakt/Tests/GenericReleaseBatch/Packshot/Factory/PackshotFactoryTest`
 + `vendor/bin/phpunit tests/Kompakt/Tests/GenericReleaseBatch/Packshot/Metadata/Loader/LoaderTest`
 + `vendor/bin/phpunit tests/Kompakt/Tests/GenericReleaseBatch/Packshot/PackshotTest`
-+ `vendor/bin/phpunit tests/Kompakt/Tests/GenericReleaseBatch/Packshot/Processor/PackshotProcessorTest`
++ `vendor/bin/phpunit tests/Kompakt/Tests/GenericReleaseBatch/Packshot/Tracer/PackshotTracerTest`
 
 ## License
 
