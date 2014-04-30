@@ -14,6 +14,7 @@ Generic release batch definition
 + `cp tests/config.php.dist config.php`
 + Adjust `config.php` as needed
 + `vendor/bin/phpunit`
++ `vendor/bin/phpunit --coverage-html tests/_coverage`
 + `vendor/bin/phpunit tests/Kompakt/Tests/GenericReleaseBatch`
 + `vendor/bin/phpunit tests/Kompakt/Tests/GenericReleaseBatch/Batch/BatchTest`
 + `vendor/bin/phpunit tests/Kompakt/Tests/GenericReleaseBatch/Batch/Factory/BatchFactoryTest`
