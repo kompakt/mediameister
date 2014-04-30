@@ -25,6 +25,11 @@ class PackshotFactoryTest extends \PHPUnit_Framework_TestCase
             ->getMock()
         ;
 
+        $metadataWriterFactory = $this
+            ->getMockBuilder('Kompakt\GenericReleaseBatch\Packshot\Metadata\Writer\Factory\WriterFactoryInterface')
+            ->getMock()
+        ;
+
         $artworkLoaderFactory = $this
             ->getMockBuilder('Kompakt\GenericReleaseBatch\Packshot\Artwork\Loader\Factory\LoaderFactoryInterface')
             ->getMock()
@@ -38,6 +43,7 @@ class PackshotFactoryTest extends \PHPUnit_Framework_TestCase
         $packshotFactory = new PackshotFactory(
             $layoutFactory,
             $metadataLoaderFactory,
+            $metadataWriterFactory,
             $artworkLoaderFactory,
             $audioLoaderFactory
         );

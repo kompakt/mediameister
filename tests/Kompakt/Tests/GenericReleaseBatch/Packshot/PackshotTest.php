@@ -18,6 +18,7 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
         $packshot = new Packshot(
             $this->getLayoutFactory(),
             $this->getMetadataLoaderFactory(),
+            $this->getMetadataWriterFactory(),
             $this->getArtworkLoaderFactory(),
             $this->getAudioLoaderFactory(),
             __DIR__
@@ -76,6 +77,33 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getInstance')
             ->will($this->returnValue($loader))
+        ;
+
+        return $factory;
+    }
+
+    protected function getMetadataWriterFactory()
+    {
+        $release = $this
+            ->getMockBuilder('Kompakt\GenericReleaseBatch\Entity\ReleaseInterface')
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $writer = $this
+            ->getMockBuilder('Kompakt\GenericReleaseBatch\Packshot\Metadata\Writer\WriterInterface')
+            ->getMock()
+        ;
+
+        $factory = $this
+            ->getMockBuilder('Kompakt\GenericReleaseBatch\Packshot\Metadata\Writer\Factory\WriterFactoryInterface')
+            ->getMock()
+        ;
+
+        $factory
+            ->expects($this->any())
+            ->method('getInstance')
+            ->will($this->returnValue($writer))
         ;
 
         return $factory;

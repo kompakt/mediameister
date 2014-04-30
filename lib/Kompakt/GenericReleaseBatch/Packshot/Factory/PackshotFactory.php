@@ -14,24 +14,28 @@ use Kompakt\GenericReleaseBatch\Packshot\Audio\Loader\Factory\LoaderFactoryInter
 use Kompakt\GenericReleaseBatch\Packshot\Factory\PackshotFactoryInterface;
 use Kompakt\GenericReleaseBatch\Packshot\Layout\Factory\LayoutFactoryInterface;
 use Kompakt\GenericReleaseBatch\Packshot\Metadata\Loader\Factory\LoaderFactoryInterface as MetadataLoaderFactoryInterface;
+use Kompakt\GenericReleaseBatch\Packshot\Metadata\Writer\Factory\WriterFactoryInterface as MetadataWriterFactoryInterface;
 use Kompakt\GenericReleaseBatch\Packshot\Packshot;
 
 class PackshotFactory implements PackshotFactoryInterface
 {
     protected $layoutFactory = null;
     protected $metadataLoaderFactory = null;
+    protected $metadataWriterFactory = null;
     protected $artworkLoaderFactory = null;
     protected $audioLoaderFactory = null;
 
     public function __construct(
         LayoutFactoryInterface $layoutFactory,
         MetadataLoaderFactoryInterface $metadataLoaderFactory,
+        MetadataWriterFactoryInterface $metadataWriterFactory,
         ArtworkLoaderFactoryInterface $artworkLoaderFactory,
         AudioLoaderFactoryInterface $audioLoaderFactory
     )
     {
         $this->layoutFactory = $layoutFactory;
         $this->metadataLoaderFactory = $metadataLoaderFactory;
+        $this->metadataWriterFactory = $metadataWriterFactory;
         $this->artworkLoaderFactory = $artworkLoaderFactory;
         $this->audioLoaderFactory = $audioLoaderFactory;
     }
@@ -41,6 +45,7 @@ class PackshotFactory implements PackshotFactoryInterface
         return new Packshot(
             $this->layoutFactory,
             $this->metadataLoaderFactory,
+            $this->metadataWriterFactory,
             $this->artworkLoaderFactory,
             $this->audioLoaderFactory,
             $dir

@@ -11,6 +11,5 @@ namespace Kompakt\GenericReleaseBatch\Packshot\Metadata\Writer;
 
 interface WriterInterface
 {
-    public function toDom();
     public function save($file);
 }

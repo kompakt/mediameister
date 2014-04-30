@@ -14,11 +14,13 @@ use Kompakt\GenericReleaseBatch\Packshot\Artwork\Loader\Factory\LoaderFactoryInt
 use Kompakt\GenericReleaseBatch\Packshot\Audio\Loader\Factory\LoaderFactoryInterface as AudioLoaderFactoryInterface;
 use Kompakt\GenericReleaseBatch\Packshot\Layout\Factory\LayoutFactoryInterface;
 use Kompakt\GenericReleaseBatch\Packshot\Metadata\Loader\Factory\LoaderFactoryInterface as MetadataLoaderFactoryInterface;
+use Kompakt\GenericReleaseBatch\Packshot\Metadata\Writer\Factory\WriterFactoryInterface as MetadataWriterFactoryInterface;
 use Kompakt\GenericReleaseBatch\Packshot\PackshotInterface;
 
 class Packshot implements PackshotInterface
 {
     protected $metadataLoaderFactory = null;
+    protected $metadataWriterFactory = null;
     protected $artworkLoaderFactory = null;
     protected $audioLoaderFactory = null;
     protected $name = null;
@@ -30,6 +32,7 @@ class Packshot implements PackshotInterface
     public function __construct(
         LayoutFactoryInterface $layoutFactory,
         MetadataLoaderFactoryInterface $metadataLoaderFactory,
+        MetadataWriterFactoryInterface $metadataWriterFactory,
         ArtworkLoaderFactoryInterface $artworkLoaderFactory,
         AudioLoaderFactoryInterface $audioLoaderFactory,
         $dir
@@ -53,6 +56,7 @@ class Packshot implements PackshotInterface
         }
 
         $this->metadataLoaderFactory = $metadataLoaderFactory;
+        $this->metadataWriterFactory = $metadataWriterFactory;
         $this->artworkLoaderFactory = $artworkLoaderFactory;
         $this->audioLoaderFactory = $audioLoaderFactory;
         
@@ -102,5 +106,10 @@ class Packshot implements PackshotInterface
         $this->artworkLoader = $this->artworkLoaderFactory->getInstance($this->layout, $this->release);
         $this->audioLoader = $this->audioLoaderFactory->getInstance($this->layout, $this->release);
         return $this;
+    }
+
+    public function save()
+    {
+        $this->metadataWriterFactory->getInstance($this->getRelease())->save($this->getLayout()->getMetadataFile());
     }
 }
