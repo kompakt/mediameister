@@ -15,6 +15,21 @@ class PackshotTracerTest extends \PHPUnit_Framework_TestCase
 {
     public function testComplete()
     {
+        $tracer = new PackshotTracer($this->getDispatcher());
+        $tracer->trace($this->getPackshot());
+    }
+
+    protected function getDispatcher()
+    {
+        return $this
+            ->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcher')
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+    }
+
+    protected function getPackshot()
+    {
         $track = $this
             ->getMockBuilder('Kompakt\GenericReleaseBatch\Entity\TrackInterface')
             ->disableOriginalConstructor()
@@ -45,13 +60,6 @@ class PackshotTracerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($release))
         ;
 
-        $dispatcher = $this
-            ->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcher')
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-
-        $tracer = new PackshotTracer($dispatcher);
-        $tracer->process($packshot);
+        return $packshot;
     }
 }

@@ -16,7 +16,7 @@ class BatchTracerTest extends \PHPUnit_Framework_TestCase
     public function testComplete()
     {
         $tracer = new BatchTracer($this->getDispatcher());
-        $tracer->process($this->getBatch());
+        $tracer->trace($this->getBatch());
     }
 
     protected function getBatch()
