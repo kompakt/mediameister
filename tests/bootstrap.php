@@ -28,7 +28,7 @@ function freshTmpSubDir($class)
 // "private" functions (should not be used from within tests)
 function resolveTmpSubDir($classOrMethod)
 {
-    return TESTS_KOMPAKT_GENERICRELEASEBATCH_TEMP_DIR . '/' . preg_replace('/\\\/', '/', preg_replace('/::/', '/', $classOrMethod));
+    return TESTS_KOMPAKT_MEDIADELIVERYFRAMEWORK_TEMP_DIR . '/' . preg_replace('/\\\/', '/', preg_replace('/::/', '/', $classOrMethod));
 }
 
 function clearTmpSubDir($pathname)
