@@ -10,6 +10,19 @@ Tasks are the starting point of a specific application and process the containin
 
 This package implements the building blocks described above. It is up to you to write concrete implementations for your specific batch structure. An example can be found here [kompakt/godisko-release-batch](http://github.com/kompakt/godisko-release-batch).
 
+Structure example:
+
+    + drop-dir
+        + batch-dir
+            + packshot-dir-1
+                + metadata.xml
+                + audio-1.wav
+                + audio-2.wav
+                + audio-3.wav
+                + artwork.jpg
+                + booklet.pdf
+            + ...
+
 ## Install
 
 + `git clone https://github.com/kompakt/media-delivery-framework.git`
