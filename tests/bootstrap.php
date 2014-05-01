@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the kompakt/generic-release-batch package.
+ * This file is part of the kompakt/media-delivery-framwork package.
  *
  * (c) Christian Hoegl <chrigu@sirprize.me>
  *

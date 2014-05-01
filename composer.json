@@ -1,7 +1,7 @@
 {
-    "name": "kompakt/generic-release-batch",
+    "name": "kompakt/media-delivery-framwork",
     "type": "library",
-    "description": "Generic release batch definition",
+    "description": "Framework for media handling and delivery applications",
     "keywords": ["website", "commands"],
     "homepage": "http://www.kompakt.fm",
     "authors": [
@@ -15,6 +15,6 @@
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
-        "psr-0": { "Kompakt\\GenericReleaseBatch": "lib/" }
+        "psr-0": { "Kompakt\\MediaDeliveryFramework": "lib/" }
     }
 }
