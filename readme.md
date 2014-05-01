@@ -12,8 +12,8 @@ This package implements the building blocks described above. It is up to you to 
 
 ## Install
 
-+ `git clone https://github.com/kompakt/media-delivery-framwork.git`
-+ `cd media-delivery-framwork`
++ `git clone https://github.com/kompakt/media-delivery-framework.git`
++ `cd media-delivery-framework`
 + `curl -sS https://getcomposer.org/installer | php`
 + `php composer.phar install`
 

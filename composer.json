@@ -1,5 +1,5 @@
 {
-    "name": "kompakt/media-delivery-framwork",
+    "name": "kompakt/media-delivery-framework",
     "type": "library",
     "description": "Framework for media handling and delivery applications",
     "keywords": ["website", "commands"],
