@@ -10,9 +10,9 @@
 namespace Kompakt\MediaDeliveryFramework\Packshot\Tracer\Event;
 
 use Kompakt\MediaDeliveryFramework\Entity\TrackInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Kompakt\MediaDeliveryFramework\EventDispatcher\EventInterface;
 
-class TrackErrorEvent extends Event
+class TrackErrorEvent implements EventInterface
 {
     protected $track = null;
     protected $exception = null;

@@ -10,9 +10,9 @@
 namespace Kompakt\MediaDeliveryFramework\Batch\Tracer\Event;
 
 use Kompakt\MediaDeliveryFramework\Packshot\PackshotInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Kompakt\MediaDeliveryFramework\EventDispatcher\EventInterface;
 
-class PackshotReadEvent extends Event
+class PackshotReadEvent implements EventInterface
 {
     protected $packshot = null;
 

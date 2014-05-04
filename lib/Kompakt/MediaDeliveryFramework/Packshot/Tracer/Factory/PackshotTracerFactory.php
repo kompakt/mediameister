@@ -11,7 +11,7 @@ namespace Kompakt\MediaDeliveryFramework\Packshot\Tracer\Factory;
 
 use Kompakt\MediaDeliveryFramework\Packshot\Tracer\Factory\PackshotTracerFactoryInterface;
 use Kompakt\MediaDeliveryFramework\Packshot\Tracer\PackshotTracer;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Kompakt\MediaDeliveryFramework\EventDispatcher\EventDispatcherInterface;
 
 class PackshotTracerFactory implements PackshotTracerFactoryInterface
 {

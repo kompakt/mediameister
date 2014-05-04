@@ -10,9 +10,9 @@
 namespace Kompakt\MediaDeliveryFramework\Batch\Tracer\Event;
 
 use Kompakt\MediaDeliveryFramework\Timer\Timer;
-use Symfony\Component\EventDispatcher\Event;
+use Kompakt\MediaDeliveryFramework\EventDispatcher\EventInterface;
 
-class BatchErrorEvent extends Event
+class BatchErrorEvent implements EventInterface
 {
     protected $timer = null;
     protected $exception = null;

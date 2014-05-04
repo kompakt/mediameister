@@ -20,7 +20,7 @@ use Kompakt\MediaDeliveryFramework\Batch\Tracer\Event\PackshotReadErrorEvent;
 use Kompakt\MediaDeliveryFramework\Batch\Tracer\Event\PackshotReadEvent;
 use Kompakt\MediaDeliveryFramework\Batch\Tracer\Event\PackshotReadOkEvent;
 use Kompakt\MediaDeliveryFramework\Timer\Timer;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Kompakt\MediaDeliveryFramework\EventDispatcher\EventDispatcherInterface;
 
 class BatchTracer implements BatchTracerInterface
 {

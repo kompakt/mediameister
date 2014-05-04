@@ -12,7 +12,7 @@ namespace Kompakt\MediaDeliveryFramework\Batch\Tracer\Factory;
 use Kompakt\MediaDeliveryFramework\Batch\BatchInterface;
 use Kompakt\MediaDeliveryFramework\Batch\Tracer\BatchTracer;
 use Kompakt\MediaDeliveryFramework\Batch\Tracer\Factory\BatchtracerFactoryInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Kompakt\MediaDeliveryFramework\EventDispatcher\EventDispatcherInterface;
 
 class BatchTracerFactory implements BatchtracerFactoryInterface
 {

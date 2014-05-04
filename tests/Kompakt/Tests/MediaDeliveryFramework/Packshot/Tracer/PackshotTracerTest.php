@@ -22,7 +22,7 @@ class PackshotTracerTest extends \PHPUnit_Framework_TestCase
     protected function getDispatcher()
     {
         return $this
-            ->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcher')
+            ->getMockBuilder('Kompakt\MediaDeliveryFramework\EventDispatcher\EventDispatcherInterface')
             ->disableOriginalConstructor()
             ->getMock()
         ;

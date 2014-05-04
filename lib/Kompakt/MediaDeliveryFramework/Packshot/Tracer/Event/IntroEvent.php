@@ -9,7 +9,7 @@
 
 namespace Kompakt\MediaDeliveryFramework\Packshot\Tracer\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Kompakt\MediaDeliveryFramework\EventDispatcher\EventInterface;
 
-class IntroEvent extends Event
+class IntroEvent implements EventInterface
 {}

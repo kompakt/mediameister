@@ -9,7 +9,7 @@
 
 namespace Kompakt\MediaDeliveryFramework\Batch\Tracer\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Kompakt\MediaDeliveryFramework\EventDispatcher\EventInterface;
 
-class BatchStartEvent extends Event
+class BatchStartEvent implements EventInterface
 {}

@@ -21,7 +21,7 @@ use Kompakt\MediaDeliveryFramework\Packshot\Tracer\Event\TrackErrorEvent;
 use Kompakt\MediaDeliveryFramework\Packshot\Tracer\Event\TrackEvent;
 use Kompakt\MediaDeliveryFramework\Packshot\Tracer\Event\TrackOkEvent;
 use Kompakt\MediaDeliveryFramework\Packshot\Tracer\PackshotTracerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Kompakt\MediaDeliveryFramework\EventDispatcher\EventDispatcherInterface;
 
 class PackshotTracer implements PackshotTracerInterface
 {

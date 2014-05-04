@@ -9,9 +9,9 @@
 
 namespace Kompakt\MediaDeliveryFramework\Packshot\Tracer\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Kompakt\MediaDeliveryFramework\EventDispatcher\EventInterface;
 
-class IntroErrorEvent extends Event
+class IntroErrorEvent implements EventInterface
 {
     protected $exception = null;
 
