@@ -15,5 +15,5 @@ interface EventInterface
 {
     public function setAdapter(EventAdapterInterface $adapter);
     public function isPropagationStopped();
-    public function stopPropagation($applyToAdapter = true);
+    public function stopPropagation($avoidCircularDependency = false);
 }
