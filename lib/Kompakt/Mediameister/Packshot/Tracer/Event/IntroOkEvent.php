@@ -9,7 +9,7 @@
 
 namespace Kompakt\Mediameister\Packshot\Tracer\Event;
 
-use Kompakt\Mediameister\EventDispatcher\EventInterface;
+use Kompakt\Mediameister\EventDispatcher\Event;
 
-class IntroOkEvent implements EventInterface
+class IntroOkEvent extends Event
 {}

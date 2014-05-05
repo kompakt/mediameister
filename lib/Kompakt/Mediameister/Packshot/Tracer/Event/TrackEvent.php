@@ -10,9 +10,9 @@
 namespace Kompakt\Mediameister\Packshot\Tracer\Event;
 
 use Kompakt\Mediameister\Entity\TrackInterface;
-use Kompakt\Mediameister\EventDispatcher\EventInterface;
+use Kompakt\Mediameister\EventDispatcher\Event;
 
-class TrackEvent implements EventInterface
+class TrackEvent extends Event
 {
     protected $track = null;
 

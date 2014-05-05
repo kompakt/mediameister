@@ -9,9 +9,9 @@
 
 namespace Kompakt\Mediameister\Packshot\Tracer\Event;
 
-use Kompakt\Mediameister\EventDispatcher\EventInterface;
+use Kompakt\Mediameister\EventDispatcher\Event;
 
-class IntroErrorEvent implements EventInterface
+class IntroErrorEvent extends Event
 {
     protected $exception = null;
 

@@ -10,9 +10,9 @@
 namespace Kompakt\Mediameister\Batch\Tracer\Event;
 
 use Kompakt\Mediameister\Timer\Timer;
-use Kompakt\Mediameister\EventDispatcher\EventInterface;
+use Kompakt\Mediameister\EventDispatcher\Event;
 
-class BatchEndEvent implements EventInterface
+class BatchEndEvent extends Event
 {
     protected $timer = null;
 

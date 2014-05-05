@@ -10,9 +10,9 @@
 namespace Kompakt\Mediameister\Batch\Tracer\Event;
 
 use Kompakt\Mediameister\Timer\Timer;
-use Kompakt\Mediameister\EventDispatcher\EventInterface;
+use Kompakt\Mediameister\EventDispatcher\Event;
 
-class BatchErrorEvent implements EventInterface
+class BatchErrorEvent extends Event
 {
     protected $timer = null;
     protected $exception = null;

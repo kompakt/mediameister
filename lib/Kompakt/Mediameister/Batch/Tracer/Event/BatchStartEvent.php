@@ -9,7 +9,7 @@
 
 namespace Kompakt\Mediameister\Batch\Tracer\Event;
 
-use Kompakt\Mediameister\EventDispatcher\EventInterface;
+use Kompakt\Mediameister\EventDispatcher\Event;
 
-class BatchStartEvent implements EventInterface
+class BatchStartEvent extends Event
 {}

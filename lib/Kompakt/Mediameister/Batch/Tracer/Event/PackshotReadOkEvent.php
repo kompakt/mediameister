@@ -10,9 +10,9 @@
 namespace Kompakt\Mediameister\Batch\Tracer\Event;
 
 use Kompakt\Mediameister\Packshot\PackshotInterface;
-use Kompakt\Mediameister\EventDispatcher\EventInterface;
+use Kompakt\Mediameister\EventDispatcher\Event;
 
-class PackshotReadOkEvent implements EventInterface
+class PackshotReadOkEvent extends Event
 {
     protected $packshot = null;
 
