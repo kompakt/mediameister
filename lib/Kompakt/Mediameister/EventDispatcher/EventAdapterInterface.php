@@ -9,11 +9,9 @@
 
 namespace Kompakt\Mediameister\EventDispatcher;
 
-use Kompakt\Mediameister\EventDispatcher\EventAdapterInterface;
-
-interface EventInterface
+interface EventAdapterInterface
 {
-    public function setAdapter(EventAdapterInterface $adapter);
+    public function getNativeEvent();
     public function isPropagationStopped();
-    public function stopPropagation($applyToAdapter = true);
+    public function stopPropagation();
 }

@@ -78,8 +78,8 @@ class SymfonyEventSubscriberAdapterGenerator
         return '
             public function %s (SymfonyEventAdapter $e)
             {
-                // extract the original event and pass it to the subscriber
-                $this->originalSubscriber->%s($e->getOriginalEvent());
+                // extract the native event and pass it to the subscriber
+                $this->originalSubscriber->%s($e->getNativeEvent());
             }
         ';
     }

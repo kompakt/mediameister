@@ -9,20 +9,33 @@
 
 namespace Kompakt\Mediameister\EventDispatcher\Adapter\Symfony;
 
+use Kompakt\Mediameister\EventDispatcher\EventAdapterInterface;
 use Kompakt\Mediameister\EventDispatcher\EventInterface;
 use Symfony\Component\EventDispatcher\Event as SymfonyEvent;
 
-class SymfonyEventAdapter extends SymfonyEvent
+class SymfonyEventAdapter extends SymfonyEvent implements EventAdapterInterface
 {
-    protected $originalEvent = null;
+    protected $nativeEvent = null;
+    protected $propagationStopped = false;
 
-    public function __construct(EventInterface $originalEvent)
+    public function __construct(EventInterface $nativeEvent)
     {
-        $this->originalEvent = $originalEvent;
+        $this->nativeEvent = $nativeEvent->setAdapter($this);
     }
 
-    public function getOriginalEvent()
+    public function getNativeEvent()
     {
-        return $this->originalEvent;
+        return $this->nativeEvent;
+    }
+
+    public function isPropagationStopped()
+    {
+        return $this->propagationStopped;
+    }
+
+    public function stopPropagation()
+    {
+        $this->propagationStopped = true;
+        $this->nativeEvent->stopPropagation(false);
     }
 }
