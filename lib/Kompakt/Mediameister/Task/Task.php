@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the kompakt/release-batch-tasks package.
+ * This file is part of the kompakt/mediameister package.
  *
  * (c) Christian Hoegl <chrigu@sirprize.me>
  *

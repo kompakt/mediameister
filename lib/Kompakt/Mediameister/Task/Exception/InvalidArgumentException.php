@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the kompakt/release-batch-tasks package.
+ * This file is part of the kompakt/mediameister package.
  *
  * (c) Christian Hoegl <chrigu@sirprize.me>
  *
@@ -9,7 +9,7 @@
 
 namespace Kompakt\Mediameister\Task\Exception;
 
-use Kompakt\Mediameister\Exception as MeisterException;
+use Kompakt\Mediameister\Exception as BaseException;
 
-class InvalidArgumentException extends \InvalidArgumentException implements MeisterException
+class InvalidArgumentException extends \InvalidArgumentException implements BaseException
 {}
