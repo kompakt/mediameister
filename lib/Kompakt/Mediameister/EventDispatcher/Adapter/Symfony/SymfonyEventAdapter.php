@@ -36,6 +36,6 @@ class SymfonyEventAdapter extends SymfonyEvent implements EventAdapterInterface
     public function stopPropagation()
     {
         $this->propagationStopped = true;
-        $this->nativeEvent->stopPropagation(false);
+        $this->nativeEvent->stopPropagation(true);
     }
 }
