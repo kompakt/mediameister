@@ -18,7 +18,7 @@ class InputOkEvent extends Event
     protected $sourceBatch = null;
     protected $targetDropDir = null;
 
-    public function __construct(BatchInterface $sourceBatch, DropDirInterface $targetDropDir)
+    public function __construct(BatchInterface $sourceBatch, DropDirInterface $targetDropDir = null)
     {
         $this->sourceBatch = $sourceBatch;
         $this->targetDropDir = $targetDropDir;

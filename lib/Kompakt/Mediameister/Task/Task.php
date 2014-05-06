@@ -21,17 +21,21 @@ class Task
 {
     protected $dispatcher = null;
     protected $dropDirRegistry = null;
+    protected $requireTargetDropDir = null;
 
     public function __construct(
         EventDispatcherInterface $dispatcher,
-        RegistryInterface $dropDirRegistry
+        RegistryInterface $dropDirRegistry,
+        $requireTargetDropDir = true
+
     )
     {
         $this->dispatcher = $dispatcher;
         $this->dropDirRegistry = $dropDirRegistry;
+        $this->requireTargetDropDir = (bool) $requireTargetDropDir;
     }
 
-    public function start($sourceDropDirLabel, $sourceBatchName, $targetDropDirLabel)
+    public function run($sourceDropDirLabel, $sourceBatchName, $targetDropDirLabel = null)
     {
         try {
             $sourceDropDir = $this->dropDirRegistry->get($sourceDropDirLabel);
@@ -50,7 +54,7 @@ class Task
 
             $targetDropDir = $this->dropDirRegistry->get($targetDropDirLabel);
 
-            if (!$targetDropDir)
+            if (!$targetDropDir && $this->requireTargetDropDir)
             {
                 throw new InvalidArgumentException(sprintf('Target drop dir "%s" not found', $targetDropDirLabel));
             }
