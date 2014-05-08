@@ -12,78 +12,95 @@ namespace Kompakt\Mediameister\Batch\Tracer;
 use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\Batch\Filter\PackshotFilterInterface;
 use Kompakt\Mediameister\Batch\Tracer\BatchTracerInterface;
+use Kompakt\Mediameister\Batch\Tracer\EventNamesInterface;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchEndEvent;
-use Kompakt\Mediameister\Batch\Tracer\Event\BatchErrorEvent;
+use Kompakt\Mediameister\Batch\Tracer\Event\BatchEndErrorEvent;
+use Kompakt\Mediameister\Batch\Tracer\Event\BatchEndOkEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartEvent;
-use Kompakt\Mediameister\Batch\Tracer\Event\Events;
+use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartErrorEvent;
+use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartOkEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\PackshotReadErrorEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\PackshotReadEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\PackshotReadOkEvent;
-use Kompakt\Mediameister\Timer\Timer;
 use Kompakt\Mediameister\EventDispatcher\EventDispatcherInterface;
 
 class BatchTracer implements BatchTracerInterface
 {
     protected $dispatcher = null;
+    protected $eventNames = null;
 
-    public function __construct(EventDispatcherInterface $dispatcher)
+    public function __construct(
+        EventDispatcherInterface $dispatcher,
+        EventNamesInterface $eventNames
+    )
     {
         $this->dispatcher = $dispatcher;
+        $this->eventNames = $eventNames;
     }
 
     public function trace(BatchInterface $batch, PackshotFilterInterface $packshotFilter = null)
     {
-        $timer = new Timer();
-        $timer->start();
-
         try {
-            if (function_exists('pcntl_signal'))
-            {
-                $handleSig = function() use ($timer)
-                {
-                    $event = new BatchEndEvent($timer->stop());
-                    $this->dispatcher->dispatch(Events::BATCH_END, $event);
-                };
+            $this->dispatcher->dispatch(
+                $this->eventNames->batchStart(),
+                new BatchStartEvent()
+            );
 
-                pcntl_signal(SIGTERM, $handleSig);
-            }
-
-            $event = new BatchStartEvent();
-            $this->dispatcher->dispatch(Events::BATCH_START, $event);
+            $this->dispatcher->dispatch(
+                $this->eventNames->batchStartOk(),
+                new BatchStartOkEvent()
+            );
         }
         catch (\Exception $e)
         {
-            $event = new BatchErrorEvent($timer->stop(), $e);
-            $this->dispatcher->dispatch(Events::BATCH_ERROR, $event);
+            $this->dispatcher->dispatch(
+                $this->eventNames->batchStartError(),
+                new BatchStartErrorEvent($e)
+            );
         }
 
         foreach($batch->getPackshots($packshotFilter) as $packshot)
         {
             try {
-                // make sure it's loaded or throws loading exception here
+                // throws loading exception here if required
                 $packshot->load();
 
-                $event = new PackshotReadEvent($packshot);
-                $this->dispatcher->dispatch(Events::PACKSHOT_READ, $event);
+                $this->dispatcher->dispatch(
+                    $this->eventNames->packshotRead(),
+                    new PackshotReadEvent($packshot)
+                );
 
-                $event = new PackshotReadOkEvent($packshot);
-                $this->dispatcher->dispatch(Events::PACKSHOT_READ_OK, $event);
+                $this->dispatcher->dispatch(
+                    $this->eventNames->packshotReadOk(),
+                    new PackshotReadOkEvent($packshot)
+                );
             }
             catch (\Exception $e)
             {
-                $event = new PackshotReadErrorEvent($packshot, $e);
-                $this->dispatcher->dispatch(Events::PACKSHOT_READ_ERROR, $event);
+                $this->dispatcher->dispatch(
+                    $this->eventNames->packshotReadError(),
+                    new PackshotReadErrorEvent($packshot, $e)
+                );
             }
         }
 
         try {
-            $event = new BatchEndEvent($timer->stop());
-            $this->dispatcher->dispatch(Events::BATCH_END, $event);
+            $this->dispatcher->dispatch(
+                $this->eventNames->batchEnd(),
+                new BatchEndEvent()
+            );
+
+            $this->dispatcher->dispatch(
+                $this->eventNames->batchEndOk(),
+                new BatchEndOkEvent()
+            );
         }
         catch (\Exception $e)
         {
-            $event = new BatchErrorEvent($timer->stop(), $e);
-            $this->dispatcher->dispatch(Events::BATCH_ERROR, $event);
+            $this->dispatcher->dispatch(
+                $this->eventNames->batchEndError(),
+                new BatchEndErrorEvent($e)
+            );
         }
     }
 }

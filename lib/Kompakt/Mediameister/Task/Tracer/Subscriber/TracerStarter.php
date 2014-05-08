@@ -7,42 +7,48 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\Tracer;
+namespace Kompakt\Mediameister\Task\Tracer\Subscriber;
 
 use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\Batch\Tracer\BatchTracerInterface;
-use Kompakt\Mediameister\Batch\Tracer\Event\Events as BatchEvents;
+use Kompakt\Mediameister\Batch\Tracer\EventNamesInterface as BatchEventNamesInterface;
 use Kompakt\Mediameister\Batch\Tracer\Event\PackshotReadOkEvent;
 use Kompakt\Mediameister\EventDispatcher\EventDispatcherInterface;
 use Kompakt\Mediameister\EventDispatcher\EventSubscriberInterface;
 use Kompakt\Mediameister\Packshot\Tracer\PackshotTracerInterface;
-use Kompakt\Mediameister\Task\Tracer\Event\Events as TaskEvents;
 use Kompakt\Mediameister\Task\Tracer\Event\InputOkEvent;
+use Kompakt\Mediameister\Task\Tracer\EventNamesInterface as TaskEventNamesInterface;
 
-class TaskTracer implements EventSubscriberInterface
+class TracerStarter implements EventSubscriberInterface
 {
     protected $dispatcher = null;
+    protected $taskEventNames = null;
+    protected $batchEventNames = null;
     protected $batchTracer = null;
     protected $packshotTracer = null;
 
     public function __construct(
         EventDispatcherInterface $dispatcher,
+        TaskEventNamesInterface $taskEventNames,
+        BatchEventNamesInterface $batchEventNames,
         BatchTracerInterface $batchTracerPrototype,
         PackshotTracerInterface $packshotTracerPrototype
     )
     {
         $this->dispatcher = $dispatcher;
+        $this->taskEventNames = $taskEventNames;
+        $this->batchEventNames = $batchEventNames;
         $this->batchTracer = clone $batchTracerPrototype;
         $this->packshotTracer = clone $packshotTracerPrototype;
     }
 
-    public static function getSubscribedEvents()
+    public function getSubscriptions()
     {
         return array(
-            TaskEvents::INPUT_OK => array(
+            $this->taskEventNames->inputOk() => array(
                 array('onInputOk', 0)
             ),
-            BatchEvents::PACKSHOT_READ_OK => array(
+            $this->batchEventNames->packshotReadOk() => array(
                 array('onPackshotReadOk', 0)
             )
         );

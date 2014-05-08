@@ -9,23 +9,15 @@
 
 namespace Kompakt\Mediameister\Batch\Tracer\Event;
 
-use Kompakt\Mediameister\Timer\Timer;
 use Kompakt\Mediameister\EventDispatcher\Event;
 
-class BatchErrorEvent extends Event
+class BatchEndErrorEvent extends Event
 {
-    protected $timer = null;
     protected $exception = null;
 
-    public function __construct(Timer $timer, \Exception $exception)
+    public function __construct(\Exception $exception)
     {
-        $this->timer = $timer;
         $this->exception = $exception;
-    }
-
-    public function getTimer()
-    {
-        return $this->timer;
     }
 
     public function getException()

@@ -11,5 +11,5 @@ namespace Kompakt\Mediameister\EventDispatcher;
 
 interface EventSubscriberInterface
 {
-    public static function getSubscribedEvents();
+    public function getSubscriptions();
 }

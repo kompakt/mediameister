@@ -33,7 +33,17 @@ class SymfonyEventDispatcherAdapter implements EventDispatcherInterface
     public function addSubscriber(EventSubscriberInterface $subscriber)
     {
         $adapterGenerator = new SymfonyEventSubscriberAdapterGenerator();
-        $className = sprintf('GeneratedSubscriberAdapter_%s', uniqid());
+        $className = sprintf('%s_%s', preg_replace('/\\\/', '_', get_class($subscriber)), uniqid());
         $this->symfonyDispatcher->addSubscriber($adapterGenerator->getAdapter($subscriber, $className));
+    }
+
+    public function addListener($eventName, $listener, $priority = 0)
+    {
+        $symfonyListener = function($event) use ($listener)
+        {
+            call_user_func($listener, $event->getOriginalEvent());
+        };
+
+        $this->symfonyDispatcher->addListener($eventName, $symfonyListener, $priority);
     }
 }

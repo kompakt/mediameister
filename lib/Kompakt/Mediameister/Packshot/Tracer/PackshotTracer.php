@@ -10,7 +10,7 @@
 namespace Kompakt\Mediameister\Packshot\Tracer;
 
 use Kompakt\Mediameister\Packshot\PackshotInterface;
-use Kompakt\Mediameister\Packshot\Tracer\Event\Events;
+use Kompakt\Mediameister\Packshot\Tracer\EventNamesInterface;
 use Kompakt\Mediameister\Packshot\Tracer\Event\IntroErrorEvent;
 use Kompakt\Mediameister\Packshot\Tracer\Event\IntroEvent;
 use Kompakt\Mediameister\Packshot\Tracer\Event\IntroOkEvent;
@@ -26,51 +26,77 @@ use Kompakt\Mediameister\EventDispatcher\EventDispatcherInterface;
 class PackshotTracer implements PackshotTracerInterface
 {
     protected $dispatcher = null;
+    protected $eventNames = null;
 
-    public function __construct(EventDispatcherInterface $dispatcher)
+    public function __construct(
+        EventDispatcherInterface $dispatcher,
+        EventNamesInterface $eventNames
+    )
     {
         $this->dispatcher = $dispatcher;
+        $this->eventNames = $eventNames;
     }
 
     public function trace(PackshotInterface $packshot)
     {
         try {
-            $event = new IntroEvent();
-            $this->dispatcher->dispatch(Events::INTRO, $event);
-            $event = new IntroOkEvent();
-            $this->dispatcher->dispatch(Events::INTRO_OK, $event);
+            $this->dispatcher->dispatch(
+                $this->eventNames->intro(),
+                new IntroEvent()
+            );
+
+            $this->dispatcher->dispatch(
+                $this->eventNames->introOk(),
+                new IntroOkEvent()
+            );
         }
         catch (\Exception $e)
         {
-            $event = new IntroErrorEvent($e);
-            $this->dispatcher->dispatch(Events::INTRO_ERROR, $event);
+            $this->dispatcher->dispatch(
+                $this->eventNames->introError(),
+                new IntroErrorEvent($e)
+            );
         }
 
         foreach ($packshot->getRelease()->getTracks() as $track)
         {
             try {
-                $event = new TrackEvent($track);
-                $this->dispatcher->dispatch(Events::TRACK, $event);
-                $event = new TrackOkEvent($track);
-                $this->dispatcher->dispatch(Events::TRACK_OK, $event);
+                $this->dispatcher->dispatch(
+                    $this->eventNames->track(),
+                    new TrackEvent($track)
+                );
+
+                $this->dispatcher->dispatch(
+                    $this->eventNames->trackOk(),
+                    new TrackOkEvent($track)
+                );
             }
             catch (\Exception $e)
             {
-                $event = new TrackErrorEvent($track, $e);
-                $this->dispatcher->dispatch(Events::TRACK_ERROR, $event);
+                $this->dispatcher->dispatch(
+                    $this->eventNames->trackError(),
+                    new TrackErrorEvent($track, $e)
+                );
             }
         }
 
         try {
-            $event = new OutroEvent();
-            $this->dispatcher->dispatch(Events::OUTRO, $event);
-            $event = new OutroOkEvent();
-            $this->dispatcher->dispatch(Events::OUTRO_OK, $event);
+            $this->dispatcher->dispatch(
+                $this->eventNames->outro(),
+                new OutroEvent()
+            );
+
+            $this->dispatcher->dispatch(
+                $this->eventNames->outroOk(),
+                new OutroOkEvent()
+            );
         }
         catch (\Exception $e)
         {
-            $event = new OutroErrorEvent($e);
-            $this->dispatcher->dispatch(Events::OUTRO_ERROR, $event);
+            $this->dispatcher->dispatch(
+                $this->eventNames->outroError(),
+                new OutroErrorEvent($e)
+            );
         }
     }
 }

@@ -15,11 +15,8 @@ class SymfonyEventSubscriberAdapterGenerator
 {
     public function getAdapter(EventSubscriberInterface $originalSubscriber, $className)
     {
-        // get subscribed events (static method)
-        $reflector = new \ReflectionClass($originalSubscriber);
-        $events = $reflector->getMethod('getSubscribedEvents')->invoke(null);
+        $events = $originalSubscriber->getSubscriptions();
 
-        // make code
         $classDefinition = sprintf(
             $this->getClassCode(),
             $className,
@@ -27,10 +24,7 @@ class SymfonyEventSubscriberAdapterGenerator
             $this->getMethods($events)
         );
 
-        // run code
         eval($classDefinition);
-
-        // instantiate
         $className = sprintf('\%s', $className);
         return new $className($originalSubscriber);
     }
@@ -78,8 +72,8 @@ class SymfonyEventSubscriberAdapterGenerator
         return '
             public function %s (SymfonyEventAdapter $e)
             {
-                // extract the native event and pass it to the subscriber
-                $this->originalSubscriber->%s($e->getNativeEvent());
+                // extract the original event and pass it to the subscriber
+                $this->originalSubscriber->%s($e->getOriginalEvent());
             }
         ';
     }

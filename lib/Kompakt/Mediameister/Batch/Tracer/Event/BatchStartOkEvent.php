@@ -11,5 +11,5 @@ namespace Kompakt\Mediameister\Batch\Tracer\Event;
 
 use Kompakt\Mediameister\EventDispatcher\Event;
 
-class BatchEndEvent extends Event
+class BatchStartOkEvent extends Event
 {}
