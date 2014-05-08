@@ -16,7 +16,7 @@ use Kompakt\Mediameister\Batch\Tracer\Event\PackshotReadOkEvent;
 use Kompakt\Mediameister\EventDispatcher\EventDispatcherInterface;
 use Kompakt\Mediameister\EventDispatcher\EventSubscriberInterface;
 use Kompakt\Mediameister\Packshot\Tracer\PackshotTracerInterface;
-use Kompakt\Mediameister\Task\Tracer\Event\InputOkEvent;
+use Kompakt\Mediameister\Task\Tracer\Event\TaskRunEvent;
 use Kompakt\Mediameister\Task\Tracer\EventNamesInterface as TaskEventNamesInterface;
 
 class TracerStarter implements EventSubscriberInterface
@@ -45,8 +45,8 @@ class TracerStarter implements EventSubscriberInterface
     public function getSubscriptions()
     {
         return array(
-            $this->taskEventNames->inputOk() => array(
-                array('onInputOk', 0)
+            $this->taskEventNames->taskRun() => array(
+                array('onTaskRun', 0)
             ),
             $this->batchEventNames->packshotReadOk() => array(
                 array('onPackshotReadOk', 0)
@@ -54,7 +54,7 @@ class TracerStarter implements EventSubscriberInterface
         );
     }
 
-    public function onInputOk(InputOkEvent $event)
+    public function onTaskRun(TaskRunEvent $event)
     {
         $this->batchTracer->trace($event->getSourceBatch());
     }

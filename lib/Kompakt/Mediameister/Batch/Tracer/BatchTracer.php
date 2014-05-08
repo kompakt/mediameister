@@ -50,56 +50,56 @@ class BatchTracer implements BatchTracerInterface
                 $this->eventNames->batchStartOk(),
                 new BatchStartOkEvent()
             );
+
+            foreach($batch->getPackshots($packshotFilter) as $packshot)
+            {
+                try {
+                    // throws loading exception here if required
+                    $packshot->load();
+
+                    $this->dispatcher->dispatch(
+                        $this->eventNames->packshotRead(),
+                        new PackshotReadEvent($packshot)
+                    );
+
+                    $this->dispatcher->dispatch(
+                        $this->eventNames->packshotReadOk(),
+                        new PackshotReadOkEvent($packshot)
+                    );
+                }
+                catch (\Exception $e)
+                {
+                    $this->dispatcher->dispatch(
+                        $this->eventNames->packshotReadError(),
+                        new PackshotReadErrorEvent($packshot, $e)
+                    );
+                }
+            }
+
+            try {
+                $this->dispatcher->dispatch(
+                    $this->eventNames->batchEnd(),
+                    new BatchEndEvent()
+                );
+
+                $this->dispatcher->dispatch(
+                    $this->eventNames->batchEndOk(),
+                    new BatchEndOkEvent()
+                );
+            }
+            catch (\Exception $e)
+            {
+                $this->dispatcher->dispatch(
+                    $this->eventNames->batchEndError(),
+                    new BatchEndErrorEvent($e)
+                );
+            }
         }
         catch (\Exception $e)
         {
             $this->dispatcher->dispatch(
                 $this->eventNames->batchStartError(),
                 new BatchStartErrorEvent($e)
-            );
-        }
-
-        foreach($batch->getPackshots($packshotFilter) as $packshot)
-        {
-            try {
-                // throws loading exception here if required
-                $packshot->load();
-
-                $this->dispatcher->dispatch(
-                    $this->eventNames->packshotRead(),
-                    new PackshotReadEvent($packshot)
-                );
-
-                $this->dispatcher->dispatch(
-                    $this->eventNames->packshotReadOk(),
-                    new PackshotReadOkEvent($packshot)
-                );
-            }
-            catch (\Exception $e)
-            {
-                $this->dispatcher->dispatch(
-                    $this->eventNames->packshotReadError(),
-                    new PackshotReadErrorEvent($packshot, $e)
-                );
-            }
-        }
-
-        try {
-            $this->dispatcher->dispatch(
-                $this->eventNames->batchEnd(),
-                new BatchEndEvent()
-            );
-
-            $this->dispatcher->dispatch(
-                $this->eventNames->batchEndOk(),
-                new BatchEndOkEvent()
-            );
-        }
-        catch (\Exception $e)
-        {
-            $this->dispatcher->dispatch(
-                $this->eventNames->batchEndError(),
-                new BatchEndErrorEvent($e)
             );
         }
     }

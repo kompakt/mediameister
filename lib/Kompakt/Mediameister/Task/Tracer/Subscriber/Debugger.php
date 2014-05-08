@@ -32,13 +32,21 @@ use Kompakt\Mediameister\Packshot\Tracer\Event\TrackEvent;
 use Kompakt\Mediameister\Packshot\Tracer\Event\TrackOkEvent;
 use Kompakt\Mediameister\Task\Tracer\EventNamesInterface as TaskEventNamesInterface;
 use Kompakt\Mediameister\Task\Tracer\Event\InputErrorEvent;
-use Kompakt\Mediameister\Task\Tracer\Event\InputOkEvent;
+use Kompakt\Mediameister\Task\Tracer\Event\TaskEndEvent;
+use Kompakt\Mediameister\Task\Tracer\Event\TaskErrorEvent;
+use Kompakt\Mediameister\Task\Tracer\Event\TaskFinalEvent;
+use Kompakt\Mediameister\Task\Tracer\Event\TaskRunEvent;
 
 class Debugger implements EventSubscriberInterface
 {
     protected $taskEventNames = null;
     protected $batchEventNames = null;
     protected $packshotEventNames = null;
+
+    // processing state vars
+    protected $sourceBatch = null;
+    protected $targetDropDir = null;
+    protected $currentPackshot = null;
 
     public function __construct(
         TaskEventNamesInterface $taskEventNames,
@@ -54,12 +62,24 @@ class Debugger implements EventSubscriberInterface
     public function getSubscriptions()
     {
         return array(
-            $this->taskEventNames->inputOk() => array(
-                array('onInputOk', 0)
-            ),
+            
             $this->taskEventNames->inputError() => array(
                 array('onInputError', 0)
             ),
+            $this->taskEventNames->taskRun() => array(
+                array('onTaskRun', 0)
+            ),
+            $this->taskEventNames->taskEnd() => array(
+                array('onTaskEnd', 0)
+            ),
+            $this->taskEventNames->taskFinal() => array(
+                array('onTaskFinal', 0)
+            ),
+            $this->taskEventNames->taskError() => array(
+                array('onTaskError', 0)
+            ),
+
+
             $this->batchEventNames->batchStart() => array(
                 array('onBatchStart', 0)
             ),
@@ -87,6 +107,8 @@ class Debugger implements EventSubscriberInterface
             $this->batchEventNames->batchEndError() => array(
                 array('onBatchEndError', 0)
             ),
+
+
             $this->packshotEventNames->intro() => array(
                 array('onPackshotIntro', 0)
             ),
@@ -117,55 +139,71 @@ class Debugger implements EventSubscriberInterface
         );
     }
 
-    public function onInputOk(InputOkEvent $event)
-    {
-        echo sprintf("Input ok (Batch: %s)\n", $event->getSourceBatch()->getName());
-    }
-
     public function onInputError(InputErrorEvent $event)
-    {
+    {#throw new \Exception('onInputError');
         echo sprintf("! Task input error: (!) %s\n", $event->getException()->getMessage());
     }
 
+    public function onTaskRun(TaskRunEvent $event)
+    {#throw new \Exception('onTaskRun');
+        $this->sourceBatch = $event->getSourceBatch();
+        $this->targetDropDir = $event->getTargetDropDir();
+        echo sprintf("> Task run\n");
+    }
+
+    public function onTaskEnd(TaskEndEvent $event)
+    {#throw new \Exception('onTaskEnd');
+        echo sprintf("> Task end\n");
+    }
+
+    public function onTaskFinal(TaskFinalEvent $event)
+    {#throw new \Exception('onTaskFinal');
+        echo sprintf("> Task final\n");
+    }
+
+    public function onTaskError(TaskErrorEvent $event)
+    {#throw new \Exception('onTaskError');
+        echo sprintf("! Task error: (!) %s\n", $event->getException()->getMessage());
+    }
+
     public function onBatchStart(BatchStartEvent $event)
-    {
-        echo sprintf("Batch start\n");
+    {#throw new \Exception('onBatchStart');
+        echo sprintf("> Batch start: '%s'\n", $this->sourceBatch->getName());
     }
 
     public function onBatchStartOk(BatchStartOkEvent $event)
-    {
-        echo sprintf("Batch start ok\n");
+    {#throw new \Exception('onBatchStartOk');
+        echo sprintf("> Batch start ok\n");
     }
 
     public function onBatchStartError(BatchStartErrorEvent $event)
-    {
-        echo sprintf("Batch start error\n");
+    {#throw new \Exception('onBatchStartError');
+        echo sprintf("! Batch start error: '%s'\n", $event->getException()->getMessage());
     }
 
     public function onBatchEnd(BatchEndEvent $event)
-    {
-        echo sprintf("Batch end\n");
+    {#throw new \Exception('onBatchEnd');
+        echo sprintf("> Batch end: '%s'\n", $this->sourceBatch->getName());
     }
 
     public function onBatchEndOk(BatchEndOkEvent $event)
-    {
-        echo sprintf("Batch end ok\n");
+    {#throw new \Exception('onBatchEndOk');
+        echo sprintf("> Batch end ok\n");
     }
 
     public function onBatchEndError(BatchEndErrorEvent $event)
-    {
-        echo sprintf("Batch end error\n");
+    {#throw new \Exception('onBatchEndError');
+        echo sprintf("! Batch end error: '%s'\n", $event->getException()->getMessage());
     }
 
-    protected $currentPackshot = null;
-
     public function onPackshotRead(PackshotReadEvent $event)
-    {
-        #echo sprintf("Packshot read\n");
+    {#throw new \Exception('onPackshotRead');
+        echo sprintf("Packshot read\n");
     }
 
     public function onPackshotReadOk(PackshotReadOkEvent $event)
     {
+        #throw new \Exception('onPackshotReadOk');
         $this->currentPackshot = $event->getPackshot();
         echo sprintf("> %s // %s\n", $this->currentPackshot->getName(), $this->currentPackshot->getRelease()->getName());
         #echo sprintf("Packshot read ok\n");
@@ -173,97 +211,52 @@ class Debugger implements EventSubscriberInterface
 
     public function onPackshotReadError(PackshotReadErrorEvent $event)
     {
-        echo sprintf("! %s: (!) %s\n", $event->getPackshot()->getName(), $event->getException()->getMessage());
-        $this->currentPackshot = null;
+        #throw new \Exception('onPackshotReadError');
+        echo sprintf("! Packshot read error '%s': (!) %s\n", $event->getPackshot()->getName(), $event->getException()->getMessage());
     }
 
     public function onPackshotIntro(IntroEvent $event)
     {
-        if (!$this->currentPackshot)
-        {
-            #return;
-        }
-
-        #echo sprintf("Packshot intro\n");
+        echo sprintf("Packshot intro\n");
     }
 
     public function onPackshotIntroOk(IntroOkEvent $event)
     {
-        if (!$this->currentPackshot)
-        {
-            #return;
-        }
-
-        #echo sprintf("Packshot intro ok\n");
+        echo sprintf("Packshot intro ok\n");
     }
 
     public function onPackshotIntroError(IntroErrorEvent $event)
     {
-        if (!$this->currentPackshot)
-        {
-            #return;
-        }
-
         echo sprintf("! Packshot intro error: (!) %s\n", $event->getException()->getMessage());
     }
 
     public function onTrack(TrackEvent $event)
     {
-        if (!$this->currentPackshot)
-        {
-            #return;
-        }
-
-        #echo sprintf("Track\n");
+        echo sprintf("Track\n");
     }
 
     public function onTrackOk(TrackOkEvent $event)
     {
-        if (!$this->currentPackshot)
-        {
-            #return;
-        }
-
         echo sprintf("  > Track ok\n");
     }
 
     public function onTrackError(TrackErrorEvent $event)
     {
-        if (!$this->currentPackshot)
-        {
-            #return;
-        }
-
         echo sprintf("  ! Track error: (!) %s\n", $event->getException()->getMessage());
     }
 
     public function onPackshotOutro(OutroEvent $event)
     {
-        if (!$this->currentPackshot)
-        {
-            #return;
-        }
-
-        #echo sprintf("Packshot outro\n");
+        echo sprintf("Packshot outro\n");
     }
 
     public function onPackshotOutroOk(OutroOkEvent $event)
     {
-        if (!$this->currentPackshot)
-        {
-            #return;
-        }
-
-        #echo sprintf("Packshot outro ok\n");
+        echo sprintf("Packshot outro ok\n");
     }
 
     public function onPackshotOutroError(OutroErrorEvent $event)
     {
-        if (!$this->currentPackshot)
-        {
-            #return;
-        }
-
         echo sprintf("! Packshot outro error: (!) %s\n", $event->getException()->getMessage());
     }
 }

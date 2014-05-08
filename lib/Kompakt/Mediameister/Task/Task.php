@@ -15,8 +15,10 @@ use Kompakt\Mediameister\EventDispatcher\EventDispatcherInterface;
 use Kompakt\Mediameister\Task\Exception\InvalidArgumentException;
 use Kompakt\Mediameister\Task\Tracer\EventNamesInterface;
 use Kompakt\Mediameister\Task\Tracer\Event\InputErrorEvent;
-use Kompakt\Mediameister\Task\Tracer\Event\InputOkEvent;
 use Kompakt\Mediameister\Task\Tracer\Event\TaskEndEvent;
+use Kompakt\Mediameister\Task\Tracer\Event\TaskErrorEvent;
+use Kompakt\Mediameister\Task\Tracer\Event\TaskFinalEvent;
+use Kompakt\Mediameister\Task\Tracer\Event\TaskRunEvent;
 use Kompakt\Mediameister\Timer\Timer;
 
 class Task
@@ -42,6 +44,9 @@ class Task
 
     public function run($sourceDropDirLabel, $sourceBatchName, $targetDropDirLabel = null)
     {
+        $sourceBatch = null;
+        $targetDropDir = null;
+        $hasInputError = false;
         $timer = new Timer();
         $timer->start();
 
@@ -59,43 +64,70 @@ class Task
         }
 
         try {
-            $sourceDropDir = $this->dropDirRegistry->get($sourceDropDirLabel);
+            try {
+                $sourceDropDir = $this->dropDirRegistry->get($sourceDropDirLabel);
 
-            if (!$sourceDropDir)
+                if (!$sourceDropDir)
+                {
+                    throw new InvalidArgumentException(sprintf('Source drop dir "%s" not found', $sourceDropDirLabel));
+                }
+
+                $sourceBatch = $sourceDropDir->getBatch($sourceBatchName);
+
+                if (!$sourceBatch)
+                {
+                    $hasInputError = true;
+                    throw new InvalidArgumentException(sprintf('Source batch "%s" not found', $sourceBatchName));
+                }
+
+                $targetDropDir = $this->dropDirRegistry->get($targetDropDirLabel);
+
+                if (!$targetDropDir && $this->requireTargetDropDir)
+                {
+                    $hasInputError = true;
+                    throw new InvalidArgumentException(sprintf('Target drop dir "%s" not found', $targetDropDirLabel));
+                }
+            }
+            catch (\Exception $e)
             {
-                throw new InvalidArgumentException(sprintf('Source drop dir "%s" not found', $sourceDropDirLabel));
+                $this->dispatcher->dispatch(
+                    $this->eventNames->inputError(),
+                    new InputErrorEvent($e)
+                );
             }
 
-            $sourceBatch = $sourceDropDir->getBatch($sourceBatchName);
-
-            if (!$sourceBatch)
+            if ($hasInputError)
             {
-                throw new InvalidArgumentException(sprintf('Source batch "%s" not found', $sourceBatchName));
+                return;
             }
 
-            $targetDropDir = $this->dropDirRegistry->get($targetDropDirLabel);
+            try {
+                $this->dispatcher->dispatch(
+                    $this->eventNames->taskRun(),
+                    new TaskRunEvent($sourceBatch, $targetDropDir)
+                );
 
-            if (!$targetDropDir && $this->requireTargetDropDir)
+                $this->dispatcher->dispatch(
+                    $this->eventNames->taskEnd(),
+                    new TaskEndEvent()
+                );
+            }
+            catch (\Exception $e)
             {
-                throw new InvalidArgumentException(sprintf('Target drop dir "%s" not found', $targetDropDirLabel));
+                $this->dispatcher->dispatch(
+                    $this->eventNames->taskError(),
+                    new TaskErrorEvent($e)
+                );
             }
 
             $this->dispatcher->dispatch(
-                $this->eventNames->inputOk(),
-                new InputOkEvent($sourceBatch, $targetDropDir)
+                $this->eventNames->taskFinal(),
+                new TaskFinalEvent($timer->stop())
             );
         }
         catch (\Exception $e)
         {
-            $this->dispatcher->dispatch(
-                $this->eventNames->inputError(),
-                new InputErrorEvent($e)
-            );
+            die("SOMETHING WENT REALLY BAD\n");
         }
-
-        $this->dispatcher->dispatch(
-            $this->eventNames->taskEnd(),
-            new TaskEndEvent($timer->stop())
-        );
     }
 }
