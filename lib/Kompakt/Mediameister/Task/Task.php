@@ -18,11 +18,9 @@ use Kompakt\Mediameister\Task\Tracer\EventNamesInterface;
 use Kompakt\Mediameister\Task\Tracer\Event\InputErrorEvent;
 use Kompakt\Mediameister\Task\Tracer\Event\TaskEndEvent;
 use Kompakt\Mediameister\Task\Tracer\Event\TaskEndErrorEvent;
-#use Kompakt\Mediameister\Task\Tracer\Event\TaskEndOkEvent;
 use Kompakt\Mediameister\Task\Tracer\Event\TaskFinalEvent;
 use Kompakt\Mediameister\Task\Tracer\Event\TaskRunEvent;
 use Kompakt\Mediameister\Task\Tracer\Event\TaskRunErrorEvent;
-#use Kompakt\Mediameister\Task\Tracer\Event\TaskRunOkEvent;
 use Kompakt\Mediameister\Timer\Timer;
 
 class Task
@@ -111,11 +109,6 @@ class Task
                     $this->eventNames->taskRun(),
                     new TaskRunEvent($sourceBatch, $targetDropDir)
                 );
-
-                /*$this->dispatcher->dispatch(
-                    $this->eventNames->taskRunOk(),
-                    new TaskRunOkEvent()
-                );*/
             }
             catch (\Exception $e)
             {
@@ -137,11 +130,6 @@ class Task
                     $this->eventNames->taskEnd(),
                     new TaskEndEvent($sourceBatch, $targetDropDir)
                 );
-
-                /*$this->dispatcher->dispatch(
-                    $this->eventNames->taskEndOk(),
-                    new TaskEndOkEvent()
-                );*/
             }
             catch (\Exception $e)
             {
@@ -158,7 +146,6 @@ class Task
         }
         catch (\Exception $e)
         {
-            die("Uncaught exception\n");
             // An error event handler threw an exception...
             throw new RuntimeException(sprintf('Unknown error: "%s', $e->getMessage()), null, $e);
         }

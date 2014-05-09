@@ -15,7 +15,7 @@ class PackshotTracerTest extends \PHPUnit_Framework_TestCase
 {
     public function testComplete()
     {
-        $tracer = new PackshotTracer($this->getDispatcher());
+        $tracer = new PackshotTracer($this->getDispatcher(), $this->getEventNames());
         $tracer->trace($this->getPackshot());
     }
 
@@ -23,6 +23,15 @@ class PackshotTracerTest extends \PHPUnit_Framework_TestCase
     {
         return $this
             ->getMockBuilder('Kompakt\Mediameister\EventDispatcher\EventDispatcherInterface')
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+    }
+
+    protected function getEventNames()
+    {
+        return $this
+            ->getMockBuilder('Kompakt\Mediameister\Packshot\Tracer\EventNamesInterface')
             ->disableOriginalConstructor()
             ->getMock()
         ;

@@ -25,11 +25,6 @@ class EventNames implements EventNamesInterface
         return sprintf('%s.artwork', $this->namespace);
     }
 
-    /*public function artworkOk()
-    {
-        return sprintf('%s.artwork_ok', $this->namespace);
-    }*/
-
     public function artworkError()
     {
         return sprintf('%s.artwork_error', $this->namespace);
@@ -40,11 +35,6 @@ class EventNames implements EventNamesInterface
         return sprintf('%s.track', $this->namespace);
     }
 
-    /*public function trackOk()
-    {
-        return sprintf('%s.track_ok', $this->namespace);
-    }*/
-
     public function trackError()
     {
         return sprintf('%s.track_error', $this->namespace);
@@ -54,11 +44,6 @@ class EventNames implements EventNamesInterface
     {
         return sprintf('%s.metadata', $this->namespace);
     }
-
-    /*public function metadataOk()
-    {
-        return sprintf('%s.metadata_ok', $this->namespace);
-    }*/
 
     public function metadataError()
     {

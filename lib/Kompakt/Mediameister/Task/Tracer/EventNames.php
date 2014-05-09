@@ -30,11 +30,6 @@ class EventNames implements EventNamesInterface
         return sprintf('%s.task_start', $this->namespace);
     }
 
-    /*public function taskRunOk()
-    {
-        return sprintf('%s.task_start_ok', $this->namespace);
-    }*/
-
     public function taskRunError()
     {
         return sprintf('%s.task_start_error', $this->namespace);
@@ -44,11 +39,6 @@ class EventNames implements EventNamesInterface
     {
         return sprintf('%s.task_end', $this->namespace);
     }
-
-    /*public function taskEndOk()
-    {
-        return sprintf('%s.task_end_ok', $this->namespace);
-    }*/
 
     public function taskEndError()
     {

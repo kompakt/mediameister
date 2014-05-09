@@ -13,13 +13,10 @@ use Kompakt\Mediameister\Packshot\PackshotInterface;
 use Kompakt\Mediameister\Packshot\Tracer\EventNamesInterface;
 use Kompakt\Mediameister\Packshot\Tracer\Event\ArtworkErrorEvent;
 use Kompakt\Mediameister\Packshot\Tracer\Event\ArtworkEvent;
-#use Kompakt\Mediameister\Packshot\Tracer\Event\ArtworkOkEvent;
 use Kompakt\Mediameister\Packshot\Tracer\Event\MetadataErrorEvent;
 use Kompakt\Mediameister\Packshot\Tracer\Event\MetadataEvent;
-#use Kompakt\Mediameister\Packshot\Tracer\Event\MetadataOkEvent;
 use Kompakt\Mediameister\Packshot\Tracer\Event\TrackErrorEvent;
 use Kompakt\Mediameister\Packshot\Tracer\Event\TrackEvent;
-#use Kompakt\Mediameister\Packshot\Tracer\Event\TrackOkEvent;
 use Kompakt\Mediameister\Packshot\Tracer\PackshotTracerInterface;
 use Kompakt\Mediameister\EventDispatcher\EventDispatcherInterface;
 
@@ -44,11 +41,6 @@ class PackshotTracer implements PackshotTracerInterface
                 $this->eventNames->artwork(),
                 new ArtworkEvent()
             );
-
-            /*$this->dispatcher->dispatch(
-                $this->eventNames->artworkOk(),
-                new ArtworkOkEvent()
-            );*/
         }
         catch (\Exception $e)
         {
@@ -65,11 +57,6 @@ class PackshotTracer implements PackshotTracerInterface
                     $this->eventNames->track(),
                     new TrackEvent($track)
                 );
-
-                /*$this->dispatcher->dispatch(
-                    $this->eventNames->trackOk(),
-                    new TrackOkEvent($track)
-                );*/
             }
             catch (\Exception $e)
             {
@@ -85,11 +72,6 @@ class PackshotTracer implements PackshotTracerInterface
                 $this->eventNames->metadata(),
                 new MetadataEvent()
             );
-
-            /*$this->dispatcher->dispatch(
-                $this->eventNames->metadataOk(),
-                new MetadataOkEvent()
-            );*/
         }
         catch (\Exception $e)
         {

@@ -13,10 +13,8 @@ interface EventNamesInterface
 {
     public function inputError();
     public function taskRun();
-    #public function taskRunOk();
     public function taskRunError();
     public function taskEnd();
-    #public function taskEndOk();
     public function taskEndError();
     public function taskFinal();
 }

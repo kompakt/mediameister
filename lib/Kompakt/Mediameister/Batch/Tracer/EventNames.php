@@ -25,11 +25,6 @@ class EventNames implements EventNamesInterface
         return sprintf('%s.batch_start', $this->namespace);
     }
 
-    /*public function batchStartOk()
-    {
-        return sprintf('%s.batch_start_ok', $this->namespace);
-    }*/
-
     public function batchStartError()
     {
         return sprintf('%s.batch_start_error', $this->namespace);
@@ -40,11 +35,6 @@ class EventNames implements EventNamesInterface
         return sprintf('%s.packshot_load', $this->namespace);
     }
 
-    /*public function packshotLoadOk()
-    {
-        return sprintf('%s.packshot_load_ok', $this->namespace);
-    }*/
-
     public function packshotLoadError()
     {
         return sprintf('%s.packshot_load_error', $this->namespace);
@@ -54,11 +44,6 @@ class EventNames implements EventNamesInterface
     {
         return sprintf('%s.batch_end', $this->namespace);
     }
-
-    /*public function batchEndOk()
-    {
-        return sprintf('%s.batch_end_ok', $this->namespace);
-    }*/
 
     public function batchEndError()
     {

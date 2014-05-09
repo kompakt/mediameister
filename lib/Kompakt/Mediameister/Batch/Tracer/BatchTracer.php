@@ -15,13 +15,10 @@ use Kompakt\Mediameister\Batch\Tracer\BatchTracerInterface;
 use Kompakt\Mediameister\Batch\Tracer\EventNamesInterface;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchEndEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchEndErrorEvent;
-#use Kompakt\Mediameister\Batch\Tracer\Event\BatchEndOkEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartErrorEvent;
-#use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartOkEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\PackshotLoadErrorEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\PackshotLoadEvent;
-#use Kompakt\Mediameister\Batch\Tracer\Event\PackshotLoadOkEvent;
 use Kompakt\Mediameister\EventDispatcher\EventDispatcherInterface;
 
 class BatchTracer implements BatchTracerInterface
@@ -47,11 +44,6 @@ class BatchTracer implements BatchTracerInterface
                 $this->eventNames->batchStart(),
                 new BatchStartEvent()
             );
-
-            /*$this->dispatcher->dispatch(
-                $this->eventNames->batchStartOk(),
-                new BatchStartOkEvent()
-            );*/
         }
         catch (\Exception $e)
         {
@@ -77,11 +69,6 @@ class BatchTracer implements BatchTracerInterface
                     $this->eventNames->packshotLoad(),
                     new PackshotLoadEvent($packshot)
                 );
-
-                /*$this->dispatcher->dispatch(
-                    $this->eventNames->packshotLoadOk(),
-                    new PackshotLoadOkEvent($packshot)
-                );*/
             }
             catch (\Exception $e)
             {
@@ -97,11 +84,6 @@ class BatchTracer implements BatchTracerInterface
                 $this->eventNames->batchEnd(),
                 new BatchEndEvent()
             );
-
-            /*$this->dispatcher->dispatch(
-                $this->eventNames->batchEndOk(),
-                new BatchEndOkEvent()
-            );*/
         }
         catch (\Exception $e)
         {
