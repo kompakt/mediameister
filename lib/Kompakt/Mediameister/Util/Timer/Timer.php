@@ -7,9 +7,9 @@
  *
  */
 
-namespace Kompakt\Mediameister\Timer;
+namespace Kompakt\Mediameister\Util\Timer;
 
-use Kompakt\Mediameister\Timer\Exception\DomainException;
+use Kompakt\Mediameister\Util\Timer\Exception\DomainException;
 
 class Timer
 {

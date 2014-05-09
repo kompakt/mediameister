@@ -21,7 +21,7 @@ use Kompakt\Mediameister\Task\Tracer\Event\TaskEndErrorEvent;
 use Kompakt\Mediameister\Task\Tracer\Event\TaskFinalEvent;
 use Kompakt\Mediameister\Task\Tracer\Event\TaskRunEvent;
 use Kompakt\Mediameister\Task\Tracer\Event\TaskRunErrorEvent;
-use Kompakt\Mediameister\Timer\Timer;
+use Kompakt\Mediameister\Util\Timer\Timer;
 
 class Task
 {

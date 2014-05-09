@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Timer\Exception;
+namespace Kompakt\Mediameister\Util\Timer\Exception;
 
 use Kompakt\Mediameister\Exception as BaseException;
 

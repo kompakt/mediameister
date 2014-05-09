@@ -10,7 +10,7 @@
 namespace Kompakt\Mediameister\Task\Tracer\Event;
 
 use Kompakt\Mediameister\EventDispatcher\Event;
-use Kompakt\Mediameister\Timer\Timer;
+use Kompakt\Mediameister\Util\Timer\Timer;
 
 class TaskFinalEvent extends Event
 {
