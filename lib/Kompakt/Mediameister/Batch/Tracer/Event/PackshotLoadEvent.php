@@ -12,24 +12,17 @@ namespace Kompakt\Mediameister\Batch\Tracer\Event;
 use Kompakt\Mediameister\Packshot\PackshotInterface;
 use Kompakt\Mediameister\EventDispatcher\Event;
 
-class PackshotReadErrorEvent extends Event
+class PackshotLoadEvent extends Event
 {
     protected $packshot = null;
-    protected $exception = null;
 
-    public function __construct(PackshotInterface $packshot, \Exception $exception)
+    public function __construct(PackshotInterface $packshot)
     {
         $this->packshot = $packshot;
-        $this->exception = $exception;
     }
 
     public function getPackshot()
     {
         return $this->packshot;
-    }
-
-    public function getException()
-    {
-        return $this->exception;
     }
 }

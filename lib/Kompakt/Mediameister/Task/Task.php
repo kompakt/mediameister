@@ -18,7 +18,7 @@ use Kompakt\Mediameister\Task\Tracer\Event\InputErrorEvent;
 use Kompakt\Mediameister\Task\Tracer\Event\TaskEndEvent;
 use Kompakt\Mediameister\Task\Tracer\Event\TaskErrorEvent;
 use Kompakt\Mediameister\Task\Tracer\Event\TaskFinalEvent;
-use Kompakt\Mediameister\Task\Tracer\Event\TaskRunEvent;
+use Kompakt\Mediameister\Task\Tracer\Event\TaskStartEvent;
 use Kompakt\Mediameister\Timer\Timer;
 
 class Task
@@ -103,8 +103,8 @@ class Task
 
             try {
                 $this->dispatcher->dispatch(
-                    $this->eventNames->taskRun(),
-                    new TaskRunEvent($sourceBatch, $targetDropDir)
+                    $this->eventNames->taskStart(),
+                    new TaskStartEvent($sourceBatch, $targetDropDir)
                 );
 
                 $this->dispatcher->dispatch(

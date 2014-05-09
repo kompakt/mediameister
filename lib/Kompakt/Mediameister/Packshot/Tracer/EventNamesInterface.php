@@ -11,13 +11,13 @@ namespace Kompakt\Mediameister\Packshot\Tracer;
 
 interface EventNamesInterface
 {
-    public function intro();
-    public function introOk();
-    public function introError();
+    public function packshotStart();
+    public function packshotStartOk();
+    public function packshotStartError();
     public function track();
     public function trackOk();
     public function trackError();
-    public function outro();
-    public function outroOk();
-    public function outroError();
+    public function packshotEnd();
+    public function packshotEndOk();
+    public function packshotEndError();
 }

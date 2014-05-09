@@ -20,19 +20,19 @@ class EventNames implements EventNamesInterface
         $this->namespace = $namespace;
     }
 
-    public function intro()
+    public function packshotStart()
     {
-        return sprintf('%s.intro', $this->namespace);
+        return sprintf('%s.packshot_start', $this->namespace);
     }
 
-    public function introOk()
+    public function packshotStartOk()
     {
-        return sprintf('%s.intro_ok', $this->namespace);
+        return sprintf('%s.packshot_start_ok', $this->namespace);
     }
 
-    public function introError()
+    public function packshotStartError()
     {
-        return sprintf('%s.intro_error', $this->namespace);
+        return sprintf('%s.packshot_start_error', $this->namespace);
     }
 
     public function track()
@@ -50,18 +50,18 @@ class EventNames implements EventNamesInterface
         return sprintf('%s.track_error', $this->namespace);
     }
 
-    public function outro()
+    public function packshotEnd()
     {
-        return sprintf('%s.outro', $this->namespace);
+        return sprintf('%s.packshot_end', $this->namespace);
     }
 
-    public function outroOk()
+    public function packshotEndOk()
     {
-        return sprintf('%s.outro_ok', $this->namespace);
+        return sprintf('%s.packshot_end_ok', $this->namespace);
     }
 
-    public function outroError()
+    public function packshotEndError()
     {
-        return sprintf('%s.outro_error', $this->namespace);
+        return sprintf('%s.packshot_end_error', $this->namespace);
     }
 }

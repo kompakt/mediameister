@@ -25,14 +25,9 @@ class EventNames implements EventNamesInterface
         return sprintf('%s.input_error', $this->namespace);
     }
 
-    public function taskRun()
+    public function taskStart()
     {
-        return sprintf('%s.task_run', $this->namespace);
-    }
-
-    public function taskError()
-    {
-        return sprintf('%s.task_error', $this->namespace);
+        return sprintf('%s.task_start', $this->namespace);
     }
 
     public function taskEnd()
@@ -43,5 +38,10 @@ class EventNames implements EventNamesInterface
     public function taskFinal()
     {
         return sprintf('%s.task_final', $this->namespace);
+    }
+    
+    public function taskError()
+    {
+        return sprintf('%s.task_error', $this->namespace);
     }
 }

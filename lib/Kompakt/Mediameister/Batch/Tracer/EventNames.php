@@ -35,19 +35,19 @@ class EventNames implements EventNamesInterface
         return sprintf('%s.batch_start_error', $this->namespace);
     }
 
-    public function packshotRead()
+    public function packshotLoad()
     {
-        return sprintf('%s.packshot_read', $this->namespace);
+        return sprintf('%s.packshot_load', $this->namespace);
     }
 
-    public function packshotReadOk()
+    public function packshotLoadOk()
     {
-        return sprintf('%s.packshot_read_ok', $this->namespace);
+        return sprintf('%s.packshot_load_ok', $this->namespace);
     }
 
-    public function packshotReadError()
+    public function packshotLoadError()
     {
-        return sprintf('%s.packshot_read_error', $this->namespace);
+        return sprintf('%s.packshot_load_error', $this->namespace);
     }
 
     public function batchEnd()

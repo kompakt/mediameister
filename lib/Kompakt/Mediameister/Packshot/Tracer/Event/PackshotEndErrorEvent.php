@@ -11,7 +11,7 @@ namespace Kompakt\Mediameister\Packshot\Tracer\Event;
 
 use Kompakt\Mediameister\EventDispatcher\Event;
 
-class IntroErrorEvent extends Event
+class PackshotEndErrorEvent extends Event
 {
     protected $exception = null;
 

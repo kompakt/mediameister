@@ -16,17 +16,17 @@ use Kompakt\Mediameister\Batch\Tracer\Event\BatchEndOkEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartErrorEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartOkEvent;
-use Kompakt\Mediameister\Batch\Tracer\Event\PackshotReadErrorEvent;
-use Kompakt\Mediameister\Batch\Tracer\Event\PackshotReadEvent;
-use Kompakt\Mediameister\Batch\Tracer\Event\PackshotReadOkEvent;
+use Kompakt\Mediameister\Batch\Tracer\Event\PackshotLoadErrorEvent;
+use Kompakt\Mediameister\Batch\Tracer\Event\PackshotLoadEvent;
+use Kompakt\Mediameister\Batch\Tracer\Event\PackshotLoadOkEvent;
 use Kompakt\Mediameister\EventDispatcher\EventSubscriberInterface;
 use Kompakt\Mediameister\Packshot\Tracer\EventNamesInterface as PackshotEventNamesInterface;
-use Kompakt\Mediameister\Packshot\Tracer\Event\IntroErrorEvent;
-use Kompakt\Mediameister\Packshot\Tracer\Event\IntroEvent;
-use Kompakt\Mediameister\Packshot\Tracer\Event\IntroOkEvent;
-use Kompakt\Mediameister\Packshot\Tracer\Event\OutroErrorEvent;
-use Kompakt\Mediameister\Packshot\Tracer\Event\OutroEvent;
-use Kompakt\Mediameister\Packshot\Tracer\Event\OutroOkEvent;
+use Kompakt\Mediameister\Packshot\Tracer\Event\PackshotStartErrorEvent;
+use Kompakt\Mediameister\Packshot\Tracer\Event\PackshotStartEvent;
+use Kompakt\Mediameister\Packshot\Tracer\Event\PackshotStartOkEvent;
+use Kompakt\Mediameister\Packshot\Tracer\Event\PackshotEndErrorEvent;
+use Kompakt\Mediameister\Packshot\Tracer\Event\PackshotEndEvent;
+use Kompakt\Mediameister\Packshot\Tracer\Event\PackshotEndOkEvent;
 use Kompakt\Mediameister\Packshot\Tracer\Event\TrackErrorEvent;
 use Kompakt\Mediameister\Packshot\Tracer\Event\TrackEvent;
 use Kompakt\Mediameister\Packshot\Tracer\Event\TrackOkEvent;
@@ -35,7 +35,7 @@ use Kompakt\Mediameister\Task\Tracer\Event\InputErrorEvent;
 use Kompakt\Mediameister\Task\Tracer\Event\TaskEndEvent;
 use Kompakt\Mediameister\Task\Tracer\Event\TaskErrorEvent;
 use Kompakt\Mediameister\Task\Tracer\Event\TaskFinalEvent;
-use Kompakt\Mediameister\Task\Tracer\Event\TaskRunEvent;
+use Kompakt\Mediameister\Task\Tracer\Event\TaskStartEvent;
 
 class Debugger implements EventSubscriberInterface
 {
@@ -66,8 +66,8 @@ class Debugger implements EventSubscriberInterface
             $this->taskEventNames->inputError() => array(
                 array('onInputError', 0)
             ),
-            $this->taskEventNames->taskRun() => array(
-                array('onTaskRun', 0)
+            $this->taskEventNames->taskStart() => array(
+                array('onTaskStart', 0)
             ),
             $this->taskEventNames->taskEnd() => array(
                 array('onTaskEnd', 0)
@@ -89,14 +89,14 @@ class Debugger implements EventSubscriberInterface
             $this->batchEventNames->batchStartError() => array(
                 array('onBatchStartError', 0)
             ),
-            $this->batchEventNames->packshotRead() => array(
-                array('onPackshotRead', 0)
+            $this->batchEventNames->packshotLoad() => array(
+                array('onPackshotLoad', 0)
             ),
-            $this->batchEventNames->packshotReadOk() => array(
-                array('onPackshotReadOk', 0)
+            $this->batchEventNames->packshotLoadOk() => array(
+                array('onPackshotLoadOk', 0)
             ),
-            $this->batchEventNames->packshotReadError() => array(
-                array('onPackshotReadError', 0)
+            $this->batchEventNames->packshotLoadError() => array(
+                array('onPackshotLoadError', 0)
             ),
             $this->batchEventNames->batchEnd() => array(
                 array('onBatchEnd', 0)
@@ -109,14 +109,14 @@ class Debugger implements EventSubscriberInterface
             ),
 
 
-            $this->packshotEventNames->intro() => array(
-                array('onPackshotIntro', 0)
+            $this->packshotEventNames->packshotStart() => array(
+                array('onPackshotStart', 0)
             ),
-            $this->packshotEventNames->introOk() => array(
-                array('onPackshotIntroOk', 0)
+            $this->packshotEventNames->packshotStartOk() => array(
+                array('onPackshotStartOk', 0)
             ),
-            $this->packshotEventNames->introError() => array(
-                array('onPackshotIntroError', 0)
+            $this->packshotEventNames->packshotStartError() => array(
+                array('onPackshotStartError', 0)
             ),
             $this->packshotEventNames->track() => array(
                 array('onTrack', 0)
@@ -127,14 +127,14 @@ class Debugger implements EventSubscriberInterface
             $this->packshotEventNames->trackError() => array(
                 array('onTrackError', 0)
             ),
-            $this->packshotEventNames->outro() => array(
-                array('onPackshotOutro', 0)
+            $this->packshotEventNames->packshotEnd() => array(
+                array('onPackshotEnd', 0)
             ),
-            $this->packshotEventNames->outroOk() => array(
-                array('onPackshotOutroOk', 0)
+            $this->packshotEventNames->packshotEndOk() => array(
+                array('onPackshotEndOk', 0)
             ),
-            $this->packshotEventNames->outroError() => array(
-                array('onPackshotOutroError', 0)
+            $this->packshotEventNames->packshotEndError() => array(
+                array('onPackshotEndError', 0)
             )
         );
     }
@@ -144,8 +144,8 @@ class Debugger implements EventSubscriberInterface
         echo sprintf("! Task input error: (!) %s\n", $event->getException()->getMessage());
     }
 
-    public function onTaskRun(TaskRunEvent $event)
-    {#throw new \Exception('onTaskRun');
+    public function onTaskStart(TaskStartEvent $event)
+    {#throw new \Exception('onTaskStart');
         $this->sourceBatch = $event->getSourceBatch();
         $this->targetDropDir = $event->getTargetDropDir();
         echo sprintf("> Task run\n");
@@ -196,38 +196,38 @@ class Debugger implements EventSubscriberInterface
         echo sprintf("! Batch end error: '%s'\n", $event->getException()->getMessage());
     }
 
-    public function onPackshotRead(PackshotReadEvent $event)
-    {#throw new \Exception('onPackshotRead');
-        echo sprintf("Packshot read\n");
+    public function onPackshotLoad(PackshotLoadEvent $event)
+    {#throw new \Exception('onPackshotLoad');
+        echo sprintf("Packshot load\n");
     }
 
-    public function onPackshotReadOk(PackshotReadOkEvent $event)
+    public function onPackshotLoadOk(PackshotLoadOkEvent $event)
     {
-        #throw new \Exception('onPackshotReadOk');
+        #throw new \Exception('onPackshotLoadOk');
         $this->currentPackshot = $event->getPackshot();
         echo sprintf("> %s // %s\n", $this->currentPackshot->getName(), $this->currentPackshot->getRelease()->getName());
-        #echo sprintf("Packshot read ok\n");
+        #echo sprintf("Packshot load ok\n");
     }
 
-    public function onPackshotReadError(PackshotReadErrorEvent $event)
+    public function onPackshotLoadError(PackshotLoadErrorEvent $event)
     {
-        #throw new \Exception('onPackshotReadError');
-        echo sprintf("! Packshot read error '%s': (!) %s\n", $event->getPackshot()->getName(), $event->getException()->getMessage());
+        #throw new \Exception('onPackshotLoadError');
+        echo sprintf("! Packshot load error '%s': (!) %s\n", $event->getPackshot()->getName(), $event->getException()->getMessage());
     }
 
-    public function onPackshotIntro(IntroEvent $event)
+    public function onPackshotStart(PackshotStartEvent $event)
     {
-        echo sprintf("Packshot intro\n");
+        echo sprintf("Packshot packshotStart\n");
     }
 
-    public function onPackshotIntroOk(IntroOkEvent $event)
+    public function onPackshotStartOk(PackshotStartOkEvent $event)
     {
-        echo sprintf("Packshot intro ok\n");
+        echo sprintf("Packshot packshotStart ok\n");
     }
 
-    public function onPackshotIntroError(IntroErrorEvent $event)
+    public function onPackshotStartError(PackshotStartErrorEvent $event)
     {
-        echo sprintf("! Packshot intro error: (!) %s\n", $event->getException()->getMessage());
+        echo sprintf("! Packshot packshotStart error: (!) %s\n", $event->getException()->getMessage());
     }
 
     public function onTrack(TrackEvent $event)
@@ -245,18 +245,18 @@ class Debugger implements EventSubscriberInterface
         echo sprintf("  ! Track error: (!) %s\n", $event->getException()->getMessage());
     }
 
-    public function onPackshotOutro(OutroEvent $event)
+    public function onPackshotEnd(PackshotEndEvent $event)
     {
-        echo sprintf("Packshot outro\n");
+        echo sprintf("Packshot packshotEnd\n");
     }
 
-    public function onPackshotOutroOk(OutroOkEvent $event)
+    public function onPackshotEndOk(PackshotEndOkEvent $event)
     {
-        echo sprintf("Packshot outro ok\n");
+        echo sprintf("Packshot packshotEnd ok\n");
     }
 
-    public function onPackshotOutroError(OutroErrorEvent $event)
+    public function onPackshotEndError(PackshotEndErrorEvent $event)
     {
-        echo sprintf("! Packshot outro error: (!) %s\n", $event->getException()->getMessage());
+        echo sprintf("! Packshot packshotEnd error: (!) %s\n", $event->getException()->getMessage());
     }
 }

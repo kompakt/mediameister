@@ -11,5 +11,5 @@ namespace Kompakt\Mediameister\Packshot\Tracer\Event;
 
 use Kompakt\Mediameister\EventDispatcher\Event;
 
-class IntroOkEvent extends Event
+class PackshotStartOkEvent extends Event
 {}

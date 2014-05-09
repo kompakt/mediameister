@@ -12,7 +12,7 @@ namespace Kompakt\Mediameister\Batch\Tracer\Event;
 use Kompakt\Mediameister\Packshot\PackshotInterface;
 use Kompakt\Mediameister\EventDispatcher\Event;
 
-class PackshotReadOkEvent extends Event
+class PackshotLoadOkEvent extends Event
 {
     protected $packshot = null;
 

@@ -19,9 +19,9 @@ use Kompakt\Mediameister\Batch\Tracer\Event\BatchEndOkEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartErrorEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartOkEvent;
-use Kompakt\Mediameister\Batch\Tracer\Event\PackshotReadErrorEvent;
-use Kompakt\Mediameister\Batch\Tracer\Event\PackshotReadEvent;
-use Kompakt\Mediameister\Batch\Tracer\Event\PackshotReadOkEvent;
+use Kompakt\Mediameister\Batch\Tracer\Event\PackshotLoadErrorEvent;
+use Kompakt\Mediameister\Batch\Tracer\Event\PackshotLoadEvent;
+use Kompakt\Mediameister\Batch\Tracer\Event\PackshotLoadOkEvent;
 use Kompakt\Mediameister\EventDispatcher\EventDispatcherInterface;
 
 class BatchTracer implements BatchTracerInterface
@@ -54,24 +54,23 @@ class BatchTracer implements BatchTracerInterface
             foreach($batch->getPackshots($packshotFilter) as $packshot)
             {
                 try {
-                    // throws loading exception here if required
                     $packshot->load();
 
                     $this->dispatcher->dispatch(
-                        $this->eventNames->packshotRead(),
-                        new PackshotReadEvent($packshot)
+                        $this->eventNames->packshotLoad(),
+                        new PackshotLoadEvent($packshot)
                     );
 
                     $this->dispatcher->dispatch(
-                        $this->eventNames->packshotReadOk(),
-                        new PackshotReadOkEvent($packshot)
+                        $this->eventNames->packshotLoadOk(),
+                        new PackshotLoadOkEvent($packshot)
                     );
                 }
                 catch (\Exception $e)
                 {
                     $this->dispatcher->dispatch(
-                        $this->eventNames->packshotReadError(),
-                        new PackshotReadErrorEvent($packshot, $e)
+                        $this->eventNames->packshotLoadError(),
+                        new PackshotLoadErrorEvent($packshot, $e)
                     );
                 }
             }
