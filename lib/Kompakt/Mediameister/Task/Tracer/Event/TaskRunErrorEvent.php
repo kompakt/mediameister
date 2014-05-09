@@ -11,7 +11,7 @@ namespace Kompakt\Mediameister\Task\Tracer\Event;
 
 use Kompakt\Mediameister\EventDispatcher\Event;
 
-class TaskErrorEvent extends Event
+class TaskRunErrorEvent extends Event
 {
     protected $exception = null;
 

@@ -12,8 +12,11 @@ namespace Kompakt\Mediameister\Task\Tracer;
 interface EventNamesInterface
 {
     public function inputError();
-    public function taskStart();
+    public function taskRun();
+    #public function taskRunOk();
+    public function taskRunError();
     public function taskEnd();
+    #public function taskEndOk();
+    public function taskEndError();
     public function taskFinal();
-    public function taskError();
 }

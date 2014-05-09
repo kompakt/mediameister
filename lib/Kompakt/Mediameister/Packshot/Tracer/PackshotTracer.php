@@ -11,15 +11,15 @@ namespace Kompakt\Mediameister\Packshot\Tracer;
 
 use Kompakt\Mediameister\Packshot\PackshotInterface;
 use Kompakt\Mediameister\Packshot\Tracer\EventNamesInterface;
-use Kompakt\Mediameister\Packshot\Tracer\Event\PackshotStartErrorEvent;
-use Kompakt\Mediameister\Packshot\Tracer\Event\PackshotStartEvent;
-use Kompakt\Mediameister\Packshot\Tracer\Event\PackshotStartOkEvent;
-use Kompakt\Mediameister\Packshot\Tracer\Event\PackshotEndErrorEvent;
-use Kompakt\Mediameister\Packshot\Tracer\Event\PackshotEndEvent;
-use Kompakt\Mediameister\Packshot\Tracer\Event\PackshotEndOkEvent;
+use Kompakt\Mediameister\Packshot\Tracer\Event\ArtworkErrorEvent;
+use Kompakt\Mediameister\Packshot\Tracer\Event\ArtworkEvent;
+#use Kompakt\Mediameister\Packshot\Tracer\Event\ArtworkOkEvent;
+use Kompakt\Mediameister\Packshot\Tracer\Event\MetadataErrorEvent;
+use Kompakt\Mediameister\Packshot\Tracer\Event\MetadataEvent;
+#use Kompakt\Mediameister\Packshot\Tracer\Event\MetadataOkEvent;
 use Kompakt\Mediameister\Packshot\Tracer\Event\TrackErrorEvent;
 use Kompakt\Mediameister\Packshot\Tracer\Event\TrackEvent;
-use Kompakt\Mediameister\Packshot\Tracer\Event\TrackOkEvent;
+#use Kompakt\Mediameister\Packshot\Tracer\Event\TrackOkEvent;
 use Kompakt\Mediameister\Packshot\Tracer\PackshotTracerInterface;
 use Kompakt\Mediameister\EventDispatcher\EventDispatcherInterface;
 
@@ -41,20 +41,20 @@ class PackshotTracer implements PackshotTracerInterface
     {
         try {
             $this->dispatcher->dispatch(
-                $this->eventNames->packshotStart(),
-                new PackshotStartEvent()
+                $this->eventNames->artwork(),
+                new ArtworkEvent()
             );
 
-            $this->dispatcher->dispatch(
-                $this->eventNames->packshotStartOk(),
-                new PackshotStartOkEvent()
-            );
+            /*$this->dispatcher->dispatch(
+                $this->eventNames->artworkOk(),
+                new ArtworkOkEvent()
+            );*/
         }
         catch (\Exception $e)
         {
             $this->dispatcher->dispatch(
-                $this->eventNames->packshotStartError(),
-                new PackshotStartErrorEvent($e)
+                $this->eventNames->artworkError(),
+                new ArtworkErrorEvent($e)
             );
         }
 
@@ -66,10 +66,10 @@ class PackshotTracer implements PackshotTracerInterface
                     new TrackEvent($track)
                 );
 
-                $this->dispatcher->dispatch(
+                /*$this->dispatcher->dispatch(
                     $this->eventNames->trackOk(),
                     new TrackOkEvent($track)
-                );
+                );*/
             }
             catch (\Exception $e)
             {
@@ -82,20 +82,20 @@ class PackshotTracer implements PackshotTracerInterface
 
         try {
             $this->dispatcher->dispatch(
-                $this->eventNames->packshotEnd(),
-                new PackshotEndEvent()
+                $this->eventNames->metadata(),
+                new MetadataEvent()
             );
 
-            $this->dispatcher->dispatch(
-                $this->eventNames->packshotEndOk(),
-                new PackshotEndOkEvent()
-            );
+            /*$this->dispatcher->dispatch(
+                $this->eventNames->metadataOk(),
+                new MetadataOkEvent()
+            );*/
         }
         catch (\Exception $e)
         {
             $this->dispatcher->dispatch(
-                $this->eventNames->packshotEndError(),
-                new PackshotEndErrorEvent($e)
+                $this->eventNames->metadataError(),
+                new MetadataErrorEvent($e)
             );
         }
     }

@@ -13,7 +13,7 @@ use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\DropDir\DropDirInterface;
 use Kompakt\Mediameister\EventDispatcher\Event;
 
-class TaskStartEvent extends Event
+class TaskRunEvent extends Event
 {
     protected $sourceBatch = null;
     protected $targetDropDir = null;

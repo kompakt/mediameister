@@ -7,9 +7,9 @@
  *
  */
 
-namespace Kompakt\Mediameister\Packshot\Tracer\Event;
+namespace Kompakt\Mediameister\Task\Tracer\Event;
 
 use Kompakt\Mediameister\EventDispatcher\Event;
 
-class PackshotEndEvent extends Event
+class TaskEndOkEvent extends Event
 {}

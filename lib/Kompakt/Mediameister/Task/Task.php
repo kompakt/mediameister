@@ -13,12 +13,16 @@ use Kompakt\Mediameister\DropDir\DropDirInterface;
 use Kompakt\Mediameister\DropDir\Registry\RegistryInterface;
 use Kompakt\Mediameister\EventDispatcher\EventDispatcherInterface;
 use Kompakt\Mediameister\Task\Exception\InvalidArgumentException;
+use Kompakt\Mediameister\Task\Exception\RuntimeException;
 use Kompakt\Mediameister\Task\Tracer\EventNamesInterface;
 use Kompakt\Mediameister\Task\Tracer\Event\InputErrorEvent;
 use Kompakt\Mediameister\Task\Tracer\Event\TaskEndEvent;
-use Kompakt\Mediameister\Task\Tracer\Event\TaskErrorEvent;
+use Kompakt\Mediameister\Task\Tracer\Event\TaskEndErrorEvent;
+#use Kompakt\Mediameister\Task\Tracer\Event\TaskEndOkEvent;
 use Kompakt\Mediameister\Task\Tracer\Event\TaskFinalEvent;
-use Kompakt\Mediameister\Task\Tracer\Event\TaskStartEvent;
+use Kompakt\Mediameister\Task\Tracer\Event\TaskRunEvent;
+use Kompakt\Mediameister\Task\Tracer\Event\TaskRunErrorEvent;
+#use Kompakt\Mediameister\Task\Tracer\Event\TaskRunOkEvent;
 use Kompakt\Mediameister\Timer\Timer;
 
 class Task
@@ -47,6 +51,7 @@ class Task
         $sourceBatch = null;
         $targetDropDir = null;
         $hasInputError = false;
+        $hasStartError = false;
         $timer = new Timer();
         $timer->start();
 
@@ -103,20 +108,46 @@ class Task
 
             try {
                 $this->dispatcher->dispatch(
-                    $this->eventNames->taskStart(),
-                    new TaskStartEvent($sourceBatch, $targetDropDir)
+                    $this->eventNames->taskRun(),
+                    new TaskRunEvent($sourceBatch, $targetDropDir)
                 );
 
+                /*$this->dispatcher->dispatch(
+                    $this->eventNames->taskRunOk(),
+                    new TaskRunOkEvent()
+                );*/
+            }
+            catch (\Exception $e)
+            {
+                $hasStartError = true;
+
+                $this->dispatcher->dispatch(
+                    $this->eventNames->taskRunError(),
+                    new TaskRunErrorEvent($e)
+                );
+            }
+
+            if ($hasStartError)
+            {
+                return;
+            }
+
+            try {
                 $this->dispatcher->dispatch(
                     $this->eventNames->taskEnd(),
-                    new TaskEndEvent()
+                    new TaskEndEvent($sourceBatch, $targetDropDir)
                 );
+
+                /*$this->dispatcher->dispatch(
+                    $this->eventNames->taskEndOk(),
+                    new TaskEndOkEvent()
+                );*/
             }
             catch (\Exception $e)
             {
                 $this->dispatcher->dispatch(
-                    $this->eventNames->taskError(),
-                    new TaskErrorEvent($e)
+                    $this->eventNames->taskEndError(),
+                    new TaskEndErrorEvent($e)
                 );
             }
 
@@ -127,7 +158,9 @@ class Task
         }
         catch (\Exception $e)
         {
-            die("SOMETHING WENT REALLY BAD\n");
+            die("Uncaught exception\n");
+            // An error event handler threw an exception...
+            throw new RuntimeException(sprintf('Unknown error: "%s', $e->getMessage()), null, $e);
         }
     }
 }

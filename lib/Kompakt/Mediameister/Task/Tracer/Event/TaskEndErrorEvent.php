@@ -7,11 +7,11 @@
  *
  */
 
-namespace Kompakt\Mediameister\Packshot\Tracer\Event;
+namespace Kompakt\Mediameister\Task\Tracer\Event;
 
 use Kompakt\Mediameister\EventDispatcher\Event;
 
-class PackshotStartErrorEvent extends Event
+class TaskEndErrorEvent extends Event
 {
     protected $exception = null;
 

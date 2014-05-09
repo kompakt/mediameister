@@ -15,13 +15,13 @@ use Kompakt\Mediameister\Batch\Tracer\BatchTracerInterface;
 use Kompakt\Mediameister\Batch\Tracer\EventNamesInterface;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchEndEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchEndErrorEvent;
-use Kompakt\Mediameister\Batch\Tracer\Event\BatchEndOkEvent;
+#use Kompakt\Mediameister\Batch\Tracer\Event\BatchEndOkEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartErrorEvent;
-use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartOkEvent;
+#use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartOkEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\PackshotLoadErrorEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\PackshotLoadEvent;
-use Kompakt\Mediameister\Batch\Tracer\Event\PackshotLoadOkEvent;
+#use Kompakt\Mediameister\Batch\Tracer\Event\PackshotLoadOkEvent;
 use Kompakt\Mediameister\EventDispatcher\EventDispatcherInterface;
 
 class BatchTracer implements BatchTracerInterface
@@ -40,65 +40,74 @@ class BatchTracer implements BatchTracerInterface
 
     public function trace(BatchInterface $batch, PackshotFilterInterface $packshotFilter = null)
     {
+        $hasStartError = false;
+
         try {
             $this->dispatcher->dispatch(
                 $this->eventNames->batchStart(),
                 new BatchStartEvent()
             );
 
-            $this->dispatcher->dispatch(
+            /*$this->dispatcher->dispatch(
                 $this->eventNames->batchStartOk(),
                 new BatchStartOkEvent()
+            );*/
+        }
+        catch (\Exception $e)
+        {
+            $hasStartError = true;
+
+            $this->dispatcher->dispatch(
+                $this->eventNames->batchStartError(),
+                new BatchStartErrorEvent($e)
             );
+        }
 
-            foreach($batch->getPackshots($packshotFilter) as $packshot)
-            {
-                try {
-                    $packshot->load();
+        if ($hasStartError)
+        {
+            return;
+        }
 
-                    $this->dispatcher->dispatch(
-                        $this->eventNames->packshotLoad(),
-                        new PackshotLoadEvent($packshot)
-                    );
-
-                    $this->dispatcher->dispatch(
-                        $this->eventNames->packshotLoadOk(),
-                        new PackshotLoadOkEvent($packshot)
-                    );
-                }
-                catch (\Exception $e)
-                {
-                    $this->dispatcher->dispatch(
-                        $this->eventNames->packshotLoadError(),
-                        new PackshotLoadErrorEvent($packshot, $e)
-                    );
-                }
-            }
-
+        foreach($batch->getPackshots($packshotFilter) as $packshot)
+        {
             try {
-                $this->dispatcher->dispatch(
-                    $this->eventNames->batchEnd(),
-                    new BatchEndEvent()
-                );
+                $packshot->load();
 
                 $this->dispatcher->dispatch(
-                    $this->eventNames->batchEndOk(),
-                    new BatchEndOkEvent()
+                    $this->eventNames->packshotLoad(),
+                    new PackshotLoadEvent($packshot)
                 );
+
+                /*$this->dispatcher->dispatch(
+                    $this->eventNames->packshotLoadOk(),
+                    new PackshotLoadOkEvent($packshot)
+                );*/
             }
             catch (\Exception $e)
             {
                 $this->dispatcher->dispatch(
-                    $this->eventNames->batchEndError(),
-                    new BatchEndErrorEvent($e)
+                    $this->eventNames->packshotLoadError(),
+                    new PackshotLoadErrorEvent($packshot, $e)
                 );
             }
+        }
+
+        try {
+            $this->dispatcher->dispatch(
+                $this->eventNames->batchEnd(),
+                new BatchEndEvent()
+            );
+
+            /*$this->dispatcher->dispatch(
+                $this->eventNames->batchEndOk(),
+                new BatchEndOkEvent()
+            );*/
         }
         catch (\Exception $e)
         {
             $this->dispatcher->dispatch(
-                $this->eventNames->batchStartError(),
-                new BatchStartErrorEvent($e)
+                $this->eventNames->batchEndError(),
+                new BatchEndErrorEvent($e)
             );
         }
     }
