@@ -7,13 +7,13 @@
  *
  */
 
-namespace Kompakt\Mediameister\EventDispatcher\Adapter\Symfony;
+namespace Kompakt\Mediameister\Component\Adapter\EventDispatcher\Symfony;
 
-use Kompakt\Mediameister\EventDispatcher\Adapter\EventAdapterInterface;
-use Kompakt\Mediameister\EventDispatcher\EventInterface;
+use Kompakt\Mediameister\Component\Adapter\EventDispatcher\EventAdapterInterface;
+use Kompakt\Mediameister\Component\Native\EventDispatcher\EventInterface;
 use Symfony\Component\EventDispatcher\Event as SymfonyEvent;
 
-class SymfonyEventAdapter extends SymfonyEvent implements EventAdapterInterface
+class Event extends SymfonyEvent implements EventAdapterInterface
 {
     protected $originalEvent = null;
     protected $propagationStopped = false;

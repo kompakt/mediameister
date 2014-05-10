@@ -7,16 +7,16 @@
  *
  */
 
-namespace Kompakt\Mediameister\EventDispatcher\Adapter\Symfony;
+namespace Kompakt\Mediameister\Component\Adapter\EventDispatcher\Symfony;
 
-use Kompakt\Mediameister\EventDispatcher\EventDispatcherInterface;
-use Kompakt\Mediameister\EventDispatcher\EventInterface;
-use Kompakt\Mediameister\EventDispatcher\EventSubscriberInterface;
-use Kompakt\Mediameister\EventDispatcher\Adapter\Symfony\SymfonyEventAdapter;
-use Kompakt\Mediameister\EventDispatcher\Adapter\Symfony\SymfonyEventSubscriberAdapterGenerator;
+use Kompakt\Mediameister\Component\Native\EventDispatcher\EventDispatcherInterface;
+use Kompakt\Mediameister\Component\Native\EventDispatcher\EventInterface;
+use Kompakt\Mediameister\Component\Native\EventDispatcher\EventSubscriberInterface;
+use Kompakt\Mediameister\Component\Adapter\EventDispatcher\Symfony\Event as SymfonyEvent;
+use Kompakt\Mediameister\Component\Adapter\EventDispatcher\Symfony\EventSubscriberGenerator as SymfonyEventSubscriberGenerator;
 use Symfony\Component\EventDispatcher\EventDispatcher as SymfonyEventDispatcher;
 
-class SymfonyEventDispatcherAdapter implements EventDispatcherInterface
+class EventDispatcher implements EventDispatcherInterface
 {
     protected $symfonyDispatcher = null;
 
@@ -27,12 +27,12 @@ class SymfonyEventDispatcherAdapter implements EventDispatcherInterface
 
     public function dispatch($eventName, EventInterface $event = null)
     {
-        $this->symfonyDispatcher->dispatch($eventName, new SymfonyEventAdapter($event));
+        $this->symfonyDispatcher->dispatch($eventName, new SymfonyEvent($event));
     }
 
     public function addSubscriber(EventSubscriberInterface $subscriber)
     {
-        $adapterGenerator = new SymfonyEventSubscriberAdapterGenerator();
+        $adapterGenerator = new SymfonyEventSubscriberGenerator();
         $className = sprintf('%s_%s', preg_replace('/\\\/', '_', get_class($subscriber)), uniqid());
         $this->symfonyDispatcher->addSubscriber($adapterGenerator->getAdapter($subscriber, $className));
     }

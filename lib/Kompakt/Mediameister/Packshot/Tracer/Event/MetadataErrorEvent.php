@@ -9,7 +9,7 @@
 
 namespace Kompakt\Mediameister\Packshot\Tracer\Event;
 
-use Kompakt\Mediameister\EventDispatcher\Event;
+use Kompakt\Mediameister\Component\Native\EventDispatcher\Event;
 
 class MetadataErrorEvent extends Event
 {

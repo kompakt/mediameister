@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\EventDispatcher;
+namespace Kompakt\Mediameister\Component\Native\EventDispatcher;
 
 interface EventSubscriberInterface
 {

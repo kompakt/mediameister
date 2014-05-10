@@ -22,7 +22,7 @@ class PackshotTracerTest extends \PHPUnit_Framework_TestCase
     protected function getDispatcher()
     {
         return $this
-            ->getMockBuilder('Kompakt\Mediameister\EventDispatcher\EventDispatcherInterface')
+            ->getMockBuilder('Kompakt\Mediameister\Component\Native\EventDispatcher\EventDispatcherInterface')
             ->disableOriginalConstructor()
             ->getMock()
         ;

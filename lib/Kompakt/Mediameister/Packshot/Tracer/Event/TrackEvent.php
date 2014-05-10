@@ -10,7 +10,7 @@
 namespace Kompakt\Mediameister\Packshot\Tracer\Event;
 
 use Kompakt\Mediameister\Entity\TrackInterface;
-use Kompakt\Mediameister\EventDispatcher\Event;
+use Kompakt\Mediameister\Component\Native\EventDispatcher\Event;
 
 class TrackEvent extends Event
 {

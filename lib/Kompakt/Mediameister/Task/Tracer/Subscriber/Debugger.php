@@ -16,7 +16,8 @@ use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartErrorEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\PackshotLoadErrorEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\PackshotLoadEvent;
-use Kompakt\Mediameister\EventDispatcher\EventSubscriberInterface;
+use Kompakt\Mediameister\Component\Native\Console\Output\ConsoleOutputInterface;
+use Kompakt\Mediameister\Component\Native\EventDispatcher\EventSubscriberInterface;
 use Kompakt\Mediameister\Packshot\Tracer\EventNamesInterface as PackshotEventNamesInterface;
 use Kompakt\Mediameister\Packshot\Tracer\Event\ArtworkErrorEvent;
 use Kompakt\Mediameister\Packshot\Tracer\Event\ArtworkEvent;
@@ -37,6 +38,7 @@ class Debugger implements EventSubscriberInterface
     protected $taskEventNames = null;
     protected $batchEventNames = null;
     protected $packshotEventNames = null;
+    protected $output = null;
 
     // processing state vars
     protected $sourceBatch = null;
@@ -46,12 +48,14 @@ class Debugger implements EventSubscriberInterface
     public function __construct(
         TaskEventNamesInterface $taskEventNames,
         BatchEventNamesInterface $batchEventNames,
-        PackshotEventNamesInterface $packshotEventNames
+        PackshotEventNamesInterface $packshotEventNames,
+        ConsoleOutputInterface $output
     )
     {
         $this->taskEventNames = $taskEventNames;
         $this->batchEventNames = $batchEventNames;
         $this->packshotEventNames = $packshotEventNames;
+        $this->output = $output;
     }
 
     public function getSubscriptions()
@@ -119,93 +123,176 @@ class Debugger implements EventSubscriberInterface
 
     public function onInputError(InputErrorEvent $event)
     {
-        echo sprintf("! Task input error: (!) %s\n", $event->getException()->getMessage());
+        $this->output->writeln(
+            sprintf(
+                '<error>! Task input error: %s</error>',
+                $event->getException()->getMessage()
+            )
+        );
     }
 
     public function onTaskRun(TaskRunEvent $event)
     {
-        echo sprintf("> Task run\n");
         $this->sourceBatch = $event->getSourceBatch();
         $this->targetDropDir = $event->getTargetDropDir();
+
+        $this->output->writeln(
+            sprintf(
+                '<info>+ Task run</info>'
+            )
+        );
     }
 
     public function onTaskRunError(TaskRunErrorEvent $event)
     {
-        echo sprintf("> Task run error %s\n", $event->getException()->getMessage());
+        $this->output->writeln(
+            sprintf(
+                '<error>+ Task run error %s</error>',
+                $event->getException()->getMessage()
+            )
+        );
     }
 
     public function onTaskEnd(TaskEndEvent $event)
     {
-        echo sprintf("> Task end\n");
+        $this->output->writeln(
+            sprintf(
+                '<info>+ Task end</info>'
+            )
+        );
     }
 
     public function onTaskEndError(TaskEndErrorEvent $event)
     {
-        echo sprintf("> Task end error %s\n", $event->getException()->getMessage());
+        $this->output->writeln(
+            sprintf(
+                '<error>+ Task end error %s</error>',
+                $event->getException()->getMessage()
+            )
+        );
     }
 
     public function onTaskFinal(TaskFinalEvent $event)
     {
-        echo sprintf("> Task final\n");
+        $this->output->writeln(
+            sprintf(
+                '<info>+ Task final</info>'
+            )
+        );
     }
 
     public function onBatchStart(BatchStartEvent $event)
     {
-        echo sprintf("  > Batch start\n");
+        $this->output->writeln(
+            sprintf(
+                '  <info>+ Batch start</info>'
+            )
+        );
     }
 
     public function onBatchStartError(BatchStartErrorEvent $event)
     {
-        echo sprintf("  ! Batch start error: '%s'\n", $event->getException()->getMessage());
+        $this->output->writeln(
+            sprintf(
+                '  <error>! Batch start error: %s</error>',
+                $event->getException()->getMessage()
+            )
+        );
     }
 
     public function onBatchEnd(BatchEndEvent $event)
     {
-        echo sprintf("  > Batch end\n");
+        $this->output->writeln(
+            sprintf(
+                '  <info>+ Batch end</info>'
+            )
+        );
     }
 
     public function onBatchEndError(BatchEndErrorEvent $event)
     {
-        echo sprintf("  ! Batch end error: '%s'\n", $event->getException()->getMessage());
+        $this->output->writeln(
+            sprintf(
+                '  <error>! Batch end error: %s</error>',
+                $event->getException()->getMessage()
+            )
+        );
     }
 
     public function onPackshotLoad(PackshotLoadEvent $event)
     {
-        echo sprintf("    > Packshot load\n");
+        $this->output->writeln(
+            sprintf(
+                '    <info>+ Packshot load</info>'
+            )
+        );
     }
 
     public function onPackshotLoadError(PackshotLoadErrorEvent $event)
     {
-        echo sprintf("    ! Packshot load error '%s': (!) %s\n", $event->getPackshot()->getName(), $event->getException()->getMessage());
+        $this->output->writeln(
+            sprintf(
+                '    <error>! Packshot load error: %s: %s</error>',
+                $event->getPackshot()->getName(),
+                $event->getException()->getMessage()
+            )
+        );
     }
 
     public function onArtwork(ArtworkEvent $event)
     {
-        echo sprintf("      > Artwork\n");
+        $this->output->writeln(
+            sprintf(
+                '      <info>+ Artwork</info>'
+            )
+        );
     }
 
     public function onArtworkError(ArtworkErrorEvent $event)
     {
-        echo sprintf("        ! Artwork error: '%s'\n", $event->getException()->getMessage());
+        $this->output->writeln(
+            sprintf(
+                '        <error>! Artwork error: %s</error>',
+                $event->getException()->getMessage()
+            )
+        );
     }
 
     public function onTrack(TrackEvent $event)
     {
-        echo sprintf("        > Track\n");
+        $this->output->writeln(
+            sprintf(
+                '        <info>+ Track</info>'
+            )
+        );
     }
 
     public function onTrackError(TrackErrorEvent $event)
     {
-        echo sprintf("        ! Track error: '%s'\n", $event->getException()->getMessage());
+        $this->output->writeln(
+            sprintf(
+                '        <error>! Track error: %s</error>',
+                $event->getException()->getMessage()
+            )
+        );
     }
 
     public function onMetadata(MetadataEvent $event)
     {
-        echo sprintf("      > Metadata\n");
+        $this->output->writeln(
+            sprintf(
+                '      <info>+ Metadata</info>'
+            )
+        );
     }
 
     public function onMetadataError(MetadataErrorEvent $event)
     {
-        echo sprintf("      ! Metadata error: '%s'\n", $event->getException()->getMessage());
+        $this->output->writeln(
+            sprintf(
+                '      <error>! Metadata error: %s</error>',
+                $event->getException()->getMessage()
+            )
+        );
     }
 }

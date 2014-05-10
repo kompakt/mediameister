@@ -18,7 +18,7 @@ use Kompakt\Mediameister\Packshot\Tracer\Event\MetadataEvent;
 use Kompakt\Mediameister\Packshot\Tracer\Event\TrackErrorEvent;
 use Kompakt\Mediameister\Packshot\Tracer\Event\TrackEvent;
 use Kompakt\Mediameister\Packshot\Tracer\PackshotTracerInterface;
-use Kompakt\Mediameister\EventDispatcher\EventDispatcherInterface;
+use Kompakt\Mediameister\Component\Native\EventDispatcher\EventDispatcherInterface;
 
 class PackshotTracer implements PackshotTracerInterface
 {

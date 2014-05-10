@@ -19,7 +19,7 @@ use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\BatchStartErrorEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\PackshotLoadErrorEvent;
 use Kompakt\Mediameister\Batch\Tracer\Event\PackshotLoadEvent;
-use Kompakt\Mediameister\EventDispatcher\EventDispatcherInterface;
+use Kompakt\Mediameister\Component\Native\EventDispatcher\EventDispatcherInterface;
 
 class BatchTracer implements BatchTracerInterface
 {

@@ -7,11 +7,11 @@
  *
  */
 
-namespace Kompakt\Mediameister\EventDispatcher\Adapter\Symfony;
+namespace Kompakt\Mediameister\Component\Adapter\EventDispatcher\Symfony;
 
-use Kompakt\Mediameister\EventDispatcher\EventSubscriberInterface;
+use Kompakt\Mediameister\Component\Native\EventDispatcher\EventSubscriberInterface;
 
-class SymfonyEventSubscriberAdapterGenerator
+class EventSubscriberGenerator
 {
     public function getAdapter(EventSubscriberInterface $originalSubscriber, $className)
     {
@@ -44,8 +44,8 @@ class SymfonyEventSubscriberAdapterGenerator
     protected function getClassCode()
     {
         return '
-            use Kompakt\Mediameister\EventDispatcher\EventSubscriberInterface;
-            use Kompakt\Mediameister\EventDispatcher\Adapter\Symfony\SymfonyEventAdapter;
+            use Kompakt\Mediameister\Component\Native\EventDispatcher\EventSubscriberInterface;
+            use Kompakt\Mediameister\Component\Adapter\EventDispatcher\Symfony\Event as SymfonyEvent;
             use Symfony\Component\EventDispatcher\EventSubscriberInterface as SymfonyEventSubscriberInterface;
 
             class %s implements SymfonyEventSubscriberInterface
@@ -70,7 +70,7 @@ class SymfonyEventSubscriberAdapterGenerator
     protected function getMethodCode()
     {
         return '
-            public function %s (SymfonyEventAdapter $e)
+            public function %s (SymfonyEvent $e)
             {
                 // extract the original event and pass it to the subscriber
                 $this->originalSubscriber->%s($e->getOriginalEvent());

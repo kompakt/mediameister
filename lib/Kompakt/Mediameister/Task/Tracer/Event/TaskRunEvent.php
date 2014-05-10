@@ -11,7 +11,7 @@ namespace Kompakt\Mediameister\Task\Tracer\Event;
 
 use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\DropDir\DropDirInterface;
-use Kompakt\Mediameister\EventDispatcher\Event;
+use Kompakt\Mediameister\Component\Native\EventDispatcher\Event;
 
 class TaskRunEvent extends Event
 {

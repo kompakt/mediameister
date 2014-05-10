@@ -11,7 +11,7 @@ namespace Kompakt\Mediameister\Task;
 
 use Kompakt\Mediameister\DropDir\DropDirInterface;
 use Kompakt\Mediameister\DropDir\Registry\RegistryInterface;
-use Kompakt\Mediameister\EventDispatcher\EventDispatcherInterface;
+use Kompakt\Mediameister\Component\Native\EventDispatcher\EventDispatcherInterface;
 use Kompakt\Mediameister\Task\Exception\InvalidArgumentException;
 use Kompakt\Mediameister\Task\Exception\RuntimeException;
 use Kompakt\Mediameister\Task\Tracer\EventNamesInterface;
