@@ -58,39 +58,63 @@ class SummaryPrinter implements EventSubscriberInterface
 
     public function printSummary($timer)
     {
+        $packshotError
+            = ($this->summary->getPackshotCounter()->getErrors())
+            ? sprintf(' <error>(%d errors)</error>', $this->summary->getPackshotCounter()->getErrors())
+            : ''
+        ;
+
+        $artworkError
+            = ($this->summary->getArtworkCounter()->getErrors())
+            ? sprintf(' <error>(%d errors)</error>', $this->summary->getArtworkCounter()->getErrors())
+            : ''
+        ;
+
+        $metadataError
+            = ($this->summary->getMetadataCounter()->getErrors())
+            ? sprintf(' <error>(%d errors)</error>', $this->summary->getMetadataCounter()->getErrors())
+            : ''
+        ;
+
+        $trackError
+            = ($this->summary->getTrackCounter()->getErrors())
+            ? sprintf(' <error>(%d errors)</error>', $this->summary->getTrackCounter()->getErrors())
+            : ''
+        ;
+
         $this->output->writeln(
             sprintf(
-                '<info>= Packshots: %s total, %d ok (%d errors)</info>',
+                '<info>= Packshots: %s total, %d ok</info>%s',
                 $this->summary->getPackshotCounter()->getTotal(),
                 $this->summary->getPackshotCounter()->getOks(),
-                $this->summary->getPackshotCounter()->getErrors()
+                $packshotError
             )
         );
 
         $this->output->writeln(
             sprintf(
-                '<info>= Artwork: %s total, %d ok (%d errors)</info>',
+                '<info>= Artwork: %s total, %d ok</info>%s',
                 $this->summary->getArtworkCounter()->getTotal(),
                 $this->summary->getArtworkCounter()->getOks(),
-                $this->summary->getArtworkCounter()->getErrors()
+                $artworkError
             )
         );
 
         $this->output->writeln(
             sprintf(
-                '<info>= Tracks: %s total, %d ok (%d errors)</info>',
-                $this->summary->getTrackCounter()->getTotal(),
-                $this->summary->getTrackCounter()->getOks(),
-                $this->summary->getTrackCounter()->getErrors()
-            )
-        );
-
-        $this->output->writeln(
-            sprintf(
-                '<info>= Metadata: %s total, %d ok (%d errors)</info>',
+                '<info>= Metadata: %s total, %d ok</info>%s',
                 $this->summary->getMetadataCounter()->getTotal(),
                 $this->summary->getMetadataCounter()->getOks(),
-                $this->summary->getMetadataCounter()->getErrors()
+                $metadataError
+            )
+        );
+
+        $this->output->writeln(
+            sprintf(
+                '<info>= Tracks: %s total, %d ok</info>%s',
+                $this->summary->getTrackCounter()->getTotal(),
+                $this->summary->getTrackCounter()->getOks(),
+                $trackError
             )
         );
 
