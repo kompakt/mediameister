@@ -15,7 +15,7 @@ class EventNames implements EventNamesInterface
 {
     protected $namespace = null;
 
-    public function __construct($namespace = 'batch_tracker_task')
+    public function __construct($namespace = 'batch_task')
     {
         $this->namespace = $namespace;
     }
