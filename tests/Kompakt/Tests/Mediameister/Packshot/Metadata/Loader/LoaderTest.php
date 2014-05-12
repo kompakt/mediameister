@@ -46,7 +46,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
         $layout
             ->expects($this->any())
-            ->method('getOtherMetadataFileNames')
+            ->method('getOtherMetadataFilenames')
             ->will($this->returnValue(array('my-meta.xml')))
         ;
 

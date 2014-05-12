@@ -38,7 +38,7 @@ class Loader implements LoaderInterface
             return $this->metadataReaderFactory->getInstance($pathname)->load();
         }
 
-        foreach ($this->layout->getOtherMetadataFileNames() as $name)
+        foreach ($this->layout->getOtherMetadataFilenames() as $name)
         {
             $pathname = sprintf('%s/%s', dirname($pathname), $name);
             $fileInfo = new \SplFileInfo($pathname);
