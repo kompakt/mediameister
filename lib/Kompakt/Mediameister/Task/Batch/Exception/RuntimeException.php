@@ -7,9 +7,9 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\BatchTracker\Exception;
+namespace Kompakt\Mediameister\Task\Batch\Exception;
 
 use Kompakt\Mediameister\Exception as BaseException;
 
-class InvalidArgumentException extends \InvalidArgumentException implements BaseException
+class RuntimeException extends \RuntimeException implements BaseException
 {}

@@ -7,12 +7,12 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\BatchTracker\Event;
+namespace Kompakt\Mediameister\Task\Batch\Event;
 
 use Kompakt\Mediameister\Generic\EventDispatcher\Event;
 use Kompakt\Mediameister\Util\Timer\Timer;
 
-class TaskFinalEvent extends Event
+class TaskEndEvent extends Event
 {
     protected $timer = null;
 

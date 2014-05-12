@@ -7,9 +7,9 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\BatchTracker\Event;
+namespace Kompakt\Mediameister\Task\Batch\Event;
 
 use Kompakt\Mediameister\Generic\EventDispatcher\Event;
 
-class TaskEndEvent extends Event
+class BatchEndEvent extends Event
 {}

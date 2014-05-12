@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\BatchTracker\Event;
+namespace Kompakt\Mediameister\Task\Batch\Event;
 
 use Kompakt\Mediameister\Entity\TrackInterface;
 use Kompakt\Mediameister\Generic\EventDispatcher\Event;

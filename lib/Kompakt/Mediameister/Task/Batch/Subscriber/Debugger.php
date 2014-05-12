@@ -7,29 +7,28 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\BatchTracker\Subscriber;
+namespace Kompakt\Mediameister\Task\Batch\Subscriber;
 
 use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
 use Kompakt\Mediameister\Generic\EventDispatcher\EventSubscriberInterface;
-use Kompakt\Mediameister\Task\BatchTracker\EventNamesInterface;
-use Kompakt\Mediameister\Task\BatchTracker\Event\ArtworkErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\ArtworkEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\BatchEndEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\BatchEndErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\BatchStartEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\BatchStartErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\InputErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\MetadataErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\MetadataEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\PackshotLoadErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\PackshotLoadEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\TaskEndErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\TaskEndEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\TaskFinalEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\TaskRunErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\TaskRunEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\TrackErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\TrackEvent;
+use Kompakt\Mediameister\Task\Batch\EventNamesInterface;
+use Kompakt\Mediameister\Task\Batch\Event\ArtworkErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\ArtworkEvent;
+use Kompakt\Mediameister\Task\Batch\Event\BatchEndEvent;
+use Kompakt\Mediameister\Task\Batch\Event\BatchEndErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\BatchStartEvent;
+use Kompakt\Mediameister\Task\Batch\Event\BatchStartErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\InputErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\MetadataErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\MetadataEvent;
+use Kompakt\Mediameister\Task\Batch\Event\PackshotLoadErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\PackshotLoadEvent;
+use Kompakt\Mediameister\Task\Batch\Event\TaskEndErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\TaskEndEvent;
+use Kompakt\Mediameister\Task\Batch\Event\TaskRunErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\TaskRunEvent;
+use Kompakt\Mediameister\Task\Batch\Event\TrackErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\TrackEvent;
 
 class Debugger implements EventSubscriberInterface
 {
@@ -63,9 +62,6 @@ class Debugger implements EventSubscriberInterface
             ),
             $this->eventNames->taskEndError() => array(
                 array('onTaskEndError', 0)
-            ),
-            $this->eventNames->taskFinal() => array(
-                array('onTaskFinal', 0)
             ),
             // batch events
             $this->eventNames->batchStart() => array(
@@ -152,15 +148,6 @@ class Debugger implements EventSubscriberInterface
             sprintf(
                 '<error>+ Task end error %s</error>',
                 $event->getException()->getMessage()
-            )
-        );
-    }
-
-    public function onTaskFinal(TaskFinalEvent $event)
-    {
-        $this->output->writeln(
-            sprintf(
-                '<info>+ Task final</info>'
             )
         );
     }

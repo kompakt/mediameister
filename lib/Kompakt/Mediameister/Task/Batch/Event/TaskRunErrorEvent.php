@@ -7,11 +7,11 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\BatchTracker\Event;
+namespace Kompakt\Mediameister\Task\Batch\Event;
 
 use Kompakt\Mediameister\Generic\EventDispatcher\Event;
 
-class MetadataErrorEvent extends Event
+class TaskRunErrorEvent extends Event
 {
     protected $exception = null;
 

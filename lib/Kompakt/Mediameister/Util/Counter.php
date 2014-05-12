@@ -11,33 +11,47 @@ namespace Kompakt\Mediameister\Util;
 
 class Counter
 {
-    protected $oks = 0;
-    protected $errors = 0;
+    protected $oks = array();
+    protected $errors = array();
 
-    public function addOks($count)
+    public function ok($id)
     {
-        $this->oks += (int) $count;
+        if (!array_key_exists($id, $this->oks) && !array_key_exists($id, $this->errors))
+        {
+            $this->oks[$id] = 1;
+        }
+
+        return $this;
+    }
+
+    public function error($id)
+    {
+        if (array_key_exists($id, $this->oks))
+        {
+            // this has already been ok'd but it's an error now
+            unset($this->oks[$id]);
+        }
+        
+        if (!array_key_exists($id, $this->errors))
+        {
+            $this->errors[$id] = 1;
+        }
+
         return $this;
     }
 
     public function getOks()
     {
-        return $this->oks;
-    }
-
-    public function addErrors($count)
-    {
-        $this->errors += (int) $count;
-        return $this;
+        return count($this->oks);
     }
 
     public function getErrors()
     {
-        return $this->errors;
+        return count($this->errors);
     }
 
-    public function getCount()
+    public function getTotal()
     {
-        return $this->oks + $this->errors;
+        return count($this->oks) + count($this->errors);
     }
 }

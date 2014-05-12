@@ -7,11 +7,11 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\BatchTracker\Event;
+namespace Kompakt\Mediameister\Task\Batch\Event;
 
 use Kompakt\Mediameister\Generic\EventDispatcher\Event;
 
-class TaskRunErrorEvent extends Event
+class BatchStartErrorEvent extends Event
 {
     protected $exception = null;
 
@@ -19,7 +19,7 @@ class TaskRunErrorEvent extends Event
     {
         $this->exception = $exception;
     }
-
+    
     public function getException()
     {
         return $this->exception;

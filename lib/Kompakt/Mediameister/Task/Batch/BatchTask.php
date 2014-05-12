@@ -7,35 +7,35 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\BatchTracker;
+namespace Kompakt\Mediameister\Task\Batch;
 
 use Kompakt\Mediameister\DropDir\DropDirInterface;
 use Kompakt\Mediameister\DropDir\Registry\RegistryInterface;
 use Kompakt\Mediameister\Generic\EventDispatcher\EventDispatcherInterface;
-use Kompakt\Mediameister\Task\BatchTracker\EventNamesInterface;
-use Kompakt\Mediameister\Task\BatchTracker\Event\ArtworkErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\ArtworkEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\BatchEndEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\BatchEndErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\BatchStartEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\BatchStartErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\InputErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\MetadataErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\MetadataEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\PackshotLoadErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\PackshotLoadEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\TaskEndErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\TaskEndEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\TaskFinalEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\TaskRunErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\TaskRunEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\TrackErrorEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\TrackEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Exception\InvalidArgumentException;
-use Kompakt\Mediameister\Task\BatchTracker\Exception\RuntimeException;
+use Kompakt\Mediameister\Task\Batch\EventNamesInterface;
+use Kompakt\Mediameister\Task\Batch\Event\ArtworkErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\ArtworkEvent;
+use Kompakt\Mediameister\Task\Batch\Event\BatchEndEvent;
+use Kompakt\Mediameister\Task\Batch\Event\BatchEndErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\BatchStartEvent;
+use Kompakt\Mediameister\Task\Batch\Event\BatchStartErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\InputErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\MetadataErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\MetadataEvent;
+use Kompakt\Mediameister\Task\Batch\Event\PackshotLoadErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\PackshotLoadEvent;
+use Kompakt\Mediameister\Task\Batch\Event\TaskEndErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\TaskEndEvent;
+use Kompakt\Mediameister\Task\Batch\Event\TaskFinalEvent;
+use Kompakt\Mediameister\Task\Batch\Event\TaskRunErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\TaskRunEvent;
+use Kompakt\Mediameister\Task\Batch\Event\TrackErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Event\TrackEvent;
+use Kompakt\Mediameister\Task\Batch\Exception\InvalidArgumentException;
+use Kompakt\Mediameister\Task\Batch\Exception\RuntimeException;
 use Kompakt\Mediameister\Util\Timer\Timer;
 
-class BatchTrackerTask
+class BatchTask
 {
     protected $dispatcher = null;
     protected $eventNames = null;
@@ -97,11 +97,14 @@ class BatchTrackerTask
 
         if (!$this->runTask($sourceBatch, $targetDropDir))
         {
+            $this->endTask($timer);
             return;
         }
 
         if (!$this->startBatch())
         {
+            $this->endBatch();
+            $this->endTask($timer);
             return;
         }
 
@@ -123,8 +126,7 @@ class BatchTrackerTask
         }
 
         $this->endBatch();
-        $this->endTask();
-        $this->finalizeTask($timer);
+        $this->endTask($timer);
     }
 
     protected function getSourceDropDir($sourceDropDirLabel)
@@ -217,12 +219,12 @@ class BatchTrackerTask
         }
     }
 
-    protected function endTask()
+    protected function endTask($timer)
     {
         try {
             $this->dispatcher->dispatch(
                 $this->eventNames->taskEnd(),
-                new TaskEndEvent()
+                new TaskEndEvent($timer->stop())
             );
 
             return true;
@@ -231,19 +233,11 @@ class BatchTrackerTask
         {
             $this->dispatcher->dispatch(
                 $this->eventNames->taskEndError(),
-                new TaskEndErrorEvent($e)
+                new TaskEndErrorEvent($e, $timer->stop())
             );
 
             return false;
         }
-    }
-
-    protected function finalizeTask($timer)
-    {
-        $this->dispatcher->dispatch(
-            $this->eventNames->taskFinal(),
-            new TaskFinalEvent($timer->stop())
-        );
     }
 
     protected function startBatch()

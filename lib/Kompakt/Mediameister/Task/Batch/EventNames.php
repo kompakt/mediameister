@@ -7,9 +7,9 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\BatchTracker;
+namespace Kompakt\Mediameister\Task\Batch;
 
-use Kompakt\Mediameister\Task\BatchTracker\EventNamesInterface;
+use Kompakt\Mediameister\Task\Batch\EventNamesInterface;
 
 class EventNames implements EventNamesInterface
 {
@@ -43,11 +43,6 @@ class EventNames implements EventNamesInterface
     public function taskEndError()
     {
         return sprintf('%s.task_end_error', $this->namespace);
-    }
-
-    public function taskFinal()
-    {
-        return sprintf('%s.task_final', $this->namespace);
     }
 
     public function batchStart()

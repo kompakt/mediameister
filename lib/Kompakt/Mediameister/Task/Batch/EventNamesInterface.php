@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\BatchTracker;
+namespace Kompakt\Mediameister\Task\Batch;
 
 interface EventNamesInterface
 {
@@ -17,7 +17,6 @@ interface EventNamesInterface
     public function taskRunError();
     public function taskEnd();
     public function taskEndError();
-    public function taskFinal();
 
     // batch events
     public function batchStart();
