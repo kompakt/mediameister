@@ -9,7 +9,9 @@
 
 namespace Kompakt\Mediameister\Component\Native\Logger\Handler;
 
+use Kompakt\Mediameister\Component\Native\Logger\LoggerInterface;
+
 interface StreamHandlerFactoryInterface
 {
-    public function getInstance($stream, $level = Logger::DEBUG);
+    public function getInstance($stream, $level = LoggerInterface::DEBUG);
 }
