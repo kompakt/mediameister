@@ -7,9 +7,9 @@
  *
  */
 
-namespace Kompakt\Mediameister\Component\Adapter\Logger\Monolog;
+namespace Kompakt\Mediameister\Adapter\Logger\Monolog;
 
-use Kompakt\Mediameister\Component\Native\Logger\LoggerInterface;
+use Kompakt\Mediameister\Generic\Logger\LoggerInterface;
 use Monolog\Logger as MonologLogger;
 
 class Logger implements LoggerInterface

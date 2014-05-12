@@ -10,7 +10,7 @@
 namespace Kompakt\Mediameister\Task\BatchTracker\Event;
 
 use Kompakt\Mediameister\Entity\TrackInterface;
-use Kompakt\Mediameister\Component\Native\EventDispatcher\Event;
+use Kompakt\Mediameister\Generic\EventDispatcher\Event;
 
 class TrackEvent extends Event
 {

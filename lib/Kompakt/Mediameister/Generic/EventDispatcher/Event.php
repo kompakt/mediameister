@@ -7,10 +7,10 @@
  *
  */
 
-namespace Kompakt\Mediameister\Component\Native\EventDispatcher;
+namespace Kompakt\Mediameister\Generic\EventDispatcher;
 
-use Kompakt\Mediameister\Component\Adapter\EventDispatcher\EventAdapterInterface;
-use Kompakt\Mediameister\Component\Native\EventDispatcher\EventInterface;
+use Kompakt\Mediameister\Generic\EventDispatcher\EventAdapterInterface;
+use Kompakt\Mediameister\Generic\EventDispatcher\EventInterface;
 
 class Event implements EventInterface
 {

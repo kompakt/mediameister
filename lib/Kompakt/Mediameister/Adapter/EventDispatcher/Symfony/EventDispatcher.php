@@ -7,13 +7,13 @@
  *
  */
 
-namespace Kompakt\Mediameister\Component\Adapter\EventDispatcher\Symfony;
+namespace Kompakt\Mediameister\Adapter\EventDispatcher\Symfony;
 
-use Kompakt\Mediameister\Component\Native\EventDispatcher\EventDispatcherInterface;
-use Kompakt\Mediameister\Component\Native\EventDispatcher\EventInterface;
-use Kompakt\Mediameister\Component\Native\EventDispatcher\EventSubscriberInterface;
-use Kompakt\Mediameister\Component\Adapter\EventDispatcher\Symfony\Event as SymfonyEvent;
-use Kompakt\Mediameister\Component\Adapter\EventDispatcher\Symfony\EventSubscriberGenerator as SymfonyEventSubscriberGenerator;
+use Kompakt\Mediameister\Generic\EventDispatcher\EventDispatcherInterface;
+use Kompakt\Mediameister\Generic\EventDispatcher\EventInterface;
+use Kompakt\Mediameister\Generic\EventDispatcher\EventSubscriberInterface;
+use Kompakt\Mediameister\Adapter\EventDispatcher\Symfony\Event as SymfonyEvent;
+use Kompakt\Mediameister\Adapter\EventDispatcher\Symfony\EventSubscriberGenerator as SymfonyEventSubscriberGenerator;
 use Symfony\Component\EventDispatcher\EventDispatcher as SymfonyEventDispatcher;
 
 class EventDispatcher implements EventDispatcherInterface
@@ -41,7 +41,7 @@ class EventDispatcher implements EventDispatcherInterface
     {
         $symfonyListener = function($event) use ($listener)
         {
-            call_user_func($listener, $event->getOriginalEvent());
+            call_user_func($listener, $event->getGenericEvent());
         };
 
         $this->symfonyDispatcher->addListener($eventName, $symfonyListener, $priority);

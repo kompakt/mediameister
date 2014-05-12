@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Component\Native\Logger;
+namespace Kompakt\Mediameister\Generic\Logger;
 
 interface LoggerInterface
 {

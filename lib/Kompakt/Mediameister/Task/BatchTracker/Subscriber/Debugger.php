@@ -9,8 +9,8 @@
 
 namespace Kompakt\Mediameister\Task\BatchTracker\Subscriber;
 
-use Kompakt\Mediameister\Component\Native\Console\Output\ConsoleOutputInterface;
-use Kompakt\Mediameister\Component\Native\EventDispatcher\EventSubscriberInterface;
+use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
+use Kompakt\Mediameister\Generic\EventDispatcher\EventSubscriberInterface;
 use Kompakt\Mediameister\Task\BatchTracker\EventNamesInterface;
 use Kompakt\Mediameister\Task\BatchTracker\Event\ArtworkErrorEvent;
 use Kompakt\Mediameister\Task\BatchTracker\Event\ArtworkEvent;

@@ -7,10 +7,10 @@
  *
  */
 
-namespace Kompakt\Mediameister\Component\Adapter\Logger\Monolog\Handler;
+namespace Kompakt\Mediameister\Adapter\Logger\Monolog\Handler;
 
-use Kompakt\Mediameister\Component\Native\Logger\LoggerInterface;
-use Kompakt\Mediameister\Component\Native\Logger\Handler\StreamHandlerFactoryInterface;
+use Kompakt\Mediameister\Generic\Logger\LoggerInterface;
+use Kompakt\Mediameister\Generic\Logger\Handler\StreamHandlerFactoryInterface;
 use Monolog\Handler\StreamHandler as MonologStreamhandler;
 
 class StreamHandlerFactory implements StreamHandlerFactoryInterface

@@ -7,9 +7,9 @@
  *
  */
 
-namespace Kompakt\Mediameister\Component\Adapter\Console\Symfony\Output;
+namespace Kompakt\Mediameister\Adapter\Console\Symfony\Output;
 
-use Kompakt\Mediameister\Component\Native\Console\Output\ConsoleOutputInterface as MediameisterConsoleOutputInterface;
+use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface as MediameisterConsoleOutputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface as SymfonyConsoleOutputInterface;
 
 class ConsoleOutput implements MediameisterConsoleOutputInterface

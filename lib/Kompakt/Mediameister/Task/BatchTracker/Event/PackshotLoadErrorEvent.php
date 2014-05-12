@@ -10,7 +10,7 @@
 namespace Kompakt\Mediameister\Task\BatchTracker\Event;
 
 use Kompakt\Mediameister\Packshot\PackshotInterface;
-use Kompakt\Mediameister\Component\Native\EventDispatcher\Event;
+use Kompakt\Mediameister\Generic\EventDispatcher\Event;
 
 class PackshotLoadErrorEvent extends Event
 {

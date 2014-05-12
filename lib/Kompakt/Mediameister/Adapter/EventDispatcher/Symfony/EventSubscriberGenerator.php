@@ -7,15 +7,15 @@
  *
  */
 
-namespace Kompakt\Mediameister\Component\Adapter\EventDispatcher\Symfony;
+namespace Kompakt\Mediameister\Adapter\EventDispatcher\Symfony;
 
-use Kompakt\Mediameister\Component\Native\EventDispatcher\EventSubscriberInterface;
+use Kompakt\Mediameister\Generic\EventDispatcher\EventSubscriberInterface;
 
 class EventSubscriberGenerator
 {
-    public function getAdapter(EventSubscriberInterface $originalSubscriber, $className)
+    public function getAdapter(EventSubscriberInterface $genericSubscriber, $className)
     {
-        $events = $originalSubscriber->getSubscriptions();
+        $events = $genericSubscriber->getSubscriptions();
 
         $classDefinition = sprintf(
             $this->getClassCode(),
@@ -26,7 +26,7 @@ class EventSubscriberGenerator
 
         eval($classDefinition);
         $className = sprintf('\%s', $className);
-        return new $className($originalSubscriber);
+        return new $className($genericSubscriber);
     }
 
     protected function getMethods($events)
@@ -44,17 +44,17 @@ class EventSubscriberGenerator
     protected function getClassCode()
     {
         return '
-            use Kompakt\Mediameister\Component\Native\EventDispatcher\EventSubscriberInterface;
-            use Kompakt\Mediameister\Component\Adapter\EventDispatcher\Symfony\Event as SymfonyEvent;
+            use Kompakt\Mediameister\Adapter\EventDispatcher\Symfony\Event as SymfonyEvent;
+            use Kompakt\Mediameister\Generic\EventDispatcher\EventSubscriberInterface;
             use Symfony\Component\EventDispatcher\EventSubscriberInterface as SymfonyEventSubscriberInterface;
 
             class %s implements SymfonyEventSubscriberInterface
             {
-                protected $originalSubscriber = null;
+                protected $genericSubscriber = null;
 
-                public function __construct(EventSubscriberInterface $originalSubscriber)
+                public function __construct(EventSubscriberInterface $genericSubscriber)
                 {
-                    $this->originalSubscriber = $originalSubscriber;
+                    $this->genericSubscriber = $genericSubscriber;
                 }
 
                 public static function getSubscribedEvents()
@@ -73,7 +73,7 @@ class EventSubscriberGenerator
             public function %s (SymfonyEvent $e)
             {
                 // extract the original event and pass it to the subscriber
-                $this->originalSubscriber->%s($e->getOriginalEvent());
+                $this->genericSubscriber->%s($e->getGenericEvent());
             }
         ';
     }

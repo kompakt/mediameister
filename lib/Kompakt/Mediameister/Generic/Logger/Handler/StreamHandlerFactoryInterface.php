@@ -7,9 +7,9 @@
  *
  */
 
-namespace Kompakt\Mediameister\Component\Native\Logger\Handler;
+namespace Kompakt\Mediameister\Generic\Logger\Handler;
 
-use Kompakt\Mediameister\Component\Native\Logger\LoggerInterface;
+use Kompakt\Mediameister\Generic\Logger\LoggerInterface;
 
 interface StreamHandlerFactoryInterface
 {

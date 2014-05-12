@@ -7,11 +7,11 @@
  *
  */
 
-namespace Kompakt\Mediameister\Component\Adapter\EventDispatcher;
+namespace Kompakt\Mediameister\Generic\EventDispatcher;
 
 interface EventAdapterInterface
 {
-    public function getOriginalEvent();
+    public function getGenericEvent();
     public function isPropagationStopped();
     public function stopPropagation();
 }

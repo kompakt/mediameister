@@ -9,7 +9,7 @@
 
 namespace Kompakt\Mediameister\Task\BatchTracker;
 
-use Kompakt\Mediameister\Component\Native\EventDispatcher\EventDispatcherInterface;
+use Kompakt\Mediameister\Generic\EventDispatcher\EventDispatcherInterface;
 use Kompakt\Mediameister\DropDir\DropDirInterface;
 use Kompakt\Mediameister\DropDir\Registry\RegistryInterface;
 use Kompakt\Mediameister\Task\BatchTracker\EventNamesInterface;

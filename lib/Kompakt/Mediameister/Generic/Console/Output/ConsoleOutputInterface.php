@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Component\Native\Console\Output;
+namespace Kompakt\Mediameister\Generic\Console\Output;
 
 interface ConsoleOutputInterface
 {
