@@ -11,8 +11,8 @@ namespace Kompakt\Mediameister\DropDir;
 
 use Kompakt\Mediameister\Batch\Factory\BatchFactoryInterface;
 use Kompakt\Mediameister\DropDir\DropDirInterface;
-use Kompakt\Mediameister\DropDir\Filter\BatchFilterInterface;
 use Kompakt\Mediameister\DropDir\Exception\InvalidArgumentException;
+use Kompakt\Mediameister\DropDir\Filter\BatchFilterInterface;
 
 class DropDir implements DropDirInterface
 {

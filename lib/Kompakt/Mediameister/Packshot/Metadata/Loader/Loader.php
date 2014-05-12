@@ -9,10 +9,10 @@
 
 namespace Kompakt\Mediameister\Packshot\Metadata\Loader;
 
+use Kompakt\Mediameister\Packshot\Layout\LayoutInterface;
 use Kompakt\Mediameister\Packshot\Metadata\Reader\Factory\ReaderFactoryInterface;
 use Kompakt\Mediameister\Packshot\Metadata\Loader\Exception\InvalidArgumentException;
 use Kompakt\Mediameister\Packshot\Metadata\Loader\LoaderInterface;
-use Kompakt\Mediameister\Packshot\Layout\LayoutInterface;
 
 class Loader implements LoaderInterface
 {

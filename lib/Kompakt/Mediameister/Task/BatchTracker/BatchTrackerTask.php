@@ -9,9 +9,9 @@
 
 namespace Kompakt\Mediameister\Task\BatchTracker;
 
-use Kompakt\Mediameister\Generic\EventDispatcher\EventDispatcherInterface;
 use Kompakt\Mediameister\DropDir\DropDirInterface;
 use Kompakt\Mediameister\DropDir\Registry\RegistryInterface;
+use Kompakt\Mediameister\Generic\EventDispatcher\EventDispatcherInterface;
 use Kompakt\Mediameister\Task\BatchTracker\EventNamesInterface;
 use Kompakt\Mediameister\Task\BatchTracker\Event\ArtworkErrorEvent;
 use Kompakt\Mediameister\Task\BatchTracker\Event\ArtworkEvent;
@@ -24,11 +24,11 @@ use Kompakt\Mediameister\Task\BatchTracker\Event\MetadataErrorEvent;
 use Kompakt\Mediameister\Task\BatchTracker\Event\MetadataEvent;
 use Kompakt\Mediameister\Task\BatchTracker\Event\PackshotLoadErrorEvent;
 use Kompakt\Mediameister\Task\BatchTracker\Event\PackshotLoadEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\TaskEndEvent;
 use Kompakt\Mediameister\Task\BatchTracker\Event\TaskEndErrorEvent;
+use Kompakt\Mediameister\Task\BatchTracker\Event\TaskEndEvent;
 use Kompakt\Mediameister\Task\BatchTracker\Event\TaskFinalEvent;
-use Kompakt\Mediameister\Task\BatchTracker\Event\TaskRunEvent;
 use Kompakt\Mediameister\Task\BatchTracker\Event\TaskRunErrorEvent;
+use Kompakt\Mediameister\Task\BatchTracker\Event\TaskRunEvent;
 use Kompakt\Mediameister\Task\BatchTracker\Event\TrackErrorEvent;
 use Kompakt\Mediameister\Task\BatchTracker\Event\TrackEvent;
 use Kompakt\Mediameister\Task\BatchTracker\Exception\InvalidArgumentException;

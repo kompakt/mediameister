@@ -9,8 +9,8 @@
 
 namespace Kompakt\Mediameister\Task\BatchTracker\Event;
 
-use Kompakt\Mediameister\Packshot\PackshotInterface;
 use Kompakt\Mediameister\Generic\EventDispatcher\Event;
+use Kompakt\Mediameister\Packshot\PackshotInterface;
 
 class PackshotLoadEvent extends Event
 {
