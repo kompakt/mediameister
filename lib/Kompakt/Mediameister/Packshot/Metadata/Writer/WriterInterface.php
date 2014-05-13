@@ -9,7 +9,9 @@
 
 namespace Kompakt\Mediameister\Packshot\Metadata\Writer;
 
+use Kompakt\NativeReleaseBatch\Entity\ReleaseInterface;
+
 interface WriterInterface
 {
-    public function save($file);
+    public function save(ReleaseInterface $release, $file);
 }

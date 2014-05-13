@@ -84,12 +84,6 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
 
     protected function getMetadataWriterFactory()
     {
-        $release = $this
-            ->getMockBuilder('Kompakt\Mediameister\Entity\ReleaseInterface')
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-
         $writer = $this
             ->getMockBuilder('Kompakt\Mediameister\Packshot\Metadata\Writer\WriterInterface')
             ->getMock()

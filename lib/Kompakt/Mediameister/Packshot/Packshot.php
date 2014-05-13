@@ -110,6 +110,6 @@ class Packshot implements PackshotInterface
 
     public function save()
     {
-        $this->metadataWriterFactory->getInstance($this->getRelease())->save($this->getLayout()->getMetadataFile());
+        $this->metadataWriterFactory->getInstance()->save($this->getRelease(), $this->getLayout()->getMetadataFile());
     }
 }
