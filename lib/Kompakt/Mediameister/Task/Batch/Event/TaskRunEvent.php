@@ -10,27 +10,19 @@
 namespace Kompakt\Mediameister\Task\Batch\Event;
 
 use Kompakt\Mediameister\Batch\BatchInterface;
-use Kompakt\Mediameister\DropDir\DropDirInterface;
 use Kompakt\Mediameister\Generic\EventDispatcher\Event;
 
 class TaskRunEvent extends Event
 {
-    protected $sourceBatch = null;
-    protected $targetDropDir = null;
+    protected $batch = null;
 
-    public function __construct(BatchInterface $sourceBatch, DropDirInterface $targetDropDir = null)
+    public function __construct(BatchInterface $batch)
     {
-        $this->sourceBatch = $sourceBatch;
-        $this->targetDropDir = $targetDropDir;
+        $this->batch = $batch;
     }
 
-    public function getSourceBatch()
+    public function getBatch()
     {
-        return $this->sourceBatch;
-    }
-
-    public function getTargetDropDir()
-    {
-        return $this->targetDropDir;
+        return $this->batch;
     }
 }

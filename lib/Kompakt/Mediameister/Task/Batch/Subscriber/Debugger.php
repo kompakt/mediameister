@@ -18,7 +18,6 @@ use Kompakt\Mediameister\Task\Batch\Event\BatchEndEvent;
 use Kompakt\Mediameister\Task\Batch\Event\BatchEndErrorEvent;
 use Kompakt\Mediameister\Task\Batch\Event\BatchStartEvent;
 use Kompakt\Mediameister\Task\Batch\Event\BatchStartErrorEvent;
-use Kompakt\Mediameister\Task\Batch\Event\InputErrorEvent;
 use Kompakt\Mediameister\Task\Batch\Event\MetadataErrorEvent;
 use Kompakt\Mediameister\Task\Batch\Event\MetadataEvent;
 use Kompakt\Mediameister\Task\Batch\Event\PackshotLoadErrorEvent;
@@ -48,9 +47,6 @@ class Debugger implements EventSubscriberInterface
     {
         return array(
             // task events
-            $this->eventNames->inputError() => array(
-                array('onInputError', 0)
-            ),
             $this->eventNames->taskRun() => array(
                 array('onTaskRun', 0)
             ),
@@ -100,16 +96,6 @@ class Debugger implements EventSubscriberInterface
             ),
             $this->eventNames->metadataError() => array(
                 array('onMetadataError', 0)
-            )
-        );
-    }
-
-    public function onInputError(InputErrorEvent $event)
-    {
-        $this->output->writeln(
-            sprintf(
-                '<error>! Task input error: %s</error>',
-                $event->getException()->getMessage()
             )
         );
     }

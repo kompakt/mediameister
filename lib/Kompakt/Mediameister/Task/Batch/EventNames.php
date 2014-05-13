@@ -20,11 +20,6 @@ class EventNames implements EventNamesInterface
         $this->namespace = $namespace;
     }
 
-    public function inputError()
-    {
-        return sprintf('%s.input_error', $this->namespace);
-    }
-
     public function taskRun()
     {
         return sprintf('%s.task_start', $this->namespace);

@@ -15,6 +15,7 @@ use Kompakt\Mediameister\Task\Batch\EventNamesInterface;
 use Kompakt\Mediameister\Task\Batch\Event\TaskEndErrorEvent;
 use Kompakt\Mediameister\Task\Batch\Event\TaskEndEvent;
 use Kompakt\Mediameister\Task\Batch\Subscriber\Bridge\Summary;
+use Kompakt\Mediameister\Util\Timer\Timer;
 
 class SummaryPrinter implements EventSubscriberInterface
 {
@@ -56,7 +57,7 @@ class SummaryPrinter implements EventSubscriberInterface
         $this->printSummary($event->getTimer());
     }
 
-    public function printSummary($timer)
+    protected function printSummary(Timer $timer)
     {
         $packshotError
             = ($this->summary->getPackshotCounter()->getErrors())

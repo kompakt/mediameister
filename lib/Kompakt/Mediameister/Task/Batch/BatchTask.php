@@ -9,9 +9,12 @@
 
 namespace Kompakt\Mediameister\Task\Batch;
 
+use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\DropDir\DropDirInterface;
 use Kompakt\Mediameister\DropDir\Registry\RegistryInterface;
+use Kompakt\Mediameister\Entity\TrackInterface;
 use Kompakt\Mediameister\Generic\EventDispatcher\EventDispatcherInterface;
+use Kompakt\Mediameister\Packshot\PackshotInterface;
 use Kompakt\Mediameister\Task\Batch\EventNamesInterface;
 use Kompakt\Mediameister\Task\Batch\Event\ArtworkErrorEvent;
 use Kompakt\Mediameister\Task\Batch\Event\ArtworkEvent;
@@ -19,19 +22,16 @@ use Kompakt\Mediameister\Task\Batch\Event\BatchEndEvent;
 use Kompakt\Mediameister\Task\Batch\Event\BatchEndErrorEvent;
 use Kompakt\Mediameister\Task\Batch\Event\BatchStartEvent;
 use Kompakt\Mediameister\Task\Batch\Event\BatchStartErrorEvent;
-use Kompakt\Mediameister\Task\Batch\Event\InputErrorEvent;
 use Kompakt\Mediameister\Task\Batch\Event\MetadataErrorEvent;
 use Kompakt\Mediameister\Task\Batch\Event\MetadataEvent;
 use Kompakt\Mediameister\Task\Batch\Event\PackshotLoadErrorEvent;
 use Kompakt\Mediameister\Task\Batch\Event\PackshotLoadEvent;
 use Kompakt\Mediameister\Task\Batch\Event\TaskEndErrorEvent;
 use Kompakt\Mediameister\Task\Batch\Event\TaskEndEvent;
-use Kompakt\Mediameister\Task\Batch\Event\TaskFinalEvent;
 use Kompakt\Mediameister\Task\Batch\Event\TaskRunErrorEvent;
 use Kompakt\Mediameister\Task\Batch\Event\TaskRunEvent;
 use Kompakt\Mediameister\Task\Batch\Event\TrackErrorEvent;
 use Kompakt\Mediameister\Task\Batch\Event\TrackEvent;
-use Kompakt\Mediameister\Task\Batch\Exception\InvalidArgumentException;
 use Kompakt\Mediameister\Task\Batch\Exception\RuntimeException;
 use Kompakt\Mediameister\Util\Timer\Timer;
 
@@ -39,26 +39,20 @@ class BatchTask
 {
     protected $dispatcher = null;
     protected $eventNames = null;
-    protected $dropDirRegistry = null;
-    protected $requireTargetDropDir = null;
 
     public function __construct(
         EventDispatcherInterface $dispatcher,
-        EventNamesInterface $eventNames,
-        RegistryInterface $dropDirRegistry,
-        $requireTargetDropDir = true
+        EventNamesInterface $eventNames
     )
     {
         $this->dispatcher = $dispatcher;
         $this->eventNames = $eventNames;
-        $this->dropDirRegistry = $dropDirRegistry;
-        $this->requireTargetDropDir = (bool) $requireTargetDropDir;
     }
 
-    public function run($sourceDropDirLabel, $sourceBatchName, $targetDropDirLabel = null)
+    public function run(BatchInterface $batch)
     {
         try {
-            $this->doRun($sourceDropDirLabel, $sourceBatchName, $targetDropDirLabel);
+            $this->doRun($batch);
         }
         catch (\Exception $e)
         {
@@ -66,36 +60,12 @@ class BatchTask
         }
     }
 
-    protected function doRun($sourceDropDirLabel, $sourceBatchName, $targetDropDirLabel)
+    protected function doRun(BatchInterface $batch)
     {
         $timer = new Timer();
         $timer->start();
-        $targetDropDir = null;
-        $sourceDropDir = $this->getSourceDropDir($sourceDropDirLabel);
 
-        if (!$sourceDropDir)
-        {
-            return;
-        }
-
-        $sourceBatch = $this->getSourceBatch($sourceDropDir, $sourceBatchName);
-
-        if (!$sourceBatch)
-        {
-            return;
-        }
-
-        if ($this->requireTargetDropDir)
-        {
-            $targetDropDir = $this->getTargetDropDir($targetDropDirLabel);
-
-            if (!$targetDropDir)
-            {
-                return;
-            }
-        }
-
-        if (!$this->runTask($sourceBatch, $targetDropDir))
+        if (!$this->runTask($batch))
         {
             $this->endTask($timer);
             return;
@@ -108,7 +78,7 @@ class BatchTask
             return;
         }
 
-        foreach($sourceBatch->getPackshots() as $packshot)
+        foreach($batch->getPackshots() as $packshot)
         {
             if (!$this->loadPackshot($packshot))
             {
@@ -129,81 +99,12 @@ class BatchTask
         $this->endTask($timer);
     }
 
-    protected function getSourceDropDir($sourceDropDirLabel)
-    {
-        try {
-            $sourceDropDir = $this->dropDirRegistry->get($sourceDropDirLabel);
-
-            if ($sourceDropDir)
-            {
-                return $sourceDropDir;
-            }
-
-            throw new InvalidArgumentException(sprintf('Source drop dir "%s" not found', $sourceDropDirLabel));
-        }
-        catch (\Exception $e)
-        {
-            $this->dispatcher->dispatch(
-                $this->eventNames->inputError(),
-                new InputErrorEvent($e)
-            );
-
-            return null;
-        }
-    }
-
-    protected function getSourceBatch($sourceDropDir, $sourceBatchName)
-    {
-        try {
-            $sourceBatch = $sourceDropDir->getBatch($sourceBatchName);
-
-            if ($sourceBatch)
-            {
-                return $sourceBatch;
-            }
-
-            throw new InvalidArgumentException(sprintf('Source batch "%s" not found', $sourceBatchName));
-        }
-        catch (\Exception $e)
-        {
-            $this->dispatcher->dispatch(
-                $this->eventNames->inputError(),
-                new InputErrorEvent($e)
-            );
-
-            return null;
-        }
-    }
-
-    protected function getTargetDropDir($targetDropDirLabel)
-    {
-        try {
-            $targetDropDir = $this->dropDirRegistry->get($targetDropDirLabel);
-
-            if ($targetDropDir)
-            {
-                return $targetDropDir;
-            }
-
-            throw new InvalidArgumentException(sprintf('Target drop dir "%s" not found', $targetDropDirLabel));
-        }
-        catch (\Exception $e)
-        {
-            $this->dispatcher->dispatch(
-                $this->eventNames->inputError(),
-                new InputErrorEvent($e)
-            );
-
-            return null;
-        }
-    }
-
-    protected function runTask($sourceBatch, $targetDropDir)
+    protected function runTask(BatchInterface $batch)
     {
         try {
             $this->dispatcher->dispatch(
                 $this->eventNames->taskRun(),
-                new TaskRunEvent($sourceBatch, $targetDropDir)
+                new TaskRunEvent($batch)
             );
 
             return true;
@@ -219,7 +120,7 @@ class BatchTask
         }
     }
 
-    protected function endTask($timer)
+    protected function endTask(Timer $timer)
     {
         try {
             $this->dispatcher->dispatch(
@@ -282,7 +183,7 @@ class BatchTask
         }
     }
 
-    protected function loadPackshot($packshot)
+    protected function loadPackshot(PackshotInterface $packshot)
     {
         try {
             $packshot->load();
@@ -326,7 +227,7 @@ class BatchTask
         }
     }
 
-    protected function handleTrack($track)
+    protected function handleTrack(TrackInterface $track)
     {
         try {
             $this->dispatcher->dispatch(

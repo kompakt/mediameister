@@ -12,7 +12,6 @@ namespace Kompakt\Mediameister\Task\Batch;
 interface EventNamesInterface
 {
     // task events
-    public function inputError();
     public function taskRun();
     public function taskRunError();
     public function taskEnd();

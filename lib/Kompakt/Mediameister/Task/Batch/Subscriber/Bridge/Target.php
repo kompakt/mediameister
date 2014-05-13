@@ -10,12 +10,24 @@
 namespace Kompakt\Mediameister\Task\Batch\Subscriber\Bridge;
 
 use Kompakt\Mediameister\Batch\BatchInterface;
+use Kompakt\Mediameister\DropDir\DropDirInterface;
 use Kompakt\Mediameister\Packshot\PackshotInterface;
 
 class Target
 {
+    protected $dropDir = null;
     protected $batch = null;
     protected $packshot = null;
+
+    public function __construct(DropDirInterface $dropDir)
+    {
+        $this->dropDir = $dropDir;
+    }
+
+    public function getDropDir()
+    {
+        return $this->dropDir;
+    }
 
     public function setBatch(BatchInterface $batch)
     {
