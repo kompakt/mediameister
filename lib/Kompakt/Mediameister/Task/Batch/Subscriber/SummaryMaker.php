@@ -96,13 +96,13 @@ class SummaryMaker implements EventSubscriberInterface
 
     public function onTrack(TrackEvent $event)
     {
-        $id = $this->currentPackshot->getName() . $event->getTrack()->getIsrc();
+        $id = $this->currentPackshot->getName() . spl_object_hash($event->getTrack());
         $this->summary->getTrackCounter()->ok($id);
     }
 
     public function onTrackError(TrackErrorEvent $event)
     {
-        $id = $this->currentPackshot->getName() . $event->getTrack()->getIsrc();
+        $id = $this->currentPackshot->getName() . spl_object_hash($event->getTrack());
         $this->summary->getTrackCounter()->error($id);
     }
 
