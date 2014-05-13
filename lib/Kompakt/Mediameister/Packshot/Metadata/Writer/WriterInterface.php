@@ -9,7 +9,7 @@
 
 namespace Kompakt\Mediameister\Packshot\Metadata\Writer;
 
-use Kompakt\NativeReleaseBatch\Entity\ReleaseInterface;
+use Kompakt\Mediameister\Entity\ReleaseInterface;
 
 interface WriterInterface
 {
