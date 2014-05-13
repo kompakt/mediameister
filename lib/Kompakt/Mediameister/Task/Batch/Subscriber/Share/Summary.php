@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\Batch\Subscriber\Bridge;
+namespace Kompakt\Mediameister\Task\Batch\Subscriber\Share;
 
 use Kompakt\Mediameister\Util\Counter;
 

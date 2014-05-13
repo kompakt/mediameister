@@ -19,7 +19,7 @@ use Kompakt\Mediameister\Task\Batch\Event\PackshotLoadErrorEvent;
 use Kompakt\Mediameister\Task\Batch\Event\PackshotLoadEvent;
 use Kompakt\Mediameister\Task\Batch\Event\TrackErrorEvent;
 use Kompakt\Mediameister\Task\Batch\Event\TrackEvent;
-use Kompakt\Mediameister\Task\Batch\Subscriber\Bridge\Summary;
+use Kompakt\Mediameister\Task\Batch\Subscriber\Share\Summary;
 
 class SummaryMaker implements EventSubscriberInterface
 {

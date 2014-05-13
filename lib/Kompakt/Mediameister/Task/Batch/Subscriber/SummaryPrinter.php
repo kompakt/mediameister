@@ -14,7 +14,7 @@ use Kompakt\Mediameister\Generic\EventDispatcher\EventSubscriberInterface;
 use Kompakt\Mediameister\Task\Batch\EventNamesInterface;
 use Kompakt\Mediameister\Task\Batch\Event\TaskEndErrorEvent;
 use Kompakt\Mediameister\Task\Batch\Event\TaskEndEvent;
-use Kompakt\Mediameister\Task\Batch\Subscriber\Bridge\Summary;
+use Kompakt\Mediameister\Task\Batch\Subscriber\Share\Summary;
 use Kompakt\Mediameister\Util\Timer\Timer;
 
 class SummaryPrinter implements EventSubscriberInterface
