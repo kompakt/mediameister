@@ -10,12 +10,13 @@
 namespace Kompakt\Tests\Mediameister\DropDir;
 
 use Kompakt\Mediameister\DropDir\DropDir;
+use Kompakt\TestHelper\Filesystem\TmpDir;
 
 class DropDirTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetBatches()
     {
-        $dropDir = new DropDir($this->getBatchFactory(), $this->getTestDir());
+        $dropDir = new DropDir($this->getBatchFactory(), $this->getFilesDir());
         $this->assertCount(4, $dropDir->getBatches());
     }
 
@@ -24,13 +25,13 @@ class DropDirTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetBatchWithInvalidName()
     {
-        $dropDir = new DropDir($this->getBatchFactory(), $this->getTestDir());
+        $dropDir = new DropDir($this->getBatchFactory(), $this->getFilesDir());
         $dropDir->getBatch('../some-batch');
     }
 
     public function testCreateBatch()
     {
-        $dir = freshTmpSubDir(__CLASS__);
+        $dir = $this->getTmpDir(__CLASS__);
         $dropDir = new DropDir($this->getBatchFactory(), $dir);
         $this->assertCount(0, $dropDir->getBatches());
 
@@ -46,8 +47,14 @@ class DropDirTest extends \PHPUnit_Framework_TestCase
         ;
     }
 
-    protected function getTestDir()
+    protected function getFilesDir()
     {
         return sprintf('%s/_files/DropDirTest', __DIR__);
+    }
+
+    protected function getTmpDir($class)
+    {
+        $tmpDir = new TmpDir(TESTS_KOMPAKT_MEDIAMEISTER_TEMP_DIR);
+        return $tmpDir->replaceSubDir($tmpDir->prepareSubDirPath($class));
     }
 }

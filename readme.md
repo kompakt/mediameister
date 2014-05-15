@@ -39,4 +39,4 @@ Example:
 
 ## License
 
-See LICENSE.
+kompakt/mediameister is licensed under the MIT license - see the LICENSE file for details
