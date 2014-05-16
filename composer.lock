@@ -3,23 +3,23 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "41cfd325779fd8810039d637f7487231",
+    "hash": "f06bf54270cc56e3ddaca5584884e1c7",
     "packages": [
 
     ],
     "packages-dev": [
         {
             "name": "kompakt/test-helper",
-            "version": "v0.0.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kompakt/test-helper.git",
-                "reference": "5f538ce7f60a25d59ff694e38107050a8282e1d4"
+                "reference": "a3a2327d3b4128ee6c18bd605f62b3ee932cc56a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kompakt/test-helper/zipball/5f538ce7f60a25d59ff694e38107050a8282e1d4",
-                "reference": "5f538ce7f60a25d59ff694e38107050a8282e1d4",
+                "url": "https://api.github.com/repos/kompakt/test-helper/zipball/a3a2327d3b4128ee6c18bd605f62b3ee932cc56a",
+                "reference": "a3a2327d3b4128ee6c18bd605f62b3ee932cc56a",
                 "shasum": ""
             },
             "require": {
@@ -30,8 +30,8 @@
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Kompakt\\TestHelper": "lib/"
+                "psr-4": {
+                    "Kompakt\\TestHelper\\": "lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -48,7 +48,7 @@
             "keywords": [
                 "testing"
             ],
-            "time": "2014-05-15 15:18:05"
+            "time": "2014-05-16 12:08:03"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -750,9 +750,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "kompakt/test-helper": 20
+    },
     "platform": {
         "php": ">=5.3.2"
     },

@@ -10,7 +10,6 @@
 namespace Kompakt\Tests\Mediameister\Batch;
 
 use Kompakt\Mediameister\Batch\Batch;
-use Kompakt\TestHelper\Filesystem\TmpDir;
 
 class BatchTest extends \PHPUnit_Framework_TestCase
 {
@@ -78,7 +77,7 @@ class BatchTest extends \PHPUnit_Framework_TestCase
 
     protected function getTmpDir($class)
     {
-        $tmpDir = new TmpDir(TESTS_KOMPAKT_MEDIAMEISTER_TEMP_DIR);
+        $tmpDir = getTmpDir();
         return $tmpDir->replaceSubDir($tmpDir->prepareSubDirPath($class));
     }
 }

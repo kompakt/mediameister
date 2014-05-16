@@ -10,7 +10,6 @@
 namespace Kompakt\Tests\Mediameister\DropDir;
 
 use Kompakt\Mediameister\DropDir\DropDir;
-use Kompakt\TestHelper\Filesystem\TmpDir;
 
 class DropDirTest extends \PHPUnit_Framework_TestCase
 {
@@ -54,7 +53,7 @@ class DropDirTest extends \PHPUnit_Framework_TestCase
 
     protected function getTmpDir($class)
     {
-        $tmpDir = new TmpDir(TESTS_KOMPAKT_MEDIAMEISTER_TEMP_DIR);
+        $tmpDir = getTmpDir();
         return $tmpDir->replaceSubDir($tmpDir->prepareSubDirPath($class));
     }
 }
