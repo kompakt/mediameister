@@ -11,5 +11,5 @@ namespace Kompakt\Mediameister\Packshot\Metadata\Reader;
 
 interface ReaderInterface
 {
-    public function load();
+    public function read();
 }

@@ -10,31 +10,31 @@
 namespace Kompakt\Mediameister\Packshot;
 
 use Kompakt\Mediameister\Entity\ReleaseInterface;
-use Kompakt\Mediameister\Packshot\Artwork\Loader\Factory\LoaderFactoryInterface as ArtworkLoaderFactoryInterface;
-use Kompakt\Mediameister\Packshot\Audio\Loader\Factory\LoaderFactoryInterface as AudioLoaderFactoryInterface;
+use Kompakt\Mediameister\Packshot\Artwork\Finder\Factory\ArtworkFinderFactoryInterface;
+use Kompakt\Mediameister\Packshot\Audio\Finder\Factory\AudioFinderFactoryInterface;
 use Kompakt\Mediameister\Packshot\Layout\Factory\LayoutFactoryInterface;
-use Kompakt\Mediameister\Packshot\Metadata\Loader\Factory\LoaderFactoryInterface as MetadataLoaderFactoryInterface;
+use Kompakt\Mediameister\Packshot\Metadata\Finder\Factory\MetadataFinderFactoryInterface;
 use Kompakt\Mediameister\Packshot\Metadata\Writer\Factory\WriterFactoryInterface as MetadataWriterFactoryInterface;
 use Kompakt\Mediameister\Packshot\PackshotInterface;
 
 class Packshot implements PackshotInterface
 {
     protected $metadataWriterFactory = null;
-    protected $metadataLoaderFactory = null;
-    protected $artworkLoaderFactory = null;
-    protected $audioLoaderFactory = null;
+    protected $metadataFinderFactory = null;
+    protected $artworkFinderFactory = null;
+    protected $audioFinderFactory = null;
     protected $name = null;
     protected $layout = null;
     protected $release = null;
-    protected $artworkLoader = null;
-    protected $audioLoader = null;
+    protected $artworkFinder = null;
+    protected $audioFinder = null;
 
     public function __construct(
         LayoutFactoryInterface $layoutFactory,
         MetadataWriterFactoryInterface $metadataWriterFactory,
-        MetadataLoaderFactoryInterface $metadataLoaderFactory,
-        ArtworkLoaderFactoryInterface $artworkLoaderFactory,
-        AudioLoaderFactoryInterface $audioLoaderFactory,
+        MetadataFinderFactoryInterface $metadataFinderFactory,
+        ArtworkFinderFactoryInterface $artworkFinderFactory,
+        AudioFinderFactoryInterface $audioFinderFactory,
         $dir
     )
     {
@@ -55,10 +55,10 @@ class Packshot implements PackshotInterface
             throw new InvalidArgumentException(sprintf('Packshot dir not writable'));
         }
 
-        $this->metadataLoaderFactory = $metadataLoaderFactory;
+        $this->metadataFinderFactory = $metadataFinderFactory;
         $this->metadataWriterFactory = $metadataWriterFactory;
-        $this->artworkLoaderFactory = $artworkLoaderFactory;
-        $this->audioLoaderFactory = $audioLoaderFactory;
+        $this->artworkFinderFactory = $artworkFinderFactory;
+        $this->audioFinderFactory = $audioFinderFactory;
         
         $this->name = basename($dir);
         $this->layout = $layoutFactory->getInstance($dir);
@@ -79,14 +79,14 @@ class Packshot implements PackshotInterface
         return $this->release;
     }
 
-    public function getArtworkLoader()
+    public function getArtworkFinder()
     {
-        return $this->artworkLoader;
+        return $this->artworkFinder;
     }
 
-    public function getAudioLoader()
+    public function getAudioFinder()
     {
-        return $this->audioLoader;
+        return $this->audioFinder;
     }
 
     public function init(ReleaseInterface $release)
@@ -100,16 +100,16 @@ class Packshot implements PackshotInterface
     {
         if (!$this->release)
         {
-            $this->release = $this->metadataLoaderFactory->getInstance($this->layout)->load();
+            $this->release = $this->metadataFinderFactory->getInstance($this->layout)->find();
         }
 
-        $this->artworkLoader = $this->artworkLoaderFactory->getInstance($this->layout, $this->release);
-        $this->audioLoader = $this->audioLoaderFactory->getInstance($this->layout, $this->release);
+        $this->artworkFinder = $this->artworkFinderFactory->getInstance($this->layout, $this->release);
+        $this->audioFinder = $this->audioFinderFactory->getInstance($this->layout, $this->release);
         return $this;
     }
 
     public function save()
     {
-        $this->metadataWriterFactory->getInstance($this->layout, $this->release)->save();
+        $this->metadataWriterFactory->getInstance($this->layout, $this->release)->write();
     }
 }

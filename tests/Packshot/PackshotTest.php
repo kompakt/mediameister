@@ -18,9 +18,9 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
         $packshot = new Packshot(
             $this->getLayoutFactory(),
             $this->getMetadataWriterFactory(),
-            $this->getMetadataLoaderFactory(),
-            $this->getArtworkLoaderFactory(),
-            $this->getAudioLoaderFactory(),
+            $this->getMetadataFinderFactory(),
+            $this->getArtworkFinderFactory(),
+            $this->getAudioFinderFactory(),
             __DIR__
         );
 
@@ -49,7 +49,7 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
         return $factory;
     }
 
-    protected function getMetadataLoaderFactory()
+    protected function getMetadataFinderFactory()
     {
         $release = $this
             ->getMockBuilder('Kompakt\Mediameister\Entity\ReleaseInterface')
@@ -57,26 +57,26 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
             ->getMock()
         ;
 
-        $loader = $this
-            ->getMockBuilder('Kompakt\Mediameister\Packshot\Metadata\Loader\LoaderInterface')
+        $finder = $this
+            ->getMockBuilder('Kompakt\Mediameister\Packshot\Metadata\Finder\MetadataFinderInterface')
             ->getMock()
         ;
 
-        $loader
+        $finder
             ->expects($this->once())
-            ->method('load')
+            ->method('find')
             ->will($this->returnValue($release))
         ;
 
         $factory = $this
-            ->getMockBuilder('Kompakt\Mediameister\Packshot\Metadata\Loader\Factory\LoaderFactoryInterface')
+            ->getMockBuilder('Kompakt\Mediameister\Packshot\Metadata\Finder\Factory\MetadataFinderFactoryInterface')
             ->getMock()
         ;
 
         $factory
             ->expects($this->once())
             ->method('getInstance')
-            ->will($this->returnValue($loader))
+            ->will($this->returnValue($finder))
         ;
 
         return $factory;
@@ -103,18 +103,18 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
         return $factory;
     }
 
-    public function getArtworkLoaderFactory()
+    public function getArtworkFinderFactory()
     {
         return $this
-            ->getMockBuilder('Kompakt\Mediameister\Packshot\Artwork\Loader\Factory\LoaderFactoryInterface')
+            ->getMockBuilder('Kompakt\Mediameister\Packshot\Artwork\Finder\Factory\ArtworkFinderFactoryInterface')
             ->getMock()
         ;
     }
 
-    public function getAudioLoaderFactory()
+    public function getAudioFinderFactory()
     {
         return $this
-            ->getMockBuilder('Kompakt\Mediameister\Packshot\Audio\Loader\Factory\LoaderFactoryInterface')
+            ->getMockBuilder('Kompakt\Mediameister\Packshot\Audio\Finder\Factory\AudioFinderFactoryInterface')
             ->getMock()
         ;
     }

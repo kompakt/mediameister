@@ -11,5 +11,5 @@ namespace Kompakt\Mediameister\Packshot\Metadata\Writer;
 
 interface WriterInterface
 {
-    public function save();
+    public function write();
 }

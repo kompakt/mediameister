@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Packshot\Artwork\Loader;
+namespace Kompakt\Mediameister\Packshot\Audio\Finder;
 
-interface LoaderInterface
+interface AudioFinderInterface
 {}
