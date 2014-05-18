@@ -20,22 +20,22 @@ use Kompakt\Mediameister\Packshot\Packshot;
 class PackshotFactory implements PackshotFactoryInterface
 {
     protected $layoutFactory = null;
-    protected $metadataLoaderFactory = null;
     protected $metadataWriterFactory = null;
+    protected $metadataLoaderFactory = null;
     protected $artworkLoaderFactory = null;
     protected $audioLoaderFactory = null;
 
     public function __construct(
         LayoutFactoryInterface $layoutFactory,
-        MetadataLoaderFactoryInterface $metadataLoaderFactory,
         MetadataWriterFactoryInterface $metadataWriterFactory,
+        MetadataLoaderFactoryInterface $metadataLoaderFactory,
         ArtworkLoaderFactoryInterface $artworkLoaderFactory,
         AudioLoaderFactoryInterface $audioLoaderFactory
     )
     {
         $this->layoutFactory = $layoutFactory;
-        $this->metadataLoaderFactory = $metadataLoaderFactory;
         $this->metadataWriterFactory = $metadataWriterFactory;
+        $this->metadataLoaderFactory = $metadataLoaderFactory;
         $this->artworkLoaderFactory = $artworkLoaderFactory;
         $this->audioLoaderFactory = $audioLoaderFactory;
     }
@@ -44,8 +44,8 @@ class PackshotFactory implements PackshotFactoryInterface
     {
         return new Packshot(
             $this->layoutFactory,
-            $this->metadataLoaderFactory,
             $this->metadataWriterFactory,
+            $this->metadataLoaderFactory,
             $this->artworkLoaderFactory,
             $this->audioLoaderFactory,
             $dir

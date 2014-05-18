@@ -17,8 +17,8 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
     {
         $packshot = new Packshot(
             $this->getLayoutFactory(),
-            $this->getMetadataLoaderFactory(),
             $this->getMetadataWriterFactory(),
+            $this->getMetadataLoaderFactory(),
             $this->getArtworkLoaderFactory(),
             $this->getAudioLoaderFactory(),
             __DIR__

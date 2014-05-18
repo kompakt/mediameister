@@ -19,8 +19,8 @@ use Kompakt\Mediameister\Packshot\PackshotInterface;
 
 class Packshot implements PackshotInterface
 {
-    protected $metadataLoaderFactory = null;
     protected $metadataWriterFactory = null;
+    protected $metadataLoaderFactory = null;
     protected $artworkLoaderFactory = null;
     protected $audioLoaderFactory = null;
     protected $name = null;
@@ -31,8 +31,8 @@ class Packshot implements PackshotInterface
 
     public function __construct(
         LayoutFactoryInterface $layoutFactory,
-        MetadataLoaderFactoryInterface $metadataLoaderFactory,
         MetadataWriterFactoryInterface $metadataWriterFactory,
+        MetadataLoaderFactoryInterface $metadataLoaderFactory,
         ArtworkLoaderFactoryInterface $artworkLoaderFactory,
         AudioLoaderFactoryInterface $audioLoaderFactory,
         $dir
@@ -110,6 +110,6 @@ class Packshot implements PackshotInterface
 
     public function save()
     {
-        $this->metadataWriterFactory->getInstance()->save($this->getRelease(), $this->getLayout()->getMetadataFile());
+        $this->metadataWriterFactory->getInstance($this->layout, $this->release)->save();
     }
 }

@@ -42,8 +42,8 @@ class PackshotFactoryTest extends \PHPUnit_Framework_TestCase
 
         $packshotFactory = new PackshotFactory(
             $layoutFactory,
-            $metadataLoaderFactory,
             $metadataWriterFactory,
+            $metadataLoaderFactory,
             $artworkLoaderFactory,
             $audioLoaderFactory
         );

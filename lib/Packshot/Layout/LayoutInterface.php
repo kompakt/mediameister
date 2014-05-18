@@ -10,7 +10,4 @@
 namespace Kompakt\Mediameister\Packshot\Layout;
 
 interface LayoutInterface
-{
-    public function getMetadataFile();
-    public function getOtherMetadataFilenames();
-}
+{}

@@ -9,7 +9,10 @@
 
 namespace Kompakt\Mediameister\Packshot\Metadata\Writer\Factory;
 
+use Kompakt\Mediameister\Entity\ReleaseInterface;
+use Kompakt\Mediameister\Packshot\Layout\LayoutInterface;
+
 interface WriterFactoryInterface
 {
-    public function getInstance();
+    public function getInstance(LayoutInterface $layout, ReleaseInterface $release);
 }
