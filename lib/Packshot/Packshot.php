@@ -12,6 +12,7 @@ namespace Kompakt\Mediameister\Packshot;
 use Kompakt\Mediameister\Entity\ReleaseInterface;
 use Kompakt\Mediameister\Packshot\Artwork\Finder\Factory\ArtworkFinderFactoryInterface;
 use Kompakt\Mediameister\Packshot\Audio\Finder\Factory\AudioFinderFactoryInterface;
+use Kompakt\Mediameister\Packshot\Exception\InvalidArgumentException;
 use Kompakt\Mediameister\Packshot\Layout\Factory\LayoutFactoryInterface;
 use Kompakt\Mediameister\Packshot\Metadata\Finder\Factory\MetadataFinderFactoryInterface;
 use Kompakt\Mediameister\Packshot\Metadata\Writer\Factory\WriterFactoryInterface as MetadataWriterFactoryInterface;

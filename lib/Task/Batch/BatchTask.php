@@ -10,8 +10,6 @@
 namespace Kompakt\Mediameister\Task\Batch;
 
 use Kompakt\Mediameister\Batch\BatchInterface;
-use Kompakt\Mediameister\DropDir\DropDirInterface;
-use Kompakt\Mediameister\DropDir\Registry\RegistryInterface;
 use Kompakt\Mediameister\Entity\TrackInterface;
 use Kompakt\Mediameister\Generic\EventDispatcher\EventDispatcherInterface;
 use Kompakt\Mediameister\Packshot\PackshotInterface;
