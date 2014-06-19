@@ -16,4 +16,7 @@ interface EventDispatcherInterface
 {
     public function dispatch($eventName, EventInterface $event = null);
     public function addSubscriber(EventSubscriberInterface $subscriber);
+    public function removeSubscriber(EventSubscriberInterface $subscriber);
+    public function addListener($eventName, $listener, $priority = 0);
+    public function removeListener($eventName, $listener);
 }

@@ -19,6 +19,8 @@ use Symfony\Component\EventDispatcher\EventDispatcher as SymfonyEventDispatcher;
 class EventDispatcher implements EventDispatcherInterface
 {
     protected $symfonyDispatcher = null;
+    protected $subscribers = array();
+    protected $listeners = array();
 
     public function __construct(SymfonyEventDispatcher $symfonyDispatcher)
     {
@@ -32,9 +34,23 @@ class EventDispatcher implements EventDispatcherInterface
 
     public function addSubscriber(EventSubscriberInterface $subscriber)
     {
-        $adapterGenerator = new SymfonyEventSubscriberGenerator();
+        $subscriberGenerator = new SymfonyEventSubscriberGenerator();
         $className = sprintf('%s_%s', preg_replace('/\\\/', '_', get_class($subscriber)), uniqid());
-        $this->symfonyDispatcher->addSubscriber($adapterGenerator->getAdapter($subscriber, $className));
+        $symfonySubscriber = $subscriberGenerator->getAdapter($subscriber, $className);
+        $this->symfonyDispatcher->addSubscriber($symfonySubscriber);
+        $this->subscribers[] = array($subscriber, $symfonySubscriber);
+    }
+
+    public function removeSubscriber(EventSubscriberInterface $subscriber)
+    {
+        foreach ($this->subscribers as $i => $s)
+        {
+            if ($s[0] === $subscriber)
+            {
+                $this->symfonyDispatcher->removeSubscriber($s[1]);
+                unset($this->subscribers[$i]);
+            }
+        }
     }
 
     public function addListener($eventName, $listener, $priority = 0)
@@ -45,5 +61,21 @@ class EventDispatcher implements EventDispatcherInterface
         };
 
         $this->symfonyDispatcher->addListener($eventName, $symfonyListener, $priority);
+        $this->listeners[$eventName] = array($listener, $symfonyListener);
+    }
+
+    public function removeListener($eventName, $listener)
+    {
+        if (array_key_exists($eventName, $this->listeners))
+        {
+            foreach ($this->listeners[$eventName] as $i => $s)
+            {
+                if ($s[0] === $listener)
+                {
+                    $this->symfonyDispatcher->removeListener($eventName, $s[1]);
+                    unset($this->listeners[$eventName][$i]);
+                }
+            }
+        }
     }
 }
