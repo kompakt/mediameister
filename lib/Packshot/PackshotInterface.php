@@ -13,6 +13,7 @@ use Kompakt\Mediameister\Entity\ReleaseInterface;
 
 interface PackshotInterface
 {
+    public function getDir();
     public function getName();
     public function getLayout();
     public function getRelease();

@@ -60,9 +60,15 @@ class Packshot implements PackshotInterface
         $this->metadataWriterFactory = $metadataWriterFactory;
         $this->artworkFinderFactory = $artworkFinderFactory;
         $this->audioFinderFactory = $audioFinderFactory;
-        
+
+        $this->dir = $dir;
         $this->name = basename($dir);
         $this->layout = $layoutFactory->getInstance($dir);
+    }
+
+    public function getDir()
+    {
+        return $this->dir;
     }
 
     public function getName()
