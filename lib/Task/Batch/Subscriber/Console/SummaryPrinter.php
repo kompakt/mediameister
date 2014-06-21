@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\Batch\Subscriber;
+namespace Kompakt\Mediameister\Task\Batch\Subscriber\Console;
 
 use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
 use Kompakt\Mediameister\Generic\EventDispatcher\EventSubscriberInterface;
