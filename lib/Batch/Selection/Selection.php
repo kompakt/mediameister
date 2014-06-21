@@ -11,7 +11,9 @@ namespace Kompakt\Mediameister\Batch\Selection;
 
 use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\Batch\Selection\Factory\FileFactory;
+use Kompakt\Mediameister\DropDir\DropDirInterface;
 use Kompakt\Mediameister\Packshot\PackshotInterface;
+use Kompakt\Mediameister\Util\Filesystem\Directory;
 
 class Selection
 {
@@ -78,5 +80,44 @@ class Selection
     public function clear()
     {
         $this->file->clear();
+    }
+
+    public function copy(DropDirInterface $targetDropDir)
+    {
+        $targetBatch = $targetDropDir->createBatch($this->batch->getName());
+
+        foreach($this->getPackshots() as $packshot)
+        {
+            $targetPackshot = $targetBatch->createPackshot($packshot->getName());
+
+            $directory = new Directory($packshot->getDir());
+            $directory->copyChildren($targetPackshot->getDir());
+        }
+    }
+
+    public function move(DropDirInterface $targetDropDir)
+    {
+        $targetBatch = $targetDropDir->createBatch($this->batch->getName());
+
+        foreach($this->getPackshots() as $packshot)
+        {
+            $targetPackshot = $targetBatch->createPackshot($packshot->getName());
+
+            $directory = new Directory($packshot->getDir());
+            $directory->moveChildren($targetPackshot->getDir());
+            rmdir($packshot->getDir());
+        }
+
+        $this->clear();
+    }
+
+    public function delete()
+    {
+        foreach($this->getPackshots() as $packshot)
+        {
+            $this->batch->deletePackshot($packshot->getName());
+        }
+
+        $this->clear();
     }
 }

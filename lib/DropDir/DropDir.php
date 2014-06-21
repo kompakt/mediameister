@@ -13,6 +13,7 @@ use Kompakt\Mediameister\Batch\Factory\BatchFactoryInterface;
 use Kompakt\Mediameister\DropDir\DropDirInterface;
 use Kompakt\Mediameister\DropDir\Exception\InvalidArgumentException;
 use Kompakt\Mediameister\DropDir\Filter\BatchFilterInterface;
+use Kompakt\Mediameister\Util\Filesystem\Directory;
 
 class DropDir implements DropDirInterface
 {
@@ -100,6 +101,17 @@ class DropDir implements DropDirInterface
         }
 
         return $this->batchFactory->getInstance($dir);
+    }
+
+    public function deleteBatch($name)
+    {
+        $batch = $this->getBatch($name);
+
+        if ($batch)
+        {
+            $directory = new Directory($batch->getDir());
+            $directory->delete();
+        }
     }
 
     protected function checkName($name)

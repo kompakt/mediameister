@@ -13,6 +13,7 @@ use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\Batch\Exception\InvalidArgumentException;
 use Kompakt\Mediameister\Batch\Filter\PackshotFilterInterface;
 use Kompakt\Mediameister\Packshot\Factory\PackshotFactoryInterface;
+use Kompakt\Mediameister\Util\Filesystem\Directory;
 
 class Batch implements BatchInterface
 {
@@ -110,6 +111,17 @@ class Batch implements BatchInterface
         }
 
         return $this->packshotFactory->getInstance($dir);
+    }
+
+    public function deletePackshot($name)
+    {
+        $packshot = $this->getPackshot($name);
+
+        if ($packshot)
+        {
+            $directory = new Directory($packshot->getDir());
+            $directory->delete();
+        }
     }
 
     protected function checkName($name)

@@ -16,4 +16,5 @@ interface DropDirInterface
     public function getBatches(BatchFilterInterface $filter = null);
     public function getBatch($name);
     public function createBatch($name);
+    public function deleteBatch($name);
 }
