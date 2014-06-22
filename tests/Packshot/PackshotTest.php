@@ -18,7 +18,7 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
         $packshot = new Packshot(
             $this->getLayoutFactory(),
             $this->getMetadataWriterFactory(),
-            $this->getMetadataFinderFactory(),
+            $this->getMetadataLoaderFactory(),
             $this->getArtworkFinderFactory(),
             $this->getAudioFinderFactory(),
             __DIR__
@@ -49,7 +49,7 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
         return $factory;
     }
 
-    protected function getMetadataFinderFactory()
+    protected function getMetadataLoaderFactory()
     {
         $release = $this
             ->getMockBuilder('Kompakt\Mediameister\Entity\ReleaseInterface')
@@ -58,18 +58,18 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
         ;
 
         $finder = $this
-            ->getMockBuilder('Kompakt\Mediameister\Packshot\Metadata\Finder\MetadataFinderInterface')
+            ->getMockBuilder('Kompakt\Mediameister\Packshot\Metadata\Loader\MetadataLoaderInterface')
             ->getMock()
         ;
 
         $finder
             ->expects($this->once())
-            ->method('find')
+            ->method('load')
             ->will($this->returnValue($release))
         ;
 
         $factory = $this
-            ->getMockBuilder('Kompakt\Mediameister\Packshot\Metadata\Finder\Factory\MetadataFinderFactoryInterface')
+            ->getMockBuilder('Kompakt\Mediameister\Packshot\Metadata\Loader\Factory\MetadataLoaderFactoryInterface')
             ->getMock()
         ;
 

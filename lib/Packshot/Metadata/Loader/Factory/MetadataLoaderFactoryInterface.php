@@ -7,11 +7,11 @@
  *
  */
 
-namespace Kompakt\Mediameister\Packshot\Metadata\Finder\Factory;
+namespace Kompakt\Mediameister\Packshot\Metadata\Loader\Factory;
 
 use Kompakt\Mediameister\Packshot\Layout\LayoutInterface;
 
-interface MetadataFinderFactoryInterface
+interface MetadataLoaderFactoryInterface
 {
     public function getInstance(LayoutInterface $layout);
 }

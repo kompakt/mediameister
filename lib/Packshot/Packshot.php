@@ -14,26 +14,27 @@ use Kompakt\Mediameister\Packshot\Artwork\Finder\Factory\ArtworkFinderFactoryInt
 use Kompakt\Mediameister\Packshot\Audio\Finder\Factory\AudioFinderFactoryInterface;
 use Kompakt\Mediameister\Packshot\Exception\InvalidArgumentException;
 use Kompakt\Mediameister\Packshot\Layout\Factory\LayoutFactoryInterface;
-use Kompakt\Mediameister\Packshot\Metadata\Finder\Factory\MetadataFinderFactoryInterface;
+use Kompakt\Mediameister\Packshot\Metadata\Loader\Factory\MetadataLoaderFactoryInterface;
 use Kompakt\Mediameister\Packshot\Metadata\Writer\Factory\WriterFactoryInterface as MetadataWriterFactoryInterface;
 use Kompakt\Mediameister\Packshot\PackshotInterface;
 
 class Packshot implements PackshotInterface
 {
     protected $metadataWriterFactory = null;
-    protected $metadataFinderFactory = null;
+    protected $metadataLoaderFactory = null;
     protected $artworkFinderFactory = null;
     protected $audioFinderFactory = null;
     protected $name = null;
     protected $layout = null;
     protected $release = null;
+    protected $metadataLoader = null;
     protected $artworkFinder = null;
     protected $audioFinder = null;
 
     public function __construct(
         LayoutFactoryInterface $layoutFactory,
         MetadataWriterFactoryInterface $metadataWriterFactory,
-        MetadataFinderFactoryInterface $metadataFinderFactory,
+        MetadataLoaderFactoryInterface $metadataLoaderFactory,
         ArtworkFinderFactoryInterface $artworkFinderFactory,
         AudioFinderFactoryInterface $audioFinderFactory,
         $dir
@@ -56,8 +57,8 @@ class Packshot implements PackshotInterface
             throw new InvalidArgumentException(sprintf('Packshot dir not writable'));
         }
 
-        $this->metadataFinderFactory = $metadataFinderFactory;
         $this->metadataWriterFactory = $metadataWriterFactory;
+        $this->metadataLoaderFactory = $metadataLoaderFactory;
         $this->artworkFinderFactory = $artworkFinderFactory;
         $this->audioFinderFactory = $audioFinderFactory;
 
@@ -86,6 +87,11 @@ class Packshot implements PackshotInterface
         return $this->release;
     }
 
+    public function getMetadataLoader()
+    {
+        return $this->metadataLoader;
+    }
+
     public function getArtworkFinder()
     {
         return $this->artworkFinder;
@@ -105,9 +111,11 @@ class Packshot implements PackshotInterface
 
     public function load()
     {
+        $this->metadataLoader = $this->metadataLoaderFactory->getInstance($this->layout);
+
         if (!$this->release)
         {
-            $this->release = $this->metadataFinderFactory->getInstance($this->layout)->find();
+            $this->release = $this->metadataLoader->load();
         }
 
         $this->artworkFinder = $this->artworkFinderFactory->getInstance($this->layout, $this->release);

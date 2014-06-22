@@ -7,9 +7,9 @@
  *
  */
 
-namespace Kompakt\Mediameister\Packshot\Metadata\Finder;
+namespace Kompakt\Mediameister\Packshot\Metadata\Loader;
 
-interface MetadataFinderInterface
+interface MetadataLoaderInterface
 {
-    public function find();
+    public function load();
 }

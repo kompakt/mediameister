@@ -20,8 +20,8 @@ class PackshotFactoryTest extends \PHPUnit_Framework_TestCase
             ->getMock()
         ;
 
-        $metadataFinderFactory = $this
-            ->getMockBuilder('Kompakt\Mediameister\Packshot\Metadata\Finder\Factory\MetadataFinderFactoryInterface')
+        $metadataLoaderFactory = $this
+            ->getMockBuilder('Kompakt\Mediameister\Packshot\Metadata\Loader\Factory\MetadataLoaderFactoryInterface')
             ->getMock()
         ;
 
@@ -43,7 +43,7 @@ class PackshotFactoryTest extends \PHPUnit_Framework_TestCase
         $packshotFactory = new PackshotFactory(
             $layoutFactory,
             $metadataWriterFactory,
-            $metadataFinderFactory,
+            $metadataLoaderFactory,
             $artworkFinderFactory,
             $audioFinderFactory
         );
