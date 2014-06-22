@@ -32,7 +32,7 @@ class Directory
         $this->dir = $dir;
     }
 
-    /*
+    /**
      * Copy the children of this directory into targetDir
      *
      * @param string $targetDir Target directory pathname
@@ -79,7 +79,7 @@ class Directory
         }
     }
 
-    /*
+    /**
      * Move the children of this directory into targetDir
      *
      * @param string $targetDir Target directory pathname
@@ -140,7 +140,7 @@ class Directory
         rmdir($this->dir);
     }
 
-    /*
+    /**
      * Subtract baseDir from pathname
      *
      * @param string $pathname The full pathname

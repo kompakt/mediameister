@@ -13,14 +13,19 @@ use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\Batch\Exception\InvalidArgumentException;
 use Kompakt\Mediameister\Batch\Filter\PackshotFilterInterface;
 use Kompakt\Mediameister\Packshot\Factory\PackshotFactoryInterface;
-use Kompakt\Mediameister\Util\Filesystem\Directory;
+use Kompakt\Mediameister\Util\Filesystem\Factory\DirectoryFactory;
 
 class Batch implements BatchInterface
 {
     protected $dir = null;
     protected $packshotFactory = null;
+    protected $directoryFactory = null;
 
-    public function __construct(PackshotFactoryInterface $packshotFactory, $dir)
+    public function __construct(
+        PackshotFactoryInterface $packshotFactory,
+        DirectoryFactory $directoryFactory,
+        $dir
+    )
     {
         $info = new \SplFileInfo($dir);
 
@@ -40,6 +45,7 @@ class Batch implements BatchInterface
         }
         
         $this->packshotFactory = $packshotFactory;
+        $this->directoryFactory = $directoryFactory;
         $this->dir = $dir;
     }
 
@@ -92,24 +98,15 @@ class Batch implements BatchInterface
 
     public function createPackshot($name)
     {
-        $baseDir = $dir = sprintf('%s/%s', $this->dir, $this->checkName($name));
-        $count = 1;
-        $created = false;
+        $dir = sprintf('%s/%s', $this->dir, $this->checkName($name));
+        $fileInfo = new \SplFileInfo($dir);
 
-        while (!$created)
+        if ($fileInfo->isDir() || $fileInfo->isFile())
         {
-            $fileInfo = new \SplFileInfo($dir);
-
-            if ($fileInfo->isDir())
-            {
-                $dir = sprintf('%s-%s', $baseDir, $count++);
-            }
-            else {
-                mkdir($dir, 0777);
-                $created = true;
-            }
+            throw new InvalidArgumentException(sprintf('Packshot name exists: "%s"', $name));
         }
 
+        mkdir($dir, 0777);
         return $this->packshotFactory->getInstance($dir);
     }
 
@@ -119,8 +116,7 @@ class Batch implements BatchInterface
 
         if ($packshot)
         {
-            $directory = new Directory($packshot->getDir());
-            $directory->delete();
+            $this->directoryFactory->getInstance($packshot->getDir())->delete();
         }
     }
 

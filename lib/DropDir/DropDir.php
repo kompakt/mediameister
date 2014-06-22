@@ -13,14 +13,19 @@ use Kompakt\Mediameister\Batch\Factory\BatchFactoryInterface;
 use Kompakt\Mediameister\DropDir\DropDirInterface;
 use Kompakt\Mediameister\DropDir\Exception\InvalidArgumentException;
 use Kompakt\Mediameister\DropDir\Filter\BatchFilterInterface;
-use Kompakt\Mediameister\Util\Filesystem\Directory;
+use Kompakt\Mediameister\Util\Filesystem\Factory\DirectoryFactory;
 
 class DropDir implements DropDirInterface
 {
     protected $dir = null;
     protected $batchFactory = null;
+    protected $directoryFactory = null;
 
-    public function __construct(BatchFactoryInterface $batchFactory, $dir)
+    public function __construct(
+        BatchFactoryInterface $batchFactory,
+        DirectoryFactory $directoryFactory,
+        $dir
+    )
     {
         $info = new \SplFileInfo($dir);
         
@@ -40,7 +45,13 @@ class DropDir implements DropDirInterface
         }
 
         $this->batchFactory = $batchFactory;
+        $this->directoryFactory = $directoryFactory;
         $this->dir = $dir;
+    }
+
+    public function getDir()
+    {
+        return $this->dir;
     }
 
     public function getBatches(BatchFilterInterface $filter = null)
@@ -82,24 +93,15 @@ class DropDir implements DropDirInterface
 
     public function createBatch($name)
     {
-        $baseDir = $dir = sprintf('%s/%s', $this->dir, $this->checkName($name));
-        $count = 1;
-        $created = false;
+        $dir = sprintf('%s/%s', $this->dir, $this->checkName($name));
+        $fileInfo = new \SplFileInfo($dir);
 
-        while (!$created)
+        if ($fileInfo->isDir() || $fileInfo->isFile())
         {
-            $fileInfo = new \SplFileInfo($dir);
-
-            if ($fileInfo->isDir())
-            {
-                $dir = sprintf('%s-%s', $baseDir, $count++);
-            }
-            else {
-                mkdir($dir, 0777);
-                $created = true;
-            }
+            throw new InvalidArgumentException(sprintf('Batch name exists: "%s"', $name));
         }
 
+        mkdir($dir, 0777);
         return $this->batchFactory->getInstance($dir);
     }
 
@@ -109,8 +111,7 @@ class DropDir implements DropDirInterface
 
         if ($batch)
         {
-            $directory = new Directory($batch->getDir());
-            $directory->delete();
+            $this->directoryFactory->getInstance($packshot->getDir())->delete();
         }
     }
 

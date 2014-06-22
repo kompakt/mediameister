@@ -15,7 +15,12 @@ class BatchTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetPackshots()
     {
-        $batch = new Batch($this->getPackshotFactory(), $this->getFilesDir());
+        $batch = new Batch(
+            $this->getPackshotFactory(),
+            $this->getDirectoryFactory(),
+            $this->getFilesDir()
+        );
+        
         $this->assertCount(4, $batch->getPackshots());
     }
 
@@ -24,14 +29,14 @@ class BatchTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetPackshotWithInvalidName()
     {
-        $batch = new Batch($this->getPackshotFactory(), $this->getFilesDir());
+        $batch = new Batch($this->getPackshotFactory(), $this->getDirectoryFactory(), $this->getFilesDir());
         $batch->getPackshot('../some-packshot');
     }
 
     public function testCreatePackshot()
     {
         $dir = $this->getTmpDir(__CLASS__);
-        $batch = new Batch($this->getPackshotFactory(), $dir);
+        $batch = new Batch($this->getPackshotFactory(), $this->getDirectoryFactory(), $dir);
         $this->assertCount(0, $batch->getPackshots());
 
         $batch->createPackshot('my-new-packshot', $this->getRelease());
@@ -59,6 +64,14 @@ class BatchTest extends \PHPUnit_Framework_TestCase
         ;
 
         return $factory;
+    }
+
+    protected function getDirectoryFactory()
+    {
+        return $this
+            ->getMockBuilder('Kompakt\Mediameister\Util\Filesystem\Factory\DirectoryFactory')
+            ->getMock()
+        ;
     }
 
     protected function getRelease()

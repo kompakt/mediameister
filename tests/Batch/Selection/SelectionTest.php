@@ -15,7 +15,13 @@ class SelectionTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetPackshots()
     {
-        $selection = new Selection($this->getFileFactory(), $this->getBatch());
+        $selection = new Selection(
+            $this->getFileFactory(),
+            $this->getDirectoryFactory(),
+            $this->getChildFileNamerFactory(),
+            $this->getBatch()
+        );
+
         $this->assertCount(2, $selection->getPackshots());
     }
 
@@ -69,5 +75,21 @@ class SelectionTest extends \PHPUnit_Framework_TestCase
         ;
 
         return $factory;
+    }
+
+    protected function getDirectoryFactory()
+    {
+        return $this
+            ->getMockBuilder('Kompakt\Mediameister\Util\Filesystem\Factory\DirectoryFactory')
+            ->getMock()
+        ;
+    }
+
+    protected function getChildFileNamerFactory()
+    {
+        return $this
+            ->getMockBuilder('Kompakt\Mediameister\Util\Filesystem\Factory\ChildFileNamerFactory')
+            ->getMock()
+        ;
     }
 }

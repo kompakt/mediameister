@@ -15,7 +15,7 @@ class BatchFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetInstance()
     {
-        $batchFactory = new BatchFactory($this->getPackshotFactory());
+        $batchFactory = new BatchFactory($this->getPackshotFactory(), $this->getDirectoryFactory());
         $this->assertInstanceOf('Kompakt\Mediameister\Batch\Batch', $batchFactory->getInstance(__DIR__));
     }
 
@@ -23,6 +23,14 @@ class BatchFactoryTest extends \PHPUnit_Framework_TestCase
     {
         return $this
             ->getMockBuilder('Kompakt\Mediameister\Packshot\Factory\PackshotFactoryInterface')
+            ->getMock()
+        ;
+    }
+
+    protected function getDirectoryFactory()
+    {
+        return $this
+            ->getMockBuilder('Kompakt\Mediameister\Util\Filesystem\Factory\DirectoryFactory')
             ->getMock()
         ;
     }

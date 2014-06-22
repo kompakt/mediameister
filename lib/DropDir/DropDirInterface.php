@@ -13,6 +13,7 @@ use Kompakt\Mediameister\DropDir\Filter\BatchFilterInterface;
 
 interface DropDirInterface
 {
+    public function getDir();
     public function getBatches(BatchFilterInterface $filter = null);
     public function getBatch($name);
     public function createBatch($name);

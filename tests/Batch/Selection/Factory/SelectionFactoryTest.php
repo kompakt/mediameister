@@ -13,9 +13,14 @@ use Kompakt\Mediameister\Batch\Selection\Factory\SelectionFactory;
 
 class SelectionFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    public function testGetPackshots()
+    public function testGetInstance()
     {
-        $factory = new SelectionFactory($this->getFileFactory());
+        $factory = new SelectionFactory(
+            $this->getFileFactory(),
+            $this->getDirectoryFactory(),
+            $this->getChildFileNamerFactory()
+        );
+
         $this->assertInstanceOf('Kompakt\Mediameister\Batch\Selection\Selection', $factory->getInstance($this->getBatch()));
     }
 
@@ -33,6 +38,22 @@ class SelectionFactoryTest extends \PHPUnit_Framework_TestCase
         return $this
             ->getMockBuilder('Kompakt\Mediameister\Batch\Selection\Factory\FileFactory')
             ->disableOriginalConstructor()
+            ->getMock()
+        ;
+    }
+
+    protected function getDirectoryFactory()
+    {
+        return $this
+            ->getMockBuilder('Kompakt\Mediameister\Util\Filesystem\Factory\DirectoryFactory')
+            ->getMock()
+        ;
+    }
+
+    protected function getChildFileNamerFactory()
+    {
+        return $this
+            ->getMockBuilder('Kompakt\Mediameister\Util\Filesystem\Factory\ChildFileNamerFactory')
             ->getMock()
         ;
     }

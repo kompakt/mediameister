@@ -15,7 +15,12 @@ class DropDirTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetBatches()
     {
-        $dropDir = new DropDir($this->getBatchFactory(), $this->getFilesDir());
+        $dropDir = new DropDir(
+            $this->getBatchFactory(),
+            $this->getDirectoryFactory(),
+            $this->getFilesDir()
+        );
+
         $this->assertCount(4, $dropDir->getBatches());
     }
 
@@ -24,14 +29,25 @@ class DropDirTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetBatchWithInvalidName()
     {
-        $dropDir = new DropDir($this->getBatchFactory(), $this->getFilesDir());
+        $dropDir = new DropDir(
+            $this->getBatchFactory(),
+            $this->getDirectoryFactory(),
+            $this->getFilesDir()
+        );
+
         $dropDir->getBatch('../some-batch');
     }
 
     public function testCreateBatch()
     {
         $dir = $this->getTmpDir(__CLASS__);
-        $dropDir = new DropDir($this->getBatchFactory(), $dir);
+        
+        $dropDir = new DropDir(
+            $this->getBatchFactory(),
+            $this->getDirectoryFactory(),
+            $dir
+        );
+
         $this->assertCount(0, $dropDir->getBatches());
 
         $dropDir->createBatch('my-new-batch');
@@ -42,6 +58,14 @@ class DropDirTest extends \PHPUnit_Framework_TestCase
     {
         return $this
             ->getMockBuilder('Kompakt\Mediameister\Batch\Factory\BatchFactoryInterface')
+            ->getMock()
+        ;
+    }
+
+    protected function getDirectoryFactory()
+    {
+        return $this
+            ->getMockBuilder('Kompakt\Mediameister\Util\Filesystem\Factory\DirectoryFactory')
             ->getMock()
         ;
     }
