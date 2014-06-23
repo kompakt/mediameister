@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\Batch;
+namespace Kompakt\Mediameister\Task\Batch\Core;
 
 interface EventNamesInterface
 {

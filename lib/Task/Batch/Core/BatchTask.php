@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\Batch;
+namespace Kompakt\Mediameister\Task\Batch\Core;
 
 use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\Entity\TrackInterface;
