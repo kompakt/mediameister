@@ -12,7 +12,6 @@ namespace Kompakt\Mediameister\Batch\Selection\Factory;
 use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\Batch\Selection\Factory\FileFactory;
 use Kompakt\Mediameister\Batch\Selection\Selection;
-use Kompakt\Mediameister\Util\Filesystem\Factory\ChildFileNamerFactory;
 use Kompakt\Mediameister\Util\Filesystem\Factory\DirectoryFactory;
 
 class SelectionFactory
@@ -21,13 +20,11 @@ class SelectionFactory
 
     public function __construct(
         FileFactory $fileFactory,
-        DirectoryFactory $directoryFactory,
-        ChildFileNamerFactory $childFileNamerFactory
+        DirectoryFactory $directoryFactory
     )
     {
         $this->fileFactory = $fileFactory;
         $this->directoryFactory = $directoryFactory;
-        $this->childFileNamerFactory = $childFileNamerFactory;
     }
 
     public function getInstance(BatchInterface $batch)
@@ -35,7 +32,6 @@ class SelectionFactory
         return new Selection(
             $this->fileFactory,
             $this->directoryFactory,
-            $this->childFileNamerFactory,
             $batch
         );
     }

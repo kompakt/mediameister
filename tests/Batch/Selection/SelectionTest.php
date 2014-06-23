@@ -18,7 +18,6 @@ class SelectionTest extends \PHPUnit_Framework_TestCase
         $selection = new Selection(
             $this->getFileFactory(),
             $this->getDirectoryFactory(),
-            $this->getChildFileNamerFactory(),
             $this->getBatch()
         );
 
@@ -81,14 +80,6 @@ class SelectionTest extends \PHPUnit_Framework_TestCase
     {
         return $this
             ->getMockBuilder('Kompakt\Mediameister\Util\Filesystem\Factory\DirectoryFactory')
-            ->getMock()
-        ;
-    }
-
-    protected function getChildFileNamerFactory()
-    {
-        return $this
-            ->getMockBuilder('Kompakt\Mediameister\Util\Filesystem\Factory\ChildFileNamerFactory')
             ->getMock()
         ;
     }

@@ -13,26 +13,23 @@ use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\Batch\Selection\Factory\FileFactory;
 use Kompakt\Mediameister\DropDir\DropDirInterface;
 use Kompakt\Mediameister\Packshot\PackshotInterface;
-use Kompakt\Mediameister\Util\Filesystem\Factory\ChildFileNamerFactory;
 use Kompakt\Mediameister\Util\Filesystem\Factory\DirectoryFactory;
 
 class Selection
 {
     protected $file = null;
     protected $directoryFactory = null;
-    protected $childFileNamerFactory = null;
     protected $batch = null;
 
     public function __construct(
         FileFactory $fileFactory,
         DirectoryFactory $directoryFactory,
-        ChildFileNamerFactory $childFileNamerFactory,
+        #ChildFileNamerFactory $childFileNamerFactory,
         BatchInterface $batch
     )
     {
         $this->file = $fileFactory->getInstance($batch->getDir());
         $this->directoryFactory = $directoryFactory;
-        $this->childFileNamerFactory = $childFileNamerFactory;
         $this->batch = $batch;
     }
 
@@ -92,35 +89,26 @@ class Selection
         $this->file->clear();
     }
 
-    public function copy(DropDirInterface $targetDropDir)
+    public function copy(DropDirInterface $targetDropDir, $targetBatchName)
     {
-        $fileNamer = $this->childFileNamerFactory->getInstance($targetDropDir->getDir());
-        $name = $fileNamer->make($this->batch->getName());
-        $targetBatch = $targetDropDir->createBatch($name);
-        $fileNamer = $this->childFileNamerFactory->getInstance($targetBatch->getDir());
+        $targetBatch = $targetDropDir->createBatch($targetBatchName);
 
         foreach($this->getPackshots() as $packshot)
         {
-            $name = $fileNamer->make($packshot->getName());
-            $targetPackshot = $targetBatch->createPackshot($name);
-
+            $targetPackshot = $targetBatch->createPackshot($packshot->getName());
             $directory = $this->directoryFactory->getInstance($packshot->getDir());
             $directory->copyChildren($targetPackshot->getDir());
         }
     }
 
-    public function move(DropDirInterface $targetDropDir)
+    public function move(DropDirInterface $targetDropDir, $targetBatchName)
     {
-        $fileNamer = $this->childFileNamerFactory->getInstance($targetDropDir->getDir());
-        $name = $fileNamer->make($this->batch->getName());
-        $targetBatch = $targetDropDir->createBatch($name);
+        $targetBatch = $targetDropDir->createBatch($targetBatchName);
         $fileNamer = $this->childFileNamerFactory->getInstance($targetBatch->getDir());
 
         foreach($this->getPackshots() as $packshot)
         {
-            $name = $fileNamer->make($packshot->getName());
-            $targetPackshot = $targetBatch->createPackshot($name);
-
+            $targetPackshot = $targetBatch->createPackshot($packshot->getName());
             $directory = $this->directoryFactory->getInstance($packshot->getDir());
             $directory->moveChildren($targetPackshot->getDir());
             rmdir($packshot->getDir());
