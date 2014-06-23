@@ -111,7 +111,7 @@ class DropDir implements DropDirInterface
 
         if ($batch)
         {
-            $this->directoryFactory->getInstance($packshot->getDir())->delete();
+            $this->directoryFactory->getInstance($batch->getDir())->delete();
         }
     }
 
