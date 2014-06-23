@@ -7,14 +7,14 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\Batch\Console\Subscriber;
+namespace Kompakt\Mediameister\Task\Batch\Core\Console\Subscriber;
 
 use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
 use Kompakt\Mediameister\Generic\EventDispatcher\EventSubscriberInterface;
-use Kompakt\Mediameister\Task\Batch\EventNamesInterface;
-use Kompakt\Mediameister\Task\Batch\Event\TaskEndErrorEvent;
-use Kompakt\Mediameister\Task\Batch\Event\TaskEndEvent;
-use Kompakt\Mediameister\Task\Batch\Subscriber\Share\Summary;
+use Kompakt\Mediameister\Task\Batch\Core\EventNamesInterface;
+use Kompakt\Mediameister\Task\Batch\Core\Event\TaskEndErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Core\Event\TaskEndEvent;
+use Kompakt\Mediameister\Task\Batch\Core\Subscriber\Share\Summary;
 use Kompakt\Mediameister\Util\Timer\Timer;
 
 class SummaryPrinter implements EventSubscriberInterface

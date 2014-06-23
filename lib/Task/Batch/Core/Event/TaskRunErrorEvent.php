@@ -7,29 +7,21 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\Batch\Event;
+namespace Kompakt\Mediameister\Task\Batch\Core\Event;
 
 use Kompakt\Mediameister\Generic\EventDispatcher\Event;
-use Kompakt\Mediameister\Util\Timer\Timer;
 
-class TaskEndErrorEvent extends Event
+class TaskRunErrorEvent extends Event
 {
     protected $exception = null;
-    protected $timer = null;
 
-    public function __construct(\Exception $exception, Timer $timer)
+    public function __construct(\Exception $exception)
     {
         $this->exception = $exception;
-        $this->timer = $timer;
     }
 
     public function getException()
     {
         return $this->exception;
-    }
-
-    public function getTimer()
-    {
-        return $this->timer;
     }
 }

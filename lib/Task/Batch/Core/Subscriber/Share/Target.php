@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\Batch\Subscriber\Share;
+namespace Kompakt\Mediameister\Task\Batch\Core\Subscriber\Share;
 
 use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\DropDir\DropDirInterface;

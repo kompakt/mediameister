@@ -7,19 +7,19 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\Batch\Subscriber;
+namespace Kompakt\Mediameister\Task\Batch\Core\Subscriber;
 
 use Kompakt\Mediameister\Generic\EventDispatcher\EventSubscriberInterface;
-use Kompakt\Mediameister\Task\Batch\EventNamesInterface;
-use Kompakt\Mediameister\Task\Batch\Event\ArtworkErrorEvent;
-use Kompakt\Mediameister\Task\Batch\Event\ArtworkEvent;
-use Kompakt\Mediameister\Task\Batch\Event\MetadataErrorEvent;
-use Kompakt\Mediameister\Task\Batch\Event\MetadataEvent;
-use Kompakt\Mediameister\Task\Batch\Event\PackshotLoadErrorEvent;
-use Kompakt\Mediameister\Task\Batch\Event\PackshotLoadEvent;
-use Kompakt\Mediameister\Task\Batch\Event\TrackErrorEvent;
-use Kompakt\Mediameister\Task\Batch\Event\TrackEvent;
-use Kompakt\Mediameister\Task\Batch\Subscriber\Share\Summary;
+use Kompakt\Mediameister\Task\Batch\Core\EventNamesInterface;
+use Kompakt\Mediameister\Task\Batch\Core\Event\ArtworkErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Core\Event\ArtworkEvent;
+use Kompakt\Mediameister\Task\Batch\Core\Event\MetadataErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Core\Event\MetadataEvent;
+use Kompakt\Mediameister\Task\Batch\Core\Event\PackshotLoadErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Core\Event\PackshotLoadEvent;
+use Kompakt\Mediameister\Task\Batch\Core\Event\TrackErrorEvent;
+use Kompakt\Mediameister\Task\Batch\Core\Event\TrackEvent;
+use Kompakt\Mediameister\Task\Batch\Core\Subscriber\Share\Summary;
 
 class SummaryMaker implements EventSubscriberInterface
 {

@@ -9,7 +9,7 @@
 
 namespace Kompakt\Mediameister\Task\Batch;
 
-use Kompakt\Mediameister\Task\Batch\EventNamesInterface;
+use Kompakt\Mediameister\Task\Batch\Core\EventNamesInterface;
 
 class EventNames implements EventNamesInterface
 {

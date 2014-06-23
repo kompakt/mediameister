@@ -7,29 +7,22 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\Batch\Event;
+namespace Kompakt\Mediameister\Task\Batch\Core\Event;
 
 use Kompakt\Mediameister\Entity\TrackInterface;
 use Kompakt\Mediameister\Generic\EventDispatcher\Event;
 
-class TrackErrorEvent extends Event
+class TrackEvent extends Event
 {
     protected $track = null;
-    protected $exception = null;
 
-    public function __construct(TrackInterface $track, \Exception $exception)
+    public function __construct(TrackInterface $track)
     {
         $this->track = $track;
-        $this->exception = $exception;
     }
 
     public function getTrack()
     {
         return $this->track;
-    }
-
-    public function getException()
-    {
-        return $this->exception;
     }
 }
