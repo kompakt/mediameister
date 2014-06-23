@@ -24,7 +24,6 @@ class Selection
     public function __construct(
         FileFactory $fileFactory,
         DirectoryFactory $directoryFactory,
-        #ChildFileNamerFactory $childFileNamerFactory,
         BatchInterface $batch
     )
     {
@@ -104,7 +103,6 @@ class Selection
     public function move(DropDirInterface $targetDropDir, $targetBatchName)
     {
         $targetBatch = $targetDropDir->createBatch($targetBatchName);
-        $fileNamer = $this->childFileNamerFactory->getInstance($targetBatch->getDir());
 
         foreach($this->getPackshots() as $packshot)
         {
