@@ -7,10 +7,10 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\Selection\Selector\Console\Runner;
+namespace Kompakt\Mediameister\Task\Selection\Copier\Console\Runner;
 
 use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
-use Kompakt\Mediameister\Task\Selection\Selector\Manager\TaskManager;
+use Kompakt\Mediameister\Task\Selection\Copier\Manager\TaskManager;
 
 class TaskRunner
 {
@@ -26,21 +26,10 @@ class TaskRunner
         $this->output = $output;
     }
 
-    public function addPackshots($batchName, array $packshotNames)
+    public function run($batchName)
     {
         try {
-            $this->taskManager->addPackshots($batchName, $packshotNames);
-        }
-        catch (\Exception $e)
-        {
-            $this->output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
-        }
-    }
-
-    public function removePackshots($batchName, array $packshotNames)
-    {
-        try {
-            $this->taskManager->removePackshots($batchName, $packshotNames);
+            $this->taskManager->copy($batchName);
         }
         catch (\Exception $e)
         {

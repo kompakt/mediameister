@@ -7,10 +7,10 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\Selection\Segregator\Console\Runner;
+namespace Kompakt\Mediameister\Task\Selection\Mover\Console\Runner;
 
 use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
-use Kompakt\Mediameister\Task\Selection\Segregator\Manager\TaskManager;
+use Kompakt\Mediameister\Task\Selection\Mover\Manager\TaskManager;
 
 class TaskRunner
 {
@@ -26,21 +26,10 @@ class TaskRunner
         $this->output = $output;
     }
 
-    public function copyPackshots($batchName)
+    public function run($batchName)
     {
         try {
-            $this->taskManager->copyPackshots($batchName);
-        }
-        catch (\Exception $e)
-        {
-            $this->output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
-        }
-    }
-
-    public function movePackshots($batchName)
-    {
-        try {
-            $this->taskManager->movePackshots($batchName);
+            $this->taskManager->move($batchName);
         }
         catch (\Exception $e)
         {

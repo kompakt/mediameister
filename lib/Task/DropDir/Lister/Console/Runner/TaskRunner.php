@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\DropDir\Inspector\Console\Runner;
+namespace Kompakt\Mediameister\Task\DropDir\Lister\Console\Runner;
 
 use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
 use Kompakt\Mediameister\DropDir\DropDir;
@@ -26,7 +26,7 @@ class TaskRunner
         $this->output = $output;
     }
 
-    public function inspect()
+    public function run()
     {
         foreach ($this->dropDir->getBatches() as $batch)
         {

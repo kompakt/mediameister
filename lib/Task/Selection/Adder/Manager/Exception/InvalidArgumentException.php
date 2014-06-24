@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\Selection\Segregator\Manager\Exception;
+namespace Kompakt\Mediameister\Task\Selection\Adder\Manager\Exception;
 
 use Kompakt\Mediameister\Exception as BaseException;
 

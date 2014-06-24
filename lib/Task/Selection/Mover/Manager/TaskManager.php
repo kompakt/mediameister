@@ -7,11 +7,11 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\Selection\Segregator\Manager;
+namespace Kompakt\Mediameister\Task\Selection\Mover\Manager;
 
 use Kompakt\Mediameister\Batch\Selection\Factory\SelectionFactory;
 use Kompakt\Mediameister\DropDir\DropDir;
-use Kompakt\Mediameister\Task\Selection\Segregator\Manager\Exception\InvalidArgumentException;
+use Kompakt\Mediameister\Task\Selection\Mover\Manager\Exception\InvalidArgumentException;
 use Kompakt\Mediameister\Util\Filesystem\Factory\ChildFileNamerFactory;
 
 class TaskManager
@@ -34,23 +34,7 @@ class TaskManager
         $this->targetDropDir = $targetDropDir;
     }
 
-    public function copyPackshots($batchName)
-    {
-        $batch = $this->dropDir->getBatch($batchName);
-
-        if (!$batch)
-        {
-            throw new InvalidArgumentException(sprintf('Batch does not exist: "%s"', $batchName));
-        }
-
-        $fileNamer = $this->childFileNamerFactory->getInstance($this->targetDropDir->getDir());
-        $name = $fileNamer->make($batch->getName());
-
-        $selection = $this->selectionFactory->getInstance($batch);
-        $selection->copy($this->targetDropDir, $name);
-    }
-
-    public function movePackshots($batchName)
+    public function move($batchName)
     {
         $batch = $this->dropDir->getBatch($batchName);
 

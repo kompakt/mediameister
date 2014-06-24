@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\Selection\Selector\Manager\Exception;
+namespace Kompakt\Mediameister\Task\Selection\Copier\Manager\Exception;
 
 use Kompakt\Mediameister\Exception as BaseException;
 
