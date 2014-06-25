@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\DropDir\Lister\Console\Runner;
+namespace Kompakt\Mediameister\Task\Batch\Lister\Console\Runner;
 
 use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
 use Kompakt\Mediameister\DropDir\DropDir;
@@ -26,11 +26,8 @@ class TaskRunner
         $this->output = $output;
     }
 
-    public function run()
+    public function run($batchName)
     {
-        foreach ($this->dropDir->getBatches() as $batch)
-        {
-            $this->output->writeln(sprintf('<info>%s</info>', $batch->getName()));
-        }
+        $this->dropDir->deleteBatch($batchName);
     }
 }

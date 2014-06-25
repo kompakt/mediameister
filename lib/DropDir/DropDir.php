@@ -112,7 +112,10 @@ class DropDir implements DropDirInterface
         if ($batch)
         {
             $this->directoryFactory->getInstance($batch->getDir())->delete();
+            return $name;
         }
+
+        return null;
     }
 
     protected function checkName($name)

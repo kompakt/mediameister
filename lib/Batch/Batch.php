@@ -117,7 +117,10 @@ class Batch implements BatchInterface
         if ($packshot)
         {
             $this->directoryFactory->getInstance($packshot->getDir())->delete();
+            return $name;
         }
+
+        return null;
     }
 
     protected function checkName($name)
