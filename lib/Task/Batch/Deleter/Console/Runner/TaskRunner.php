@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\Batch\Lister\Console\Runner;
+namespace Kompakt\Mediameister\Task\Batch\Deleter\Console\Runner;
 
 use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
 use Kompakt\Mediameister\DropDir\DropDir;
