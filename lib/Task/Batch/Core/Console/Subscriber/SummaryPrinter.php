@@ -15,6 +15,8 @@ use Kompakt\Mediameister\Task\Batch\Core\EventNamesInterface;
 use Kompakt\Mediameister\Task\Batch\Core\Event\TaskEndErrorEvent;
 use Kompakt\Mediameister\Task\Batch\Core\Event\TaskEndEvent;
 use Kompakt\Mediameister\Task\Batch\Core\Subscriber\Share\Summary;
+use Kompakt\Mediameister\Task\Batch\Core\Subscriber\SummaryMaker;
+use Kompakt\Mediameister\Util\Counter;
 use Kompakt\Mediameister\Util\Timer\Timer;
 
 class SummaryPrinter implements EventSubscriberInterface
@@ -37,7 +39,6 @@ class SummaryPrinter implements EventSubscriberInterface
     public function getSubscriptions()
     {
         return array(
-            // task events
             $this->eventNames->taskEnd() => array(
                 array('onTaskEnd', 0)
             ),
@@ -49,75 +50,27 @@ class SummaryPrinter implements EventSubscriberInterface
 
     public function onTaskEnd(TaskEndEvent $event)
     {
-        $this->printSummary($event->getTimer());
+        $this->writeFullSummary($event->getTimer());
     }
 
     public function onTaskEndError(TaskEndErrorEvent $event)
     {
-        $this->printSummary($event->getTimer());
+        $this->writeFullSummary($event->getTimer());
     }
 
-    protected function printSummary(Timer $timer)
+    protected function writeFullSummary(Timer $timer)
     {
-        $packshotError
-            = ($this->summary->getPackshotCounter()->getErrors())
-            ? sprintf(' <error>(%d errors)</error>', $this->summary->getPackshotCounter()->getErrors())
-            : ''
-        ;
-
-        $artworkError
-            = ($this->summary->getArtworkCounter()->getErrors())
-            ? sprintf(' <error>(%d errors)</error>', $this->summary->getArtworkCounter()->getErrors())
-            : ''
-        ;
-
-        $metadataError
-            = ($this->summary->getMetadataCounter()->getErrors())
-            ? sprintf(' <error>(%d errors)</error>', $this->summary->getMetadataCounter()->getErrors())
-            : ''
-        ;
-
-        $trackError
-            = ($this->summary->getTrackCounter()->getErrors())
-            ? sprintf(' <error>(%d errors)</error>', $this->summary->getTrackCounter()->getErrors())
-            : ''
-        ;
-
         $this->output->writeln(
             sprintf(
-                '<info>= Packshots: %s total, %d ok</info>%s',
-                $this->summary->getPackshotCounter()->getTotal(),
-                $this->summary->getPackshotCounter()->getOks(),
-                $packshotError
+                '<comment>%s</comment>',
+                $this->getSeparator()
             )
         );
 
-        $this->output->writeln(
-            sprintf(
-                '<info>= Artwork: %s total, %d ok</info>%s',
-                $this->summary->getArtworkCounter()->getTotal(),
-                $this->summary->getArtworkCounter()->getOks(),
-                $artworkError
-            )
-        );
-
-        $this->output->writeln(
-            sprintf(
-                '<info>= Metadata: %s total, %d ok</info>%s',
-                $this->summary->getMetadataCounter()->getTotal(),
-                $this->summary->getMetadataCounter()->getOks(),
-                $metadataError
-            )
-        );
-
-        $this->output->writeln(
-            sprintf(
-                '<info>= Tracks: %s total, %d ok</info>%s',
-                $this->summary->getTrackCounter()->getTotal(),
-                $this->summary->getTrackCounter()->getOks(),
-                $trackError
-            )
-        );
+        $this->writeItemSummary($this->summary->getPackshotCounter(), 'Packshots');
+        $this->writeItemSummary($this->summary->getArtworkCounter(), 'Artwork');
+        $this->writeItemSummary($this->summary->getMetadataCounter(), 'Metadata');
+        $this->writeItemSummary($this->summary->getTrackCounter(), 'Tracks');
 
         $this->output->writeln(
             sprintf(
@@ -125,5 +78,29 @@ class SummaryPrinter implements EventSubscriberInterface
                 $timer->getSeconds()
             )
         );
+    }
+
+    protected function writeItemSummary(Counter $counter, $title)
+    {
+        $error
+            = ($counter->count(SummaryMaker::COUNTER_ERROR))
+            ? sprintf(' <error>(%d errors)</error>', $counter->count(SummaryMaker::COUNTER_ERROR))
+            : ''
+        ;
+
+        $this->output->writeln(
+            sprintf(
+                '<info>= %s: %s total, %d ok</info>%s',
+                $title,
+                $counter->getTotal(),
+                $counter->count(SummaryMaker::COUNTER_OK),
+                $error
+            )
+        );
+    }
+
+    protected function getSeparator()
+    {
+        return '---------------------------------------';
     }
 }

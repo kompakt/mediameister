@@ -180,7 +180,8 @@ class Debugger implements EventSubscriberInterface
     {
         $this->output->writeln(
             sprintf(
-                '    <info>+ Packshot load</info>'
+                '    <info>+ Packshot load (%s)</info>',
+                $event->getPackshot()->getName()
             )
         );
     }
@@ -189,7 +190,7 @@ class Debugger implements EventSubscriberInterface
     {
         $this->output->writeln(
             sprintf(
-                '    <error>! Packshot load error: %s: %s</error>',
+                '    <error>! Packshot load error (%s): %s</error>',
                 $event->getPackshot()->getName(),
                 $event->getException()->getMessage()
             )

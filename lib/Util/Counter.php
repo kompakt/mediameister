@@ -11,47 +11,54 @@ namespace Kompakt\Mediameister\Util;
 
 class Counter
 {
-    protected $oks = array();
-    protected $errors = array();
+    protected $stacks = array();
 
-    public function ok($id)
+    public function add($name, $id)
     {
-        if (!array_key_exists($id, $this->oks) && !array_key_exists($id, $this->errors))
+        foreach ($this->stacks as $k => $v)
         {
-            $this->oks[$id] = 1;
+            if (array_key_exists($id, $this->stacks[$k]))
+            {
+                // any given id may only exist once across all stacks
+                unset($this->stacks[$k][$id]);
+            }
         }
 
+        $this->stacks[$name][$id] = 1;
         return $this;
     }
 
-    public function error($id)
+    public function count($name)
     {
-        if (array_key_exists($id, $this->oks))
+        if (array_key_exists($name, $this->stacks))
         {
-            // this has already been ok'd but it's an error now
-            unset($this->oks[$id]);
-        }
-        
-        if (!array_key_exists($id, $this->errors))
-        {
-            $this->errors[$id] = 1;
+            return count($this->stacks[$name]);
         }
 
-        return $this;
-    }
-
-    public function getOks()
-    {
-        return count($this->oks);
-    }
-
-    public function getErrors()
-    {
-        return count($this->errors);
+        return 0;
     }
 
     public function getTotal()
     {
-        return count($this->oks) + count($this->errors);
+        $total = 0;
+
+        foreach ($this->stacks as $name => $id)
+        {
+            $total += count($this->stacks[$name]);
+        }
+
+        return $total;
+    }
+
+    public function getStacks()
+    {
+        $stacks = array();
+
+        foreach ($this->stacks as $name => $id)
+        {
+            $stacks[$name] = count($this->stacks[$name]);
+        }
+
+        return $stacks;
     }
 }

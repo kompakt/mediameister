@@ -18,12 +18,12 @@ class Summary
     protected $trackCounter = null;
     protected $metadataCounter = null;
 
-    public function __construct()
+    public function __construct(Counter $counterPrototype)
     {
-        $this->packshotCounter = new Counter();
-        $this->artworkCounter = new Counter();
-        $this->trackCounter = new Counter();
-        $this->metadataCounter = new Counter();
+        $this->packshotCounter = clone $counterPrototype;
+        $this->artworkCounter = clone $counterPrototype;
+        $this->trackCounter = clone $counterPrototype;
+        $this->metadataCounter = clone $counterPrototype;
     }
 
     public function getPackshotCounter()
