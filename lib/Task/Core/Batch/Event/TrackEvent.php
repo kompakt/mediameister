@@ -9,16 +9,32 @@
 
 namespace Kompakt\Mediameister\Task\Core\Batch\Event;
 
+use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\Entity\TrackInterface;
 use Kompakt\Mediameister\Generic\EventDispatcher\Event;
+use Kompakt\Mediameister\Packshot\PackshotInterface;
 
 class TrackEvent extends Event
 {
+    protected $batch = null;
+    protected $packshot = null;
     protected $track = null;
 
-    public function __construct(TrackInterface $track)
+    public function __construct(BatchInterface $batch, PackshotInterface $packshot, TrackInterface $track)
     {
+        $this->batch = $batch;
+        $this->packshot = $packshot;
         $this->track = $track;
+    }
+
+    public function getBatch()
+    {
+        return $this->batch;
+    }
+
+    public function getPackshot()
+    {
+        return $this->packshot;
     }
 
     public function getTrack()

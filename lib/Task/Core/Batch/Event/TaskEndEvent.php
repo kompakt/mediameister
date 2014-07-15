@@ -9,16 +9,24 @@
 
 namespace Kompakt\Mediameister\Task\Core\Batch\Event;
 
+use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\Generic\EventDispatcher\Event;
 use Kompakt\Mediameister\Util\Timer\Timer;
 
 class TaskEndEvent extends Event
 {
+    protected $batch = null;
     protected $timer = null;
 
-    public function __construct(Timer $timer)
+    public function __construct(BatchInterface $batch, Timer $timer)
     {
+        $this->batch = $batch;
         $this->timer = $timer;
+    }
+
+    public function getBatch()
+    {
+        return $this->batch;
     }
 
     public function getTimer()

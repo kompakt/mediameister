@@ -11,25 +11,14 @@ namespace Kompakt\Mediameister\Task\Core\Batch;
 
 interface EventNamesInterface
 {
-    // task events
     public function taskRun();
     public function taskRunError();
     public function taskEnd();
     public function taskEndError();
-
-    // batch events
-    public function batchStart();
-    public function batchStartError();
     public function packshotLoad();
     public function packshotLoadError();
-    public function batchEnd();
-    public function batchEndError();
-
-    // packshot events
-    public function artwork();
-    public function artworkError();
+    public function packshotUnload();
+    public function packshotUnloadError();
     public function track();
     public function trackError();
-    public function metadata();
-    public function metadataError();
 }

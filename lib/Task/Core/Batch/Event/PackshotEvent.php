@@ -9,27 +9,28 @@
 
 namespace Kompakt\Mediameister\Task\Core\Batch\Event;
 
+use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\Generic\EventDispatcher\Event;
 use Kompakt\Mediameister\Packshot\PackshotInterface;
 
-class PackshotLoadErrorEvent extends Event
+class PackshotEvent extends Event
 {
+    protected $batch = null;
     protected $packshot = null;
-    protected $exception = null;
 
-    public function __construct(PackshotInterface $packshot, \Exception $exception)
+    public function __construct(BatchInterface $batch, PackshotInterface $packshot)
     {
+        $this->batch = $batch;
         $this->packshot = $packshot;
-        $this->exception = $exception;
+    }
+
+    public function getBatch()
+    {
+        return $this->batch;
     }
 
     public function getPackshot()
     {
         return $this->packshot;
-    }
-
-    public function getException()
-    {
-        return $this->exception;
     }
 }

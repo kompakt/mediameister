@@ -12,16 +12,8 @@ namespace Kompakt\Mediameister\Task\Core\Batch\Console\Subscriber;
 use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
 use Kompakt\Mediameister\Generic\EventDispatcher\EventSubscriberInterface;
 use Kompakt\Mediameister\Task\Core\Batch\EventNamesInterface;
-use Kompakt\Mediameister\Task\Core\Batch\Event\ArtworkErrorEvent;
-use Kompakt\Mediameister\Task\Core\Batch\Event\ArtworkEvent;
-use Kompakt\Mediameister\Task\Core\Batch\Event\BatchEndEvent;
-use Kompakt\Mediameister\Task\Core\Batch\Event\BatchEndErrorEvent;
-use Kompakt\Mediameister\Task\Core\Batch\Event\BatchStartEvent;
-use Kompakt\Mediameister\Task\Core\Batch\Event\BatchStartErrorEvent;
-use Kompakt\Mediameister\Task\Core\Batch\Event\MetadataErrorEvent;
-use Kompakt\Mediameister\Task\Core\Batch\Event\MetadataEvent;
-use Kompakt\Mediameister\Task\Core\Batch\Event\PackshotLoadErrorEvent;
-use Kompakt\Mediameister\Task\Core\Batch\Event\PackshotLoadEvent;
+use Kompakt\Mediameister\Task\Core\Batch\Event\PackshotErrorEvent;
+use Kompakt\Mediameister\Task\Core\Batch\Event\PackshotEvent;
 use Kompakt\Mediameister\Task\Core\Batch\Event\TaskEndErrorEvent;
 use Kompakt\Mediameister\Task\Core\Batch\Event\TaskEndEvent;
 use Kompakt\Mediameister\Task\Core\Batch\Event\TaskRunErrorEvent;
@@ -46,7 +38,6 @@ class Debugger implements EventSubscriberInterface
     public function getSubscriptions()
     {
         return array(
-            // task events
             $this->eventNames->taskRun() => array(
                 array('onTaskRun', 0)
             ),
@@ -59,43 +50,23 @@ class Debugger implements EventSubscriberInterface
             $this->eventNames->taskEndError() => array(
                 array('onTaskEndError', 0)
             ),
-            // batch events
-            $this->eventNames->batchStart() => array(
-                array('onBatchStart', 0)
-            ),
-            $this->eventNames->batchStartError() => array(
-                array('onBatchStartError', 0)
-            ),
             $this->eventNames->packshotLoad() => array(
                 array('onPackshotLoad', 0)
             ),
             $this->eventNames->packshotLoadError() => array(
                 array('onPackshotLoadError', 0)
             ),
-            $this->eventNames->batchEnd() => array(
-                array('onBatchEnd', 0)
+            $this->eventNames->packshotUnload() => array(
+                array('onPackshotUnload', 0)
             ),
-            $this->eventNames->batchEndError() => array(
-                array('onBatchEndError', 0)
-            ),
-            // packshot events
-            $this->eventNames->artwork() => array(
-                array('onArtwork', 0)
-            ),
-            $this->eventNames->artworkError() => array(
-                array('onArtworkError', 0)
+            $this->eventNames->packshotUnloadError() => array(
+                array('onPackshotUnloadError', 0)
             ),
             $this->eventNames->track() => array(
                 array('onTrack', 0)
             ),
             $this->eventNames->trackError() => array(
                 array('onTrackError', 0)
-            ),
-            $this->eventNames->metadata() => array(
-                array('onMetadata', 0)
-            ),
-            $this->eventNames->metadataError() => array(
-                array('onMetadataError', 0)
             )
         );
     }
@@ -104,7 +75,7 @@ class Debugger implements EventSubscriberInterface
     {
         $this->output->writeln(
             sprintf(
-                '<info>+ Task run</info>'
+                '<info>+ DEBUG: Task run</info>'
             )
         );
     }
@@ -113,7 +84,7 @@ class Debugger implements EventSubscriberInterface
     {
         $this->output->writeln(
             sprintf(
-                '<error>+ Task run error %s</error>',
+                '<error>+ DEBUG: Task run error %s</error>',
                 $event->getException()->getMessage()
             )
         );
@@ -123,7 +94,7 @@ class Debugger implements EventSubscriberInterface
     {
         $this->output->writeln(
             sprintf(
-                '<info>+ Task end</info>'
+                '<info>+ DEBUG: Task end</info>'
             )
         );
     }
@@ -132,85 +103,49 @@ class Debugger implements EventSubscriberInterface
     {
         $this->output->writeln(
             sprintf(
-                '<error>+ Task end error %s</error>',
+                '<error>+ DEBUG: Task end error %s</error>',
                 $event->getException()->getMessage()
             )
         );
     }
 
-    public function onBatchStart(BatchStartEvent $event)
+    public function onPackshotLoad(PackshotEvent $event)
     {
         $this->output->writeln(
             sprintf(
-                '  <info>+ Batch start</info>'
-            )
-        );
-    }
-
-    public function onBatchStartError(BatchStartErrorEvent $event)
-    {
-        $this->output->writeln(
-            sprintf(
-                '  <error>! Batch start error: %s</error>',
-                $event->getException()->getMessage()
-            )
-        );
-    }
-
-    public function onBatchEnd(BatchEndEvent $event)
-    {
-        $this->output->writeln(
-            sprintf(
-                '  <info>+ Batch end</info>'
-            )
-        );
-    }
-
-    public function onBatchEndError(BatchEndErrorEvent $event)
-    {
-        $this->output->writeln(
-            sprintf(
-                '  <error>! Batch end error: %s</error>',
-                $event->getException()->getMessage()
-            )
-        );
-    }
-
-    public function onPackshotLoad(PackshotLoadEvent $event)
-    {
-        $this->output->writeln(
-            sprintf(
-                '    <info>+ Packshot load (%s)</info>',
+                '  <info>+ DEBUG: Packshot load (%s)</info>',
                 $event->getPackshot()->getName()
             )
         );
     }
 
-    public function onPackshotLoadError(PackshotLoadErrorEvent $event)
+    public function onPackshotLoadError(PackshotErrorEvent $event)
     {
         $this->output->writeln(
             sprintf(
-                '    <error>! Packshot load error (%s): %s</error>',
+                '  <error>! DEBUG: Packshot load error (%s): %s</error>',
                 $event->getPackshot()->getName(),
                 $event->getException()->getMessage()
             )
         );
     }
 
-    public function onArtwork(ArtworkEvent $event)
+    public function onPackshotUnload(PackshotEvent $event)
     {
         $this->output->writeln(
             sprintf(
-                '      <info>+ Artwork</info>'
+                '  <info>+ DEBUG: Packshot unload (%s)</info>',
+                $event->getPackshot()->getName()
             )
         );
     }
 
-    public function onArtworkError(ArtworkErrorEvent $event)
+    public function onPackshotUnloadError(PackshotErrorEvent $event)
     {
         $this->output->writeln(
             sprintf(
-                '      <error>! Artwork error: %s</error>',
+                '  <error>! DEBUG: Packshot unload error (%s): %s</error>',
+                $event->getPackshot()->getName(),
                 $event->getException()->getMessage()
             )
         );
@@ -220,7 +155,7 @@ class Debugger implements EventSubscriberInterface
     {
         $this->output->writeln(
             sprintf(
-                '        <info>+ Track</info>'
+                '    <info>+ DEBUG: Track</info>'
             )
         );
     }
@@ -229,26 +164,7 @@ class Debugger implements EventSubscriberInterface
     {
         $this->output->writeln(
             sprintf(
-                '        <error>! Track error: %s</error>',
-                $event->getException()->getMessage()
-            )
-        );
-    }
-
-    public function onMetadata(MetadataEvent $event)
-    {
-        $this->output->writeln(
-            sprintf(
-                '      <info>+ Metadata</info>'
-            )
-        );
-    }
-
-    public function onMetadataError(MetadataErrorEvent $event)
-    {
-        $this->output->writeln(
-            sprintf(
-                '      <error>! Metadata error: %s</error>',
+                '    <error>! DEBUG: Track error: %s</error>',
                 $event->getException()->getMessage()
             )
         );

@@ -11,19 +11,19 @@ namespace Kompakt\Mediameister\Task\Core\Batch\Event;
 
 use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\Generic\EventDispatcher\Event;
-use Kompakt\Mediameister\Util\Timer\Timer;
+use Kompakt\Mediameister\Packshot\PackshotInterface;
 
-class TaskEndErrorEvent extends Event
+class PackshotErrorEvent extends Event
 {
     protected $exception = null;
     protected $batch = null;
-    protected $timer = null;
+    protected $packshot = null;
 
-    public function __construct(\Exception $exception, BatchInterface $batch, Timer $timer)
+    public function __construct(\Exception $exception, BatchInterface $batch, PackshotInterface $packshot)
     {
         $this->exception = $exception;
         $this->batch = $batch;
-        $this->timer = $timer;
+        $this->packshot = $packshot;
     }
 
     public function getException()
@@ -36,8 +36,8 @@ class TaskEndErrorEvent extends Event
         return $this->batch;
     }
 
-    public function getTimer()
+    public function getPackshot()
     {
-        return $this->timer;
+        return $this->packshot;
     }
 }

@@ -15,11 +15,11 @@ use Kompakt\Mediameister\Task\Core\Batch\EventNamesInterface;
 use Kompakt\Mediameister\Task\Core\Batch\Event\TaskEndErrorEvent;
 use Kompakt\Mediameister\Task\Core\Batch\Event\TaskEndEvent;
 use Kompakt\Mediameister\Task\Core\Batch\Subscriber\Share\Summary;
-use Kompakt\Mediameister\Task\Core\Batch\Subscriber\SummaryMaker;
+use Kompakt\Mediameister\Task\Core\Batch\Subscriber\GenericSummaryMaker;
 use Kompakt\Mediameister\Util\Counter;
 use Kompakt\Mediameister\Util\Timer\Timer;
 
-class SummaryPrinter implements EventSubscriberInterface
+class GenericSummaryPrinter implements EventSubscriberInterface
 {
     protected $eventNames = null;
     protected $summary = null;
@@ -68,8 +68,6 @@ class SummaryPrinter implements EventSubscriberInterface
         );
 
         $this->writeItemSummary($this->summary->getPackshotCounter(), 'Packshots');
-        $this->writeItemSummary($this->summary->getArtworkCounter(), 'Artwork');
-        $this->writeItemSummary($this->summary->getMetadataCounter(), 'Metadata');
         $this->writeItemSummary($this->summary->getTrackCounter(), 'Tracks');
 
         $this->output->writeln(
@@ -83,8 +81,8 @@ class SummaryPrinter implements EventSubscriberInterface
     protected function writeItemSummary(Counter $counter, $title)
     {
         $error
-            = ($counter->count(SummaryMaker::COUNTER_ERROR))
-            ? sprintf(' <error>(%d errors)</error>', $counter->count(SummaryMaker::COUNTER_ERROR))
+            = ($counter->count(GenericSummaryMaker::ERROR))
+            ? sprintf(' <error>(%d errors)</error>', $counter->count(GenericSummaryMaker::ERROR))
             : ''
         ;
 
@@ -93,7 +91,7 @@ class SummaryPrinter implements EventSubscriberInterface
                 '<info>= %s: %s total, %d ok</info>%s',
                 $title,
                 $counter->getTotal(),
-                $counter->count(SummaryMaker::COUNTER_OK),
+                $counter->count(GenericSummaryMaker::OK),
                 $error
             )
         );

@@ -15,7 +15,7 @@ class EventNames implements EventNamesInterface
 {
     protected $namespace = null;
 
-    public function __construct($namespace = 'batch_task')
+    public function __construct($namespace = 'batch_task_engine')
     {
         $this->namespace = $namespace;
     }
@@ -40,16 +40,6 @@ class EventNames implements EventNamesInterface
         return sprintf('%s.task_end_error', $this->namespace);
     }
 
-    public function batchStart()
-    {
-        return sprintf('%s.batch_start', $this->namespace);
-    }
-
-    public function batchStartError()
-    {
-        return sprintf('%s.batch_start_error', $this->namespace);
-    }
-
     public function packshotLoad()
     {
         return sprintf('%s.packshot_load', $this->namespace);
@@ -60,24 +50,14 @@ class EventNames implements EventNamesInterface
         return sprintf('%s.packshot_load_error', $this->namespace);
     }
 
-    public function batchEnd()
+    public function packshotUnload()
     {
-        return sprintf('%s.batch_end', $this->namespace);
+        return sprintf('%s.packshot_unload', $this->namespace);
     }
 
-    public function batchEndError()
+    public function packshotUnloadError()
     {
-        return sprintf('%s.batch_end_error', $this->namespace);
-    }
-
-    public function artwork()
-    {
-        return sprintf('%s.artwork', $this->namespace);
-    }
-
-    public function artworkError()
-    {
-        return sprintf('%s.artwork_error', $this->namespace);
+        return sprintf('%s.packshot_unload_error', $this->namespace);
     }
 
     public function track()
@@ -88,15 +68,5 @@ class EventNames implements EventNamesInterface
     public function trackError()
     {
         return sprintf('%s.track_error', $this->namespace);
-    }
-
-    public function metadata()
-    {
-        return sprintf('%s.metadata', $this->namespace);
-    }
-
-    public function metadataError()
-    {
-        return sprintf('%s.metadata_error', $this->namespace);
     }
 }
