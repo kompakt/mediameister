@@ -9,8 +9,8 @@
 
 namespace Kompakt\Mediameister\Packshot\Factory;
 
-use Kompakt\Mediameister\Packshot\Artwork\Finder\Factory\ArtworkFinderFactoryInterface;
-use Kompakt\Mediameister\Packshot\Audio\Finder\Factory\AudioFinderFactoryInterface;
+use Kompakt\Mediameister\Packshot\Artwork\Locator\Factory\ArtworkLocatorFactoryInterface;
+use Kompakt\Mediameister\Packshot\Audio\Locator\Factory\AudioLocatorFactoryInterface;
 use Kompakt\Mediameister\Packshot\Factory\PackshotFactoryInterface;
 use Kompakt\Mediameister\Packshot\Layout\Factory\LayoutFactoryInterface;
 use Kompakt\Mediameister\Packshot\Metadata\Loader\Factory\MetadataLoaderFactoryInterface;
@@ -22,22 +22,22 @@ class PackshotFactory implements PackshotFactoryInterface
     protected $layoutFactory = null;
     protected $metadataWriterFactory = null;
     protected $metadataLoaderFactory = null;
-    protected $artworkFinderFactory = null;
-    protected $audioFinderFactory = null;
+    protected $artworkLocatorFactory = null;
+    protected $audioLocatorFactory = null;
 
     public function __construct(
         LayoutFactoryInterface $layoutFactory,
         MetadataWriterFactoryInterface $metadataWriterFactory,
         MetadataLoaderFactoryInterface $metadataLoaderFactory,
-        ArtworkFinderFactoryInterface $artworkFinderFactory,
-        AudioFinderFactoryInterface $audioFinderFactory
+        ArtworkLocatorFactoryInterface $artworkLocatorFactory,
+        AudioLocatorFactoryInterface $audioLocatorFactory
     )
     {
         $this->layoutFactory = $layoutFactory;
         $this->metadataWriterFactory = $metadataWriterFactory;
         $this->metadataLoaderFactory = $metadataLoaderFactory;
-        $this->artworkFinderFactory = $artworkFinderFactory;
-        $this->audioFinderFactory = $audioFinderFactory;
+        $this->artworkLocatorFactory = $artworkLocatorFactory;
+        $this->audioLocatorFactory = $audioLocatorFactory;
     }
 
     public function getInstance($dir)
@@ -46,8 +46,8 @@ class PackshotFactory implements PackshotFactoryInterface
             $this->layoutFactory,
             $this->metadataWriterFactory,
             $this->metadataLoaderFactory,
-            $this->artworkFinderFactory,
-            $this->audioFinderFactory,
+            $this->artworkLocatorFactory,
+            $this->audioLocatorFactory,
             $dir
         );
     }

@@ -17,8 +17,8 @@ interface PackshotInterface
     public function getName();
     public function getLayout();
     public function getRelease();
-    public function getArtworkFinder();
-    public function getAudioFinder();
+    public function getArtworkLocator();
+    public function getAudioLocator();
     public function init(ReleaseInterface $release);
     public function load();
 }

@@ -30,13 +30,13 @@ class PackshotFactoryTest extends \PHPUnit_Framework_TestCase
             ->getMock()
         ;
 
-        $artworkFinderFactory = $this
-            ->getMockBuilder('Kompakt\Mediameister\Packshot\Artwork\Finder\Factory\ArtworkFinderFactoryInterface')
+        $artworkLocatorFactory = $this
+            ->getMockBuilder('Kompakt\Mediameister\Packshot\Artwork\Locator\Factory\ArtworkLocatorFactoryInterface')
             ->getMock()
         ;
 
-        $audioFinderFactory = $this
-            ->getMockBuilder('Kompakt\Mediameister\Packshot\Audio\Finder\Factory\AudioFinderFactoryInterface')
+        $audioLocatorFactory = $this
+            ->getMockBuilder('Kompakt\Mediameister\Packshot\Audio\Locator\Factory\AudioLocatorFactoryInterface')
             ->getMock()
         ;
 
@@ -44,8 +44,8 @@ class PackshotFactoryTest extends \PHPUnit_Framework_TestCase
             $layoutFactory,
             $metadataWriterFactory,
             $metadataLoaderFactory,
-            $artworkFinderFactory,
-            $audioFinderFactory
+            $artworkLocatorFactory,
+            $audioLocatorFactory
         );
 
         $this->assertInstanceOf('Kompakt\Mediameister\Packshot\Packshot', $packshotFactory->getInstance(__DIR__));

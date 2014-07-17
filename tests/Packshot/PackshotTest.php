@@ -19,8 +19,8 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
             $this->getLayoutFactory(),
             $this->getMetadataWriterFactory(),
             $this->getMetadataLoaderFactory(),
-            $this->getArtworkFinderFactory(),
-            $this->getAudioFinderFactory(),
+            $this->getArtworkLocatorFactory(),
+            $this->getAudioLocatorFactory(),
             __DIR__
         );
 
@@ -57,12 +57,12 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
             ->getMock()
         ;
 
-        $finder = $this
+        $loader = $this
             ->getMockBuilder('Kompakt\Mediameister\Packshot\Metadata\Loader\MetadataLoaderInterface')
             ->getMock()
         ;
 
-        $finder
+        $loader
             ->expects($this->once())
             ->method('load')
             ->will($this->returnValue($release))
@@ -76,7 +76,7 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
         $factory
             ->expects($this->once())
             ->method('getInstance')
-            ->will($this->returnValue($finder))
+            ->will($this->returnValue($loader))
         ;
 
         return $factory;
@@ -103,18 +103,18 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
         return $factory;
     }
 
-    public function getArtworkFinderFactory()
+    public function getArtworkLocatorFactory()
     {
         return $this
-            ->getMockBuilder('Kompakt\Mediameister\Packshot\Artwork\Finder\Factory\ArtworkFinderFactoryInterface')
+            ->getMockBuilder('Kompakt\Mediameister\Packshot\Artwork\Locator\Factory\ArtworkLocatorFactoryInterface')
             ->getMock()
         ;
     }
 
-    public function getAudioFinderFactory()
+    public function getAudioLocatorFactory()
     {
         return $this
-            ->getMockBuilder('Kompakt\Mediameister\Packshot\Audio\Finder\Factory\AudioFinderFactoryInterface')
+            ->getMockBuilder('Kompakt\Mediameister\Packshot\Audio\Locator\Factory\AudioLocatorFactoryInterface')
             ->getMock()
         ;
     }

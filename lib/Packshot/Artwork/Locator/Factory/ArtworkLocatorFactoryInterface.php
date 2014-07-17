@@ -7,12 +7,12 @@
  *
  */
 
-namespace Kompakt\Mediameister\Packshot\Artwork\Finder\Factory;
+namespace Kompakt\Mediameister\Packshot\Artwork\Locator\Factory;
 
 use Kompakt\Mediameister\Entity\ReleaseInterface;
 use Kompakt\Mediameister\Packshot\Layout\LayoutInterface;
 
-interface ArtworkFinderFactoryInterface
+interface ArtworkLocatorFactoryInterface
 {
     public function getInstance(LayoutInterface $layout, ReleaseInterface $release);
 }

@@ -7,12 +7,12 @@
  *
  */
 
-namespace Kompakt\Mediameister\Packshot\Audio\Finder\Factory;
+namespace Kompakt\Mediameister\Packshot\Audio\Locator\Factory;
 
 use Kompakt\Mediameister\Entity\ReleaseInterface;
 use Kompakt\Mediameister\Packshot\Layout\LayoutInterface;
 
-interface AudioFinderFactoryInterface
+interface AudioLocatorFactoryInterface
 {
     public function getInstance(LayoutInterface $layout, ReleaseInterface $release);
 }

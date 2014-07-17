@@ -10,8 +10,8 @@
 namespace Kompakt\Mediameister\Packshot;
 
 use Kompakt\Mediameister\Entity\ReleaseInterface;
-use Kompakt\Mediameister\Packshot\Artwork\Finder\Factory\ArtworkFinderFactoryInterface;
-use Kompakt\Mediameister\Packshot\Audio\Finder\Factory\AudioFinderFactoryInterface;
+use Kompakt\Mediameister\Packshot\Artwork\Locator\Factory\ArtworkLocatorFactoryInterface;
+use Kompakt\Mediameister\Packshot\Audio\Locator\Factory\AudioLocatorFactoryInterface;
 use Kompakt\Mediameister\Packshot\Exception\InvalidArgumentException;
 use Kompakt\Mediameister\Packshot\Layout\Factory\LayoutFactoryInterface;
 use Kompakt\Mediameister\Packshot\Metadata\Loader\Factory\MetadataLoaderFactoryInterface;
@@ -22,21 +22,21 @@ class Packshot implements PackshotInterface
 {
     protected $metadataWriterFactory = null;
     protected $metadataLoaderFactory = null;
-    protected $artworkFinderFactory = null;
-    protected $audioFinderFactory = null;
+    protected $artworkLocatorFactory = null;
+    protected $audioLocatorFactory = null;
     protected $name = null;
     protected $layout = null;
     protected $release = null;
     protected $metadataLoader = null;
-    protected $artworkFinder = null;
-    protected $audioFinder = null;
+    protected $artworkLocator = null;
+    protected $audioLocator = null;
 
     public function __construct(
         LayoutFactoryInterface $layoutFactory,
         MetadataWriterFactoryInterface $metadataWriterFactory,
         MetadataLoaderFactoryInterface $metadataLoaderFactory,
-        ArtworkFinderFactoryInterface $artworkFinderFactory,
-        AudioFinderFactoryInterface $audioFinderFactory,
+        ArtworkLocatorFactoryInterface $artworkLocatorFactory,
+        AudioLocatorFactoryInterface $audioLocatorFactory,
         $dir
     )
     {
@@ -59,8 +59,8 @@ class Packshot implements PackshotInterface
 
         $this->metadataWriterFactory = $metadataWriterFactory;
         $this->metadataLoaderFactory = $metadataLoaderFactory;
-        $this->artworkFinderFactory = $artworkFinderFactory;
-        $this->audioFinderFactory = $audioFinderFactory;
+        $this->artworkLocatorFactory = $artworkLocatorFactory;
+        $this->audioLocatorFactory = $audioLocatorFactory;
 
         $this->dir = $dir;
         $this->name = basename($dir);
@@ -92,14 +92,14 @@ class Packshot implements PackshotInterface
         return $this->metadataLoader;
     }
 
-    public function getArtworkFinder()
+    public function getArtworkLocator()
     {
-        return $this->artworkFinder;
+        return $this->artworkLocator;
     }
 
-    public function getAudioFinder()
+    public function getAudioLocator()
     {
-        return $this->audioFinder;
+        return $this->audioLocator;
     }
 
     public function init(ReleaseInterface $release)
@@ -118,8 +118,8 @@ class Packshot implements PackshotInterface
             $this->release = $this->metadataLoader->load();
         }
 
-        $this->artworkFinder = $this->artworkFinderFactory->getInstance($this->layout, $this->release);
-        $this->audioFinder = $this->audioFinderFactory->getInstance($this->layout, $this->release);
+        $this->artworkLocator = $this->artworkLocatorFactory->getInstance($this->layout, $this->release);
+        $this->audioLocator = $this->audioLocatorFactory->getInstance($this->layout, $this->release);
         return $this;
     }
 
