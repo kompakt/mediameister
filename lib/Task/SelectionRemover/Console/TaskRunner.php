@@ -7,10 +7,10 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\SelectionAdder\Console\Runner;
+namespace Kompakt\Mediameister\Task\SelectionRemover\Console;
 
 use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
-use Kompakt\Mediameister\Task\SelectionAdder\Task;
+use Kompakt\Mediameister\Task\SelectionRemover\Task;
 
 class TaskRunner
 {
@@ -29,7 +29,7 @@ class TaskRunner
     public function run($batchName, array $packshotNames)
     {
         try {
-            $this->task->add($batchName, $packshotNames);
+            $this->task->remove($batchName, $packshotNames);
         }
         catch (\Exception $e)
         {

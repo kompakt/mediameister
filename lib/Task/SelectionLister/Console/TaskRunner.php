@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\SelectionLister\Console\Runner;
+namespace Kompakt\Mediameister\Task\SelectionLister\Console;
 
 use Kompakt\Mediameister\Batch\Selection\Factory\SelectionFactory;
 use Kompakt\Mediameister\DropDir\DropDir;

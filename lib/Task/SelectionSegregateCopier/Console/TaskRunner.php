@@ -7,10 +7,10 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\SelectionRemover\Console\Runner;
+namespace Kompakt\Mediameister\Task\SelectionSegregateCopier\Console;
 
 use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
-use Kompakt\Mediameister\Task\SelectionRemover\Task;
+use Kompakt\Mediameister\Task\SelectionSegregateCopier\Task;
 
 class TaskRunner
 {
@@ -26,10 +26,10 @@ class TaskRunner
         $this->output = $output;
     }
 
-    public function run($batchName, array $packshotNames)
+    public function run($batchName)
     {
         try {
-            $this->task->remove($batchName, $packshotNames);
+            $this->task->segregateCopy($batchName);
         }
         catch (\Exception $e)
         {

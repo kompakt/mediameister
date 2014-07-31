@@ -7,27 +7,33 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\BatchDeleter\Console\Runner;
+namespace Kompakt\Mediameister\Task\SelectionSegregateMover\Console;
 
 use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
-use Kompakt\Mediameister\DropDir\DropDir;
+use Kompakt\Mediameister\Task\SelectionSegregateMover\Task;
 
 class TaskRunner
 {
-    protected $dropDir = null;
+    protected $task = null;
     protected $output = null;
 
     public function __construct(
-        DropDir $dropDir,
+        Task $task,
         ConsoleOutputInterface $output
     )
     {
-        $this->dropDir = $dropDir;
+        $this->task = $task;
         $this->output = $output;
     }
 
     public function run($batchName)
     {
-        $this->dropDir->deleteBatch($batchName);
+        try {
+            $this->task->segregateMove($batchName);
+        }
+        catch (\Exception $e)
+        {
+            $this->output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
+        }
     }
 }

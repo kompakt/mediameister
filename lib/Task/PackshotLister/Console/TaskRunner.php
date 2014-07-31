@@ -7,7 +7,7 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\PackshotLister\Console\Runner;
+namespace Kompakt\Mediameister\Task\PackshotLister\Console;
 
 use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
 use Kompakt\Mediameister\DropDir\DropDir;
