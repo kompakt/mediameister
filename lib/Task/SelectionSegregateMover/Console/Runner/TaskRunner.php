@@ -7,29 +7,29 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\SelectionCopier\Console\Runner;
+namespace Kompakt\Mediameister\Task\SelectionSegregateMover\Console\Runner;
 
 use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
-use Kompakt\Mediameister\Task\SelectionCopier\Manager\TaskManager;
+use Kompakt\Mediameister\Task\SelectionSegregateMover\Task;
 
 class TaskRunner
 {
-    protected $taskManager = null;
+    protected $task = null;
     protected $output = null;
 
     public function __construct(
-        TaskManager $taskManager,
+        Task $task,
         ConsoleOutputInterface $output
     )
     {
-        $this->taskManager = $taskManager;
+        $this->task = $task;
         $this->output = $output;
     }
 
     public function run($batchName)
     {
         try {
-            $this->taskManager->copy($batchName);
+            $this->task->segregateMove($batchName);
         }
         catch (\Exception $e)
         {

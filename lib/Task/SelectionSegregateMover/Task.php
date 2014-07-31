@@ -7,14 +7,14 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\SelectionMover\Manager;
+namespace Kompakt\Mediameister\Task\SelectionSegregateMover;
 
 use Kompakt\Mediameister\Batch\Selection\Factory\SelectionFactory;
 use Kompakt\Mediameister\DropDir\DropDir;
-use Kompakt\Mediameister\Task\SelectionMover\Manager\Exception\InvalidArgumentException;
+use Kompakt\Mediameister\Task\SelectionSegregateMover\Exception\BatchNotFoundException;
 use Kompakt\Mediameister\Util\Filesystem\Factory\ChildFileNamerFactory;
 
-class TaskManager
+class Task
 {
     protected $selectionFactory = null;
     protected $childFileNamerFactory = null;
@@ -34,19 +34,22 @@ class TaskManager
         $this->targetDropDir = $targetDropDir;
     }
 
-    public function move($batchName)
+    public function segregateMove($batchName)
     {
         $batch = $this->dropDir->getBatch($batchName);
 
         if (!$batch)
         {
-            throw new InvalidArgumentException(sprintf('Batch does not exist: "%s"', $batchName));
+            $e = new BatchNotFoundException(sprintf('Batch does not exist: "%s"', $batchName));
+            $e->setBatchName($batchName);
+            throw $e;
         }
 
         $fileNamer = $this->childFileNamerFactory->getInstance($this->targetDropDir->getDir());
         $name = $fileNamer->make($batch->getName());
-
+        $targetBatch = $this->targetDropDir->createBatch($name);
         $selection = $this->selectionFactory->getInstance($batch);
-        $selection->move($this->targetDropDir, $name);
+        $selection->segregateMove($targetBatch);
+        return $targetBatch;
     }
 }

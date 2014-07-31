@@ -10,26 +10,26 @@
 namespace Kompakt\Mediameister\Task\SelectionAdder\Console\Runner;
 
 use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
-use Kompakt\Mediameister\Task\SelectionAdder\Manager\TaskManager;
+use Kompakt\Mediameister\Task\SelectionAdder\Task;
 
 class TaskRunner
 {
-    protected $taskManager = null;
+    protected $task = null;
     protected $output = null;
 
     public function __construct(
-        TaskManager $taskManager,
+        Task $task,
         ConsoleOutputInterface $output
     )
     {
-        $this->taskManager = $taskManager;
+        $this->task = $task;
         $this->output = $output;
     }
 
     public function run($batchName, array $packshotNames)
     {
         try {
-            $this->taskManager->add($batchName, $packshotNames);
+            $this->task->add($batchName, $packshotNames);
         }
         catch (\Exception $e)
         {

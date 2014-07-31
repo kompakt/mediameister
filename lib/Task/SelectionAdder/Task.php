@@ -7,13 +7,14 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\SelectionAdder\Manager;
+namespace Kompakt\Mediameister\Task\SelectionAdder;
 
 use Kompakt\Mediameister\Batch\Selection\Factory\SelectionFactory;
 use Kompakt\Mediameister\DropDir\DropDir;
-use Kompakt\Mediameister\Task\SelectionAdder\Manager\Exception\InvalidArgumentException;
+use Kompakt\Mediameister\Task\SelectionAdder\Exception\BatchNotFoundException;
+use Kompakt\Mediameister\Task\SelectionAdder\Exception\PackshotNotFoundException;
 
-class TaskManager
+class Task
 {
     protected $selectionFactory = null;
     protected $dropDir = null;
@@ -33,10 +34,12 @@ class TaskManager
 
         if (!$batch)
         {
-            throw new InvalidArgumentException(sprintf('Batch does not exist: "%s"', $batchName));
+            $e = new BatchNotFoundException(sprintf('Batch does not exist: "%s"', $batchName));
+            $e->setBatchName($batchName);
+            throw $e;
         }
 
-        $selection = $this->selectionFactory->getInstance($batch);
+        $addedPackshots = array();
 
         foreach ($packshotNames as $packshotName)
         {
@@ -44,10 +47,21 @@ class TaskManager
 
             if (!$packshot)
             {
-                throw new InvalidArgumentException(sprintf('Packshot does not exist: "%s"', $packshotName));
+                $e = new PackshotNotFoundException(sprintf('Packshot does not exist: "%s"', $packshotName));
+                $e->setPackshotName($packshotName);
+                throw $e;
             }
 
+            $addedPackshots[] = $packshot;
+        }
+
+        $selection = $this->selectionFactory->getInstance($batch);
+
+        foreach ($addedPackshots as $packshot)
+        {
             $selection->addPackshot($packshot);
         }
+
+        return $addedPackshots;
     }
 }

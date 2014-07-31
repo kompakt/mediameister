@@ -7,13 +7,13 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\SelectionRemover\Manager;
+namespace Kompakt\Mediameister\Task\SelectionRemover;
 
 use Kompakt\Mediameister\Batch\Selection\Factory\SelectionFactory;
 use Kompakt\Mediameister\DropDir\DropDir;
-use Kompakt\Mediameister\Task\SelectionRemover\Manager\Exception\InvalidArgumentException;
+use Kompakt\Mediameister\Task\SelectionRemover\Exception\BatchNotFoundException;
 
-class TaskManager
+class Task
 {
     protected $selectionFactory = null;
     protected $dropDir = null;
@@ -33,10 +33,13 @@ class TaskManager
 
         if (!$batch)
         {
-            throw new InvalidArgumentException(sprintf('Batch does not exist: "%s"', $batchName));
+            $e = new BatchNotFoundException(sprintf('Batch does not exist: "%s"', $batchName));
+            $e->setBatchName($batchName);
+            throw $e;
         }
 
         $selection = $this->selectionFactory->getInstance($batch);
+        $removedPackshotNames = array();
 
         foreach ($packshotNames as $packshotName)
         {
@@ -44,8 +47,12 @@ class TaskManager
 
             if ($packshot)
             {
+                $packshotName = $packshot->getName();
                 $selection->removePackshot($packshot);
+                $removedPackshotNames[] = $packshotName;
             }
         }
+
+        return $removedPackshotNames;
     }
 }

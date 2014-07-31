@@ -7,14 +7,14 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\SelectionCopier\Manager;
+namespace Kompakt\Mediameister\Task\SelectionSegregateCopier;
 
 use Kompakt\Mediameister\Batch\Selection\Factory\SelectionFactory;
 use Kompakt\Mediameister\DropDir\DropDir;
-use Kompakt\Mediameister\Task\SelectionCopier\Manager\Exception\InvalidArgumentException;
+use Kompakt\Mediameister\Task\SelectionSegregateCopier\Exception\BatchNotFoundException;
 use Kompakt\Mediameister\Util\Filesystem\Factory\ChildFileNamerFactory;
 
-class TaskManager
+class Task
 {
     protected $selectionFactory = null;
     protected $childFileNamerFactory = null;
@@ -34,19 +34,22 @@ class TaskManager
         $this->targetDropDir = $targetDropDir;
     }
 
-    public function copy($batchName)
+    public function segregateCopy($batchName)
     {
         $batch = $this->dropDir->getBatch($batchName);
 
         if (!$batch)
         {
-            throw new InvalidArgumentException(sprintf('Batch does not exist: "%s"', $batchName));
+            $e = new BatchNotFoundException(sprintf('Batch does not exist: "%s"', $batchName));
+            $e->setBatchName($batchName);
+            throw $e;
         }
 
         $fileNamer = $this->childFileNamerFactory->getInstance($this->targetDropDir->getDir());
         $name = $fileNamer->make($batch->getName());
-
+        $targetBatch = $this->targetDropDir->createBatch($name);
         $selection = $this->selectionFactory->getInstance($batch);
-        $selection->copy($this->targetDropDir, $name);
+        $selection->segregateCopy($targetBatch);
+        return $targetBatch;
     }
 }

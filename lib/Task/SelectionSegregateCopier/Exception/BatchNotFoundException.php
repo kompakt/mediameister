@@ -7,9 +7,9 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\SelectionAdder\Manager\Exception;
+namespace Kompakt\Mediameister\Task\SelectionSegregateCopier\Exception;
 
 use Kompakt\Mediameister\Exception as BaseException;
 
-class InvalidArgumentException extends \InvalidArgumentException implements BaseException
+class BatchNotFoundException extends \InvalidArgumentException implements BaseException
 {}

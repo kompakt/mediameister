@@ -11,7 +11,6 @@ namespace Kompakt\Mediameister\Batch\Selection;
 
 use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\Batch\Selection\Factory\FileFactory;
-use Kompakt\Mediameister\DropDir\DropDirInterface;
 use Kompakt\Mediameister\Packshot\PackshotInterface;
 use Kompakt\Mediameister\Util\Filesystem\Factory\DirectoryFactory;
 
@@ -88,10 +87,8 @@ class Selection
         $this->file->clear();
     }
 
-    public function copy(DropDirInterface $targetDropDir, $targetBatchName)
+    public function segregateCopy(BatchInterface $targetBatch)
     {
-        $targetBatch = $targetDropDir->createBatch($targetBatchName);
-
         foreach($this->getPackshots() as $packshot)
         {
             $targetPackshot = $targetBatch->createPackshot($packshot->getName());
@@ -100,10 +97,8 @@ class Selection
         }
     }
 
-    public function move(DropDirInterface $targetDropDir, $targetBatchName)
+    public function segregateMove(BatchInterface $targetBatch)
     {
-        $targetBatch = $targetDropDir->createBatch($targetBatchName);
-
         foreach($this->getPackshots() as $packshot)
         {
             $targetPackshot = $targetBatch->createPackshot($packshot->getName());

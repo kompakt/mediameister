@@ -7,9 +7,9 @@
  *
  */
 
-namespace Kompakt\Mediameister\Task\SelectionMover\Manager\Exception;
+namespace Kompakt\Mediameister\Task\SelectionRemover\Exception;
 
 use Kompakt\Mediameister\Exception as BaseException;
 
-class InvalidArgumentException extends \InvalidArgumentException implements BaseException
+class BatchNotFoundException extends \InvalidArgumentException implements BaseException
 {}

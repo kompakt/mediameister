@@ -10,26 +10,26 @@
 namespace Kompakt\Mediameister\Task\SelectionRemover\Console\Runner;
 
 use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
-use Kompakt\Mediameister\Task\SelectionRemover\Manager\TaskManager;
+use Kompakt\Mediameister\Task\SelectionRemover\Task;
 
 class TaskRunner
 {
-    protected $taskManager = null;
+    protected $task = null;
     protected $output = null;
 
     public function __construct(
-        TaskManager $taskManager,
+        Task $task,
         ConsoleOutputInterface $output
     )
     {
-        $this->taskManager = $taskManager;
+        $this->task = $task;
         $this->output = $output;
     }
 
     public function run($batchName, array $packshotNames)
     {
         try {
-            $this->taskManager->remove($batchName, $packshotNames);
+            $this->task->remove($batchName, $packshotNames);
         }
         catch (\Exception $e)
         {
