@@ -31,17 +31,17 @@ class DropDir implements DropDirInterface
         
         if (!$info->isDir())
         {
-            throw new InvalidArgumentException(sprintf('Brop dir not found'));
+            throw new InvalidArgumentException(sprintf('Drop dir not found'));
         }
 
         if (!$info->isReadable())
         {
-            throw new InvalidArgumentException(sprintf('Brop dir not readable'));
+            throw new InvalidArgumentException(sprintf('Drop dir not readable'));
         }
 
         if (!$info->isWritable())
         {
-            throw new InvalidArgumentException(sprintf('Brop dir not writable'));
+            throw new InvalidArgumentException(sprintf('Drop dir not writable'));
         }
 
         $this->batchFactory = $batchFactory;
