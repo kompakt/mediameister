@@ -72,7 +72,7 @@ class DropDir implements DropDirInterface
                 continue;
             }
 
-            $batches[] = $batch;
+            $batches[$batch->getName()] = $batch;
         }
 
         return $batches;
