@@ -21,7 +21,7 @@ class DropDirTest extends \PHPUnit_Framework_TestCase
             $this->getFilesDir()
         );
 
-        $this->assertCount(4, $dropDir->getBatches());
+        $this->assertCount(1, $dropDir->getBatches());
     }
 
     /**
@@ -56,10 +56,22 @@ class DropDirTest extends \PHPUnit_Framework_TestCase
 
     protected function getBatchFactory()
     {
-        return $this
+        $batch = $this
+            ->getMockBuilder('Kompakt\Mediameister\Batch\BatchInterface')
+            ->getMock()
+        ;
+
+        $factory = $this
             ->getMockBuilder('Kompakt\Mediameister\Batch\Factory\BatchFactoryInterface')
             ->getMock()
         ;
+
+        $factory
+            ->method('getInstance')
+            ->will($this->returnValue($batch))
+        ;
+
+        return $factory;
     }
 
     protected function getDirectoryFactory()
