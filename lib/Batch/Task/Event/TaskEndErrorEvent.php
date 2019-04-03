@@ -10,8 +10,8 @@
 namespace Kompakt\Mediameister\Batch\Task\Event;
 
 use Kompakt\Mediameister\Batch\BatchInterface;
-use Kompakt\Mediameister\Generic\EventDispatcher\Event;
 use Kompakt\Mediameister\Util\Timer\Timer;
+use Symfony\Component\EventDispatcher\Event;
 
 class TaskEndErrorEvent extends Event
 {

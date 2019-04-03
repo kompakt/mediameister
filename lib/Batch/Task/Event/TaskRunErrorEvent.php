@@ -10,7 +10,7 @@
 namespace Kompakt\Mediameister\Batch\Task\Event;
 
 use Kompakt\Mediameister\Batch\BatchInterface;
-use Kompakt\Mediameister\Generic\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\Event;
 
 class TaskRunErrorEvent extends Event
 {

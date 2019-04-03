@@ -12,8 +12,8 @@ namespace Kompakt\Mediameister\Batch\Task\Factory;
 use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\Batch\Task\BatchTaskEngine;
 use Kompakt\Mediameister\Batch\Task\EventNamesInterface;
-use Kompakt\Mediameister\Generic\EventDispatcher\EventDispatcherInterface;
 use Kompakt\Mediameister\Util\Timer\Timer;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class BatchTaskEngineFactory
 {

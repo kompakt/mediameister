@@ -21,9 +21,9 @@ use Kompakt\Mediameister\Batch\Task\Event\TrackErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TrackEvent;
 use Kompakt\Mediameister\Batch\Task\Exception\RuntimeException;
 use Kompakt\Mediameister\Entity\TrackInterface;
-use Kompakt\Mediameister\Generic\EventDispatcher\EventDispatcherInterface;
 use Kompakt\Mediameister\Packshot\PackshotInterface;
 use Kompakt\Mediameister\Util\Timer\Timer;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class BatchTaskEngine
 {

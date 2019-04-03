@@ -10,7 +10,6 @@
 namespace Kompakt\Mediameister\Batch\Task\Console\Subscriber;
 
 use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
-use Kompakt\Mediameister\Generic\EventDispatcher\EventSubscriberInterface;
 use Kompakt\Mediameister\Batch\Task\EventNamesInterface;
 use Kompakt\Mediameister\Batch\Task\Event\PackshotErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\PackshotEvent;
@@ -20,54 +19,87 @@ use Kompakt\Mediameister\Batch\Task\Event\TaskRunErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TaskRunEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TrackErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TrackEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class Debugger implements EventSubscriberInterface
+class Debugger
 {
+    protected $dispatcher = null;
     protected $eventNames = null;
     protected $output = null;
 
     public function __construct(
+        EventDispatcherInterface $dispatcher,
         EventNamesInterface $eventNames,
         ConsoleOutputInterface $output
     )
     {
+        $this->dispatcher = $dispatcher;
         $this->eventNames = $eventNames;
         $this->output = $output;
     }
 
-    public function getSubscriptions()
+    public function activate()
     {
-        return array(
-            $this->eventNames->taskRun() => array(
-                array('onTaskRun', 0)
-            ),
-            $this->eventNames->taskRunError() => array(
-                array('onTaskRunError', 0)
-            ),
-            $this->eventNames->taskEnd() => array(
-                array('onTaskEnd', 0)
-            ),
-            $this->eventNames->taskEndError() => array(
-                array('onTaskEndError', 0)
-            ),
-            $this->eventNames->packshotLoad() => array(
-                array('onPackshotLoad', 0)
-            ),
-            $this->eventNames->packshotLoadError() => array(
-                array('onPackshotLoadError', 0)
-            ),
-            $this->eventNames->packshotUnload() => array(
-                array('onPackshotUnload', 0)
-            ),
-            $this->eventNames->packshotUnloadError() => array(
-                array('onPackshotUnloadError', 0)
-            ),
-            $this->eventNames->track() => array(
-                array('onTrack', 0)
-            ),
-            $this->eventNames->trackError() => array(
-                array('onTrackError', 0)
-            )
+        $this->handleListeners(true);
+    }
+
+    public function deactivate()
+    {
+        $this->handleListeners(false);
+    }
+
+    protected function handleListeners($add)
+    {
+        $method = ($add) ? 'addListener' : 'removeListener';
+
+        $this->dispatcher->$method(
+            $this->eventNames->taskRun(),
+            [$this, 'onTaskRun']
+        );
+
+        $this->dispatcher->$method(
+            $this->eventNames->taskRunError(),
+            [$this, 'onTaskRunError']
+        );
+
+        $this->dispatcher->$method(
+            $this->eventNames->taskEnd(),
+            [$this, 'onTaskEnd']
+        );
+
+        $this->dispatcher->$method(
+            $this->eventNames->taskEndError(),
+            [$this, 'onTaskEndError']
+        );
+
+        $this->dispatcher->$method(
+            $this->eventNames->packshotLoad(),
+            [$this, 'onPackshotLoad']
+        );
+
+        $this->dispatcher->$method(
+            $this->eventNames->packshotLoadError(),
+            [$this, 'onPackshotLoadError']
+        );
+
+        $this->dispatcher->$method(
+            $this->eventNames->packshotUnload(),
+            [$this, 'onPackshotUnload']
+        );
+
+        $this->dispatcher->$method(
+            $this->eventNames->packshotUnloadError(),
+            [$this, 'onPackshotUnloadError']
+        );
+
+        $this->dispatcher->$method(
+            $this->eventNames->track(),
+            [$this, 'onTrack']
+        );
+
+        $this->dispatcher->$method(
+            $this->eventNames->trackError(),
+            [$this, 'onTrackError']
         );
     }
 

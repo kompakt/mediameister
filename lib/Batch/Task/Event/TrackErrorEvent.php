@@ -11,8 +11,8 @@ namespace Kompakt\Mediameister\Batch\Task\Event;
 
 use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\Entity\TrackInterface;
-use Kompakt\Mediameister\Generic\EventDispatcher\Event;
 use Kompakt\Mediameister\Packshot\PackshotInterface;
+use Symfony\Component\EventDispatcher\Event;
 
 class TrackErrorEvent extends Event
 {

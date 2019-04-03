@@ -9,46 +9,66 @@
 
 namespace Kompakt\Mediameister\Batch\Task\Subscriber;
 
-use Kompakt\Mediameister\Generic\EventDispatcher\EventSubscriberInterface;
 use Kompakt\Mediameister\Batch\Task\EventNamesInterface;
 use Kompakt\Mediameister\Batch\Task\Event\PackshotErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\PackshotEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TrackErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TrackEvent;
 use Kompakt\Mediameister\Batch\Task\Subscriber\Share\Summary;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class GenericSummaryMaker implements EventSubscriberInterface
+class GenericSummaryMaker
 {
     const OK = 'ok';
     const ERROR = 'error';
 
+    protected $dispatcher = null;
     protected $eventNames = null;
     protected $summary = null;
 
     public function __construct(
+        EventDispatcherInterface $dispatcher,
         EventNamesInterface $eventNames,
         Summary $summary
     )
     {
+        $this->dispatcher = $dispatcher;
         $this->eventNames = $eventNames;
         $this->summary = $summary;
     }
 
-    public function getSubscriptions()
+    public function activate()
     {
-        return array(
-            $this->eventNames->packshotLoad() => array(
-                array('onPackshotLoad', 0)
-            ),
-            $this->eventNames->packshotLoadError() => array(
-                array('onPackshotLoadError', 0)
-            ),
-            $this->eventNames->track() => array(
-                array('onTrack', 0)
-            ),
-            $this->eventNames->trackError() => array(
-                array('onTrackError', 0)
-            )
+        $this->handleListeners(true);
+    }
+
+    public function deactivate()
+    {
+        $this->handleListeners(false);
+    }
+
+    protected function handleListeners($add)
+    {
+        $method = ($add) ? 'addListener' : 'removeListener';
+
+        $this->dispatcher->$method(
+            $this->eventNames->packshotLoad(),
+            [$this, 'onPackshotLoad']
+        );
+
+        $this->dispatcher->$method(
+            $this->eventNames->packshotLoadError(),
+            [$this, 'onPackshotLoadError']
+        );
+
+        $this->dispatcher->$method(
+            $this->eventNames->track(),
+            [$this, 'onTrack']
+        );
+
+        $this->dispatcher->$method(
+            $this->eventNames->trackError(),
+            [$this, 'onTrackError']
         );
     }
 
