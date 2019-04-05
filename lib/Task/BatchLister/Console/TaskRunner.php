@@ -9,8 +9,8 @@
 
 namespace Kompakt\Mediameister\Task\BatchLister\Console;
 
-use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
 use Kompakt\Mediameister\DropDir\DropDir;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 
 class TaskRunner
 {

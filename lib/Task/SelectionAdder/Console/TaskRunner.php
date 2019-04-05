@@ -9,8 +9,8 @@
 
 namespace Kompakt\Mediameister\Task\SelectionAdder\Console;
 
-use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
 use Kompakt\Mediameister\Task\SelectionAdder\Task;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 
 class TaskRunner
 {

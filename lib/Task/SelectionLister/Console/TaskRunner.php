@@ -11,7 +11,7 @@ namespace Kompakt\Mediameister\Task\SelectionLister\Console;
 
 use Kompakt\Mediameister\Batch\Selection\Factory\SelectionFactory;
 use Kompakt\Mediameister\DropDir\DropDir;
-use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 
 class TaskRunner
 {

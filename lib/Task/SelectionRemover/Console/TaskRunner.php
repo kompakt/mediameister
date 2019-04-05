@@ -9,8 +9,8 @@
 
 namespace Kompakt\Mediameister\Task\SelectionRemover\Console;
 
-use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
 use Kompakt\Mediameister\Task\SelectionRemover\Task;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 
 class TaskRunner
 {

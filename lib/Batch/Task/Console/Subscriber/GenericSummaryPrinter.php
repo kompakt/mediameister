@@ -9,7 +9,6 @@
 
 namespace Kompakt\Mediameister\Batch\Task\Console\Subscriber;
 
-use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
 use Kompakt\Mediameister\Batch\Task\EventNamesInterface;
 use Kompakt\Mediameister\Batch\Task\Event\TaskEndErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TaskEndEvent;
@@ -17,6 +16,7 @@ use Kompakt\Mediameister\Batch\Task\Subscriber\Share\Summary;
 use Kompakt\Mediameister\Batch\Task\Subscriber\GenericSummaryMaker;
 use Kompakt\Mediameister\Util\Counter;
 use Kompakt\Mediameister\Util\Timer\Timer;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class GenericSummaryPrinter

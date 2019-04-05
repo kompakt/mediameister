@@ -9,7 +9,6 @@
 
 namespace Kompakt\Mediameister\Batch\Task\Console\Subscriber;
 
-use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
 use Kompakt\Mediameister\Batch\Task\EventNamesInterface;
 use Kompakt\Mediameister\Batch\Task\Event\PackshotErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\PackshotEvent;
@@ -19,6 +18,7 @@ use Kompakt\Mediameister\Batch\Task\Event\TaskRunErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TaskRunEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TrackErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TrackEvent;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Debugger

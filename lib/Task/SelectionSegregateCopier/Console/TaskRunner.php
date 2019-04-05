@@ -9,8 +9,8 @@
 
 namespace Kompakt\Mediameister\Task\SelectionSegregateCopier\Console;
 
-use Kompakt\Mediameister\Generic\Console\Output\ConsoleOutputInterface;
 use Kompakt\Mediameister\Task\SelectionSegregateCopier\Task;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 
 class TaskRunner
 {
