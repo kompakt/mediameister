@@ -9,14 +9,14 @@
 
 namespace Kompakt\Mediameister\Batch\Task\Subscriber;
 
-use Kompakt\Mediameister\Generic\Logger\Handler\StreamHandlerFactoryInterface;
-use Kompakt\Mediameister\Generic\Logger\LoggerInterface;
 use Kompakt\Mediameister\Batch\Task\EventNamesInterface;
 use Kompakt\Mediameister\Batch\Task\Event\PackshotErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TaskEndErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TaskRunErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TaskRunEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TrackErrorEvent;
+use Kompakt\Mediameister\Logger\Handler\Factory\StreamHandlerFactory;
+use Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ErrorLogger
@@ -29,8 +29,8 @@ class ErrorLogger
     public function __construct(
         EventDispatcherInterface $dispatcher,
         EventNamesInterface $eventNames,
-        LoggerInterface $logger,
-        StreamHandlerFactoryInterface $streamHandlerFactory,
+        Logger $logger,
+        StreamHandlerFactory $streamHandlerFactory,
         $filename
     )
     {
