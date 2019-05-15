@@ -13,7 +13,6 @@ use Kompakt\Mediameister\Batch\Task\EventNamesInterface;
 use Kompakt\Mediameister\Batch\Task\Event\PackshotErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TaskEndErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TaskRunErrorEvent;
-use Kompakt\Mediameister\Batch\Task\Event\TaskRunEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TrackErrorEvent;
 use Kompakt\Mediameister\Logger\Handler\Factory\StreamHandlerFactory;
 use Monolog\Logger;
@@ -24,41 +23,31 @@ class ErrorLogger
     protected $dispatcher = null;
     protected $eventNames = null;
     protected $logger = null;
-    protected $streamHandlerFactory = null;
 
     public function __construct(
         EventDispatcherInterface $dispatcher,
-        EventNamesInterface $eventNames,
-        Logger $logger,
-        StreamHandlerFactory $streamHandlerFactory,
-        $filename
+        EventNamesInterface $eventNames
     )
     {
         $this->dispatcher = $dispatcher;
         $this->eventNames = $eventNames;
-        $this->logger = $logger;
-        $this->streamHandlerFactory = $streamHandlerFactory;
-        $this->filename = $filename;
     }
 
-    public function activate()
+    public function activate(Logger $logger)
     {
         $this->handleListeners(true);
+        $this->logger = $logger;
     }
 
     public function deactivate()
     {
         $this->handleListeners(false);
+        $this->logger = null;
     }
 
     protected function handleListeners($add)
     {
         $method = ($add) ? 'addListener' : 'removeListener';
-
-        $this->dispatcher->$method(
-            $this->eventNames->taskRun(),
-            [$this, 'onTaskRun']
-        );
 
         $this->dispatcher->$method(
             $this->eventNames->taskRunError(),
@@ -84,12 +73,6 @@ class ErrorLogger
             $this->eventNames->trackError(),
             [$this, 'onTrackError']
         );
-    }
-
-    public function onTaskRun(TaskRunEvent $event)
-    {
-        $logfile = sprintf('%s/%s', $event->getBatch()->getDir(), $this->filename);
-        $this->logger->pushHandler($this->streamHandlerFactory->getInstance($logfile));
     }
 
     public function onTaskRunError(TaskRunErrorEvent $event)
