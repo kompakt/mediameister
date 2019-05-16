@@ -16,8 +16,6 @@ use Kompakt\Mediameister\Batch\Task\Event\TaskEndErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TaskEndEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TrackErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TrackEvent;
-#use Kompakt\Mediameister\Batch\Task\Subscriber\Share\Summary;
-#use Kompakt\Mediameister\Batch\Task\Subscriber\GenericSummaryMaker;
 use Kompakt\Mediameister\Util\Counter;
 use Kompakt\Mediameister\Util\Timer\Timer;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
@@ -150,8 +148,8 @@ class SummaryPrinter
     protected function writeItemSummary(Counter $counter, $title)
     {
         $error
-            = ($counter->count(GenericSummaryMaker::ERROR))
-            ? sprintf(' <error>(%d errors)</error>', $counter->count(GenericSummaryMaker::ERROR))
+            = ($counter->count(self::ERROR))
+            ? sprintf(' <error>(%d errors)</error>', $counter->count(self::ERROR))
             : ''
         ;
 
@@ -160,7 +158,7 @@ class SummaryPrinter
                 '<info>= %s: %s total, %d ok</info>%s',
                 $title,
                 $counter->getTotal(),
-                $counter->count(GenericSummaryMaker::OK),
+                $counter->count(self::OK),
                 $error
             )
         );
