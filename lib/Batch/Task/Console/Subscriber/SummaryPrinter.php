@@ -10,33 +10,42 @@
 namespace Kompakt\Mediameister\Batch\Task\Console\Subscriber;
 
 use Kompakt\Mediameister\Batch\Task\EventNamesInterface;
+use Kompakt\Mediameister\Batch\Task\Event\PackshotErrorEvent;
+use Kompakt\Mediameister\Batch\Task\Event\PackshotEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TaskEndErrorEvent;
 use Kompakt\Mediameister\Batch\Task\Event\TaskEndEvent;
-use Kompakt\Mediameister\Batch\Task\Subscriber\Share\Summary;
-use Kompakt\Mediameister\Batch\Task\Subscriber\GenericSummaryMaker;
+use Kompakt\Mediameister\Batch\Task\Event\TrackErrorEvent;
+use Kompakt\Mediameister\Batch\Task\Event\TrackEvent;
+#use Kompakt\Mediameister\Batch\Task\Subscriber\Share\Summary;
+#use Kompakt\Mediameister\Batch\Task\Subscriber\GenericSummaryMaker;
 use Kompakt\Mediameister\Util\Counter;
 use Kompakt\Mediameister\Util\Timer\Timer;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class GenericSummaryPrinter
+class SummaryPrinter
 {
+    const OK = 'ok';
+    const ERROR = 'error';
+
     protected $dispatcher = null;
     protected $eventNames = null;
-    protected $summary = null;
     protected $output = null;
+    protected $packshotCounter = null;
+    protected $trackCounter = null;
 
     public function __construct(
         EventDispatcherInterface $dispatcher,
         EventNamesInterface $eventNames,
-        Summary $summary,
-        ConsoleOutputInterface $output
+        ConsoleOutputInterface $output,
+        Counter $counterPrototype
     )
     {
         $this->dispatcher = $dispatcher;
         $this->eventNames = $eventNames;
-        $this->summary = $summary;
         $this->output = $output;
+        $this->packshotCounter = clone $counterPrototype;
+        $this->trackCounter = clone $counterPrototype;
     }
 
     public function activate()
@@ -62,19 +71,63 @@ class GenericSummaryPrinter
             $this->eventNames->taskEndError(),
             [$this, 'onTaskEndError']
         );
+
+        $this->dispatcher->$method(
+            $this->eventNames->packshotLoad(),
+            [$this, 'onPackshotLoad']
+        );
+
+        $this->dispatcher->$method(
+            $this->eventNames->packshotLoadError(),
+            [$this, 'onPackshotLoadError']
+        );
+
+        $this->dispatcher->$method(
+            $this->eventNames->track(),
+            [$this, 'onTrack']
+        );
+
+        $this->dispatcher->$method(
+            $this->eventNames->trackError(),
+            [$this, 'onTrackError']
+        );
     }
 
     public function onTaskEnd(TaskEndEvent $event)
     {
-        $this->writeFullSummary($event->getTimer());
+        $this->printSummary($event->getTimer());
     }
 
     public function onTaskEndError(TaskEndErrorEvent $event)
     {
-        $this->writeFullSummary($event->getTimer());
+        $this->printSummary($event->getTimer());
     }
 
-    protected function writeFullSummary(Timer $timer)
+    public function onPackshotLoad(PackshotEvent $event)
+    {
+        $id = $event->getPackshot()->getName();
+        $this->packshotCounter->add(self::OK, $id);
+    }
+
+    public function onPackshotLoadError(PackshotErrorEvent $event)
+    {
+        $id = $event->getPackshot()->getName();
+        $this->packshotCounter->add(self::ERROR, $id);
+    }
+
+    public function onTrack(TrackEvent $event)
+    {
+        $id = $event->getPackshot()->getName() . spl_object_hash($event->getTrack());
+        $this->trackCounter->add(self::OK, $id);
+    }
+
+    public function onTrackError(TrackErrorEvent $event)
+    {
+        $id = $event->getPackshot()->getName() . spl_object_hash($event->getTrack());
+        $this->trackCounter->add(self::ERROR, $id);
+    }
+
+    protected function printSummary(Timer $timer)
     {
         $this->output->writeln(
             sprintf(
@@ -83,8 +136,8 @@ class GenericSummaryPrinter
             )
         );
 
-        $this->writeItemSummary($this->summary->getPackshotCounter(), 'Packshots');
-        $this->writeItemSummary($this->summary->getTrackCounter(), 'Tracks');
+        $this->writeItemSummary($this->packshotCounter, 'Packshots');
+        $this->writeItemSummary($this->trackCounter, 'Tracks');
 
         $this->output->writeln(
             sprintf(
