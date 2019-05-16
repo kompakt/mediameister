@@ -25,7 +25,7 @@ use Kompakt\Mediameister\Packshot\PackshotInterface;
 use Kompakt\Mediameister\Util\Timer\Timer;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class BatchTaskEngine
+class Task
 {
     protected $dispatcher = null;
     protected $eventNames = null;
