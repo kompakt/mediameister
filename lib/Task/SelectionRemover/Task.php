@@ -33,9 +33,7 @@ class Task
 
         if (!$batch)
         {
-            $e = new BatchNotFoundException(sprintf('Batch does not exist: "%s"', $batchName));
-            $e->setBatchName($batchName);
-            throw $e;
+            throw new BatchNotFoundException(sprintf('Batch does not exist: "%s"', $batchName));
         }
 
         $selection = $this->selectionFactory->getInstance($batch);
