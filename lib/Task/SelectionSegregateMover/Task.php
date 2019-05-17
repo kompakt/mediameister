@@ -40,9 +40,7 @@ class Task
 
         if (!$batch)
         {
-            $e = new BatchNotFoundException(sprintf('Batch does not exist: "%s"', $batchName));
-            $e->setBatchName($batchName);
-            throw $e;
+            throw new BatchNotFoundException(sprintf('Batch does not exist: "%s"', $batchName));
         }
 
         $fileNamer = $this->childFileNamerFactory->getInstance($this->targetDropDir->getDir());
