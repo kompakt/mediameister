@@ -75,7 +75,7 @@ class Task
         }
         catch (\Exception $e)
         {
-            throw new RuntimeException(sprintf('Batch task engine error'), null, $e);
+            throw new RuntimeException(sprintf('Batch task error'), null, $e);
         }
     }
 
