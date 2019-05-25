@@ -72,7 +72,7 @@ class SummaryPrinter
 
         $this->dispatcher->$method(
             $this->eventNames->packshotLoadOk(),
-            [$this, 'onPackshotLoad']
+            [$this, 'onPackshotLoadOk']
         );
 
         $this->dispatcher->$method(
@@ -101,7 +101,7 @@ class SummaryPrinter
         $this->printSummary($event->getTimer());
     }
 
-    public function onPackshotLoad(PackshotEvent $event)
+    public function onPackshotLoadOk(PackshotEvent $event)
     {
         $id = $event->getPackshot()->getName();
         $this->packshotCounter->add(self::OK, $id);

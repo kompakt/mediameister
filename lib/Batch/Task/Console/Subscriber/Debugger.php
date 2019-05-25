@@ -74,7 +74,7 @@ class Debugger
 
         $this->dispatcher->$method(
             $this->eventNames->packshotLoadOk(),
-            [$this, 'onPackshotLoad']
+            [$this, 'onPackshotLoadOk']
         );
 
         $this->dispatcher->$method(
@@ -141,11 +141,11 @@ class Debugger
         );
     }
 
-    public function onPackshotLoad(PackshotEvent $event)
+    public function onPackshotLoadOk(PackshotEvent $event)
     {
         $this->output->writeln(
             sprintf(
-                '  <info>+ DEBUG: Packshot load (%s)</info>',
+                '  <info>+ DEBUG: Packshot load ok (%s)</info>',
                 $event->getPackshot()->getName()
             )
         );
