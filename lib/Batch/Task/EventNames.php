@@ -40,7 +40,7 @@ class EventNames implements EventNamesInterface
         return sprintf('%s.task_end_error', $this->namespace);
     }
 
-    public function packshotLoad()
+    public function packshotLoadOk()
     {
         return sprintf('%s.packshot_load', $this->namespace);
     }

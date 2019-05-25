@@ -73,7 +73,7 @@ class Debugger
         );
 
         $this->dispatcher->$method(
-            $this->eventNames->packshotLoad(),
+            $this->eventNames->packshotLoadOk(),
             [$this, 'onPackshotLoad']
         );
 

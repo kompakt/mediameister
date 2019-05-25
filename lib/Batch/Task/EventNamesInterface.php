@@ -15,7 +15,7 @@ interface EventNamesInterface
     public function taskRunError();
     public function taskEnd();
     public function taskEndError();
-    public function packshotLoad();
+    public function packshotLoadOk();
     public function packshotLoadError();
     public function packshotUnload();
     public function packshotUnloadError();

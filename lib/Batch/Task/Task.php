@@ -127,7 +127,7 @@ class Task
             $packshot->load();
 
             $this->dispatcher->dispatch(
-                $this->eventNames->packshotLoad(),
+                $this->eventNames->packshotLoadOk(),
                 new PackshotEvent($this->batch, $packshot)
             );
 
