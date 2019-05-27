@@ -21,6 +21,7 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
             $this->getMetadataLoaderFactory(),
             $this->getArtworkLocatorFactory(),
             $this->getAudioLocatorFactory(),
+            $this->getZipLocatorFactory(),
             __DIR__
         );
 
@@ -115,6 +116,14 @@ class PackshotTest extends \PHPUnit_Framework_TestCase
     {
         return $this
             ->getMockBuilder('Kompakt\Mediameister\Packshot\Audio\Locator\Factory\AudioLocatorFactoryInterface')
+            ->getMock()
+        ;
+    }
+
+    public function getZipLocatorFactory()
+    {
+        return $this
+            ->getMockBuilder('Kompakt\Mediameister\Packshot\Zip\Locator\Factory\ZipLocatorFactoryInterface')
             ->getMock()
         ;
     }

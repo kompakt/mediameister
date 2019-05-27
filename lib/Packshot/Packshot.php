@@ -17,6 +17,7 @@ use Kompakt\Mediameister\Packshot\Layout\Factory\LayoutFactoryInterface;
 use Kompakt\Mediameister\Packshot\Metadata\Loader\Factory\MetadataLoaderFactoryInterface;
 use Kompakt\Mediameister\Packshot\Metadata\Writer\Factory\WriterFactoryInterface as MetadataWriterFactoryInterface;
 use Kompakt\Mediameister\Packshot\PackshotInterface;
+use Kompakt\Mediameister\Packshot\Zip\Locator\Factory\ZipLocatorFactoryInterface;
 
 class Packshot implements PackshotInterface
 {
@@ -24,12 +25,14 @@ class Packshot implements PackshotInterface
     protected $metadataLoaderFactory = null;
     protected $artworkLocatorFactory = null;
     protected $audioLocatorFactory = null;
+    protected $zipLocatorFactory = null;
     protected $name = null;
     protected $layout = null;
     protected $release = null;
     protected $metadataLoader = null;
     protected $artworkLocator = null;
     protected $audioLocator = null;
+    protected $zipLocator = null;
 
     public function __construct(
         LayoutFactoryInterface $layoutFactory,
@@ -37,6 +40,7 @@ class Packshot implements PackshotInterface
         MetadataLoaderFactoryInterface $metadataLoaderFactory,
         ArtworkLocatorFactoryInterface $artworkLocatorFactory,
         AudioLocatorFactoryInterface $audioLocatorFactory,
+        ZipLocatorFactoryInterface $zipLocatorFactory,
         $dir
     )
     {
@@ -61,6 +65,7 @@ class Packshot implements PackshotInterface
         $this->metadataLoaderFactory = $metadataLoaderFactory;
         $this->artworkLocatorFactory = $artworkLocatorFactory;
         $this->audioLocatorFactory = $audioLocatorFactory;
+        $this->zipLocatorFactory = $zipLocatorFactory;
 
         $this->dir = $dir;
         $this->name = basename($dir);
@@ -102,6 +107,11 @@ class Packshot implements PackshotInterface
         return $this->audioLocator;
     }
 
+    public function getZipLocator()
+    {
+        return $this->zipLocator;
+    }
+
     public function init(ReleaseInterface $release)
     {
         $this->release = $release;
@@ -120,6 +130,7 @@ class Packshot implements PackshotInterface
 
         $this->artworkLocator = $this->artworkLocatorFactory->getInstance($this->layout, $this->release);
         $this->audioLocator = $this->audioLocatorFactory->getInstance($this->layout, $this->release);
+        $this->zipLocator = $this->zipLocatorFactory->getInstance($this->layout, $this->release);
         return $this;
     }
 
