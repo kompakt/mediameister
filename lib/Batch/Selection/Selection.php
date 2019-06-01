@@ -48,6 +48,26 @@ class Selection
         return $packshots;
     }
 
+    public function getPackshot($name)
+    {
+        foreach($this->file->getItems() as $item)
+        {
+            $packshot = $this->batch->getPackshot($item);
+
+            if ($packshot)
+            {
+                return $packshot;
+            }
+        }
+
+        return null;
+    }
+
+    public function hasPackshot($name)
+    {
+        return ($this->getPackshot($name));
+    }
+
     public function addPackshot(PackshotInterface $packshot)
     {
         $this->addPackshots(array($packshot));
