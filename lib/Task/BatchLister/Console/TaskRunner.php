@@ -28,9 +28,18 @@ class TaskRunner
 
     public function run()
     {
+        $batches = [];
+
         foreach ($this->dropDir->getBatches() as $batch)
         {
-            $this->output->writeln(sprintf('<info>%s</info>', $batch->getName()));
+            $batches[] = $batch->getName();
+        }
+
+        asort($batches);
+
+        foreach ($batches as $batchName)
+        {
+            $this->output->writeln(sprintf('<info>%s</info>', $batchName));
         }
     }
 }
