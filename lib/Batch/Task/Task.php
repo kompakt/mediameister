@@ -83,8 +83,8 @@ class Task
     {
         try {
             $this->dispatcher->dispatch(
-                $this->eventNames->taskRun(),
-                new TaskRunEvent($this->batch)
+                new TaskRunEvent($this->batch),
+                $this->eventNames->taskRun()
             );
 
             return true;
@@ -92,8 +92,8 @@ class Task
         catch (\Exception $e)
         {
             $this->dispatcher->dispatch(
-                $this->eventNames->taskRunError(),
-                new TaskRunErrorEvent($e, $this->batch)
+                new TaskRunErrorEvent($e, $this->batch),
+                $this->eventNames->taskRunError()
             );
 
             return false;
@@ -104,8 +104,8 @@ class Task
     {
         try {
             $this->dispatcher->dispatch(
-                $this->eventNames->taskEnd(),
-                new TaskEndEvent($this->batch, $this->timer->stop())
+                new TaskEndEvent($this->batch, $this->timer->stop()),
+                $this->eventNames->taskEnd()
             );
 
             return true;
@@ -113,8 +113,8 @@ class Task
         catch (\Exception $e)
         {
             $this->dispatcher->dispatch(
-                $this->eventNames->taskEndError(),
-                new TaskEndErrorEvent($e, $this->batch, $this->timer->stop())
+                new TaskEndErrorEvent($e, $this->batch, $this->timer->stop()),
+                $this->eventNames->taskEndError()
             );
 
             return false;
@@ -127,8 +127,8 @@ class Task
             $packshot->load();
 
             $this->dispatcher->dispatch(
-                $this->eventNames->packshotLoadOk(),
-                new PackshotEvent($this->batch, $packshot)
+                new PackshotEvent($this->batch, $packshot),
+                $this->eventNames->packshotLoadOk()
             );
 
             return true;
@@ -136,8 +136,8 @@ class Task
         catch (\Exception $e)
         {
             $this->dispatcher->dispatch(
-                $this->eventNames->packshotLoadError(),
-                new PackshotErrorEvent($e, $this->batch, $packshot)
+                new PackshotErrorEvent($e, $this->batch, $packshot),
+                $this->eventNames->packshotLoadError()
             );
 
             return false;
@@ -148,8 +148,8 @@ class Task
     {
         try {
             $this->dispatcher->dispatch(
-                $this->eventNames->packshotUnload(),
-                new PackshotEvent($this->batch, $packshot)
+                new PackshotEvent($this->batch, $packshot),
+                $this->eventNames->packshotUnload()
             );
 
             return true;
@@ -157,8 +157,8 @@ class Task
         catch (\Exception $e)
         {
             $this->dispatcher->dispatch(
-                $this->eventNames->packshotUnloadError(),
-                new PackshotErrorEvent($e, $this->batch, $packshot)
+                new PackshotErrorEvent($e, $this->batch, $packshot),
+                $this->eventNames->packshotUnloadError()
             );
 
             return false;
@@ -169,8 +169,8 @@ class Task
     {
         try {
             $this->dispatcher->dispatch(
-                $this->eventNames->track(),
-                new TrackEvent($this->batch, $packshot, $track)
+                new TrackEvent($this->batch, $packshot, $track),
+                $this->eventNames->track()
             );
 
             return true;
@@ -178,8 +178,8 @@ class Task
         catch (\Exception $e)
         {
             $this->dispatcher->dispatch(
-                $this->eventNames->trackError(),
-                new TrackErrorEvent($e, $this->batch, $packshot, $track)
+                new TrackErrorEvent($e, $this->batch, $packshot, $track),
+                $this->eventNames->trackError()
             );
 
             return false;

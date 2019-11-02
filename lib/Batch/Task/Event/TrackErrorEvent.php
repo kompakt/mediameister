@@ -12,7 +12,7 @@ namespace Kompakt\Mediameister\Batch\Task\Event;
 use Kompakt\Mediameister\Batch\BatchInterface;
 use Kompakt\Mediameister\Entity\TrackInterface;
 use Kompakt\Mediameister\Packshot\PackshotInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class TrackErrorEvent extends Event
 {
