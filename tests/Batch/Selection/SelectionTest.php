@@ -10,8 +10,9 @@
 namespace Kompakt\Tests\Mediameister\Batch\Selection;
 
 use Kompakt\Mediameister\Batch\Selection\Selection;
+use PHPUnit\Framework\TestCase;
 
-class SelectionTest extends \PHPUnit_Framework_TestCase
+class SelectionTest extends TestCase
 {
     public function testGetPackshots()
     {

@@ -10,8 +10,9 @@
 namespace Kompakt\Tests\Mediameister\Batch\Selection\Factory;
 
 use Kompakt\Mediameister\Batch\Selection\Factory\FileFactory;
+use PHPUnit\Framework\TestCase;
 
-class FileFactoryTest extends \PHPUnit_Framework_TestCase
+class FileFactoryTest extends TestCase
 {
     public function testInstance()
     {

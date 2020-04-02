@@ -10,8 +10,9 @@
 namespace Kompakt\Tests\Mediameister\Util\Archive;
 
 use Kompakt\Mediameister\Util\Archive\FileAdder;
+use PHPUnit\Framework\TestCase;
 
-class FileAdderTest extends \PHPUnit_Framework_TestCase
+class FileAdderTest extends TestCase
 {
     public function testAddChildren()
     {
@@ -26,6 +27,8 @@ class FileAdderTest extends \PHPUnit_Framework_TestCase
         $fileAdder->addChildren($sourceFilesDirname);
 
         $zip->close();
+
+        $this->assertTrue(true);
     }
 
     public function testAddFileFromBasedir()
@@ -46,6 +49,8 @@ class FileAdderTest extends \PHPUnit_Framework_TestCase
         }
 
         $zip->close();
+
+        $this->assertTrue(true);
     }
 
     public function testEmptyDirFileFromBasedir()
@@ -66,6 +71,8 @@ class FileAdderTest extends \PHPUnit_Framework_TestCase
         }
 
         $zip->close();
+
+        $this->assertTrue(true);
     }
 
     protected function getTmpDir($class)

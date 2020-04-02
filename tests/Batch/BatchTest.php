@@ -10,8 +10,10 @@
 namespace Kompakt\Tests\Mediameister\Batch;
 
 use Kompakt\Mediameister\Batch\Batch;
+use Kompakt\Mediameister\Batch\Exception\InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 
-class BatchTest extends \PHPUnit_Framework_TestCase
+class BatchTest extends TestCase
 {
     public function testGetPackshots()
     {
@@ -24,11 +26,10 @@ class BatchTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(4, $batch->getPackshots());
     }
 
-    /**
-     * @expectedException Kompakt\Mediameister\Batch\Exception\InvalidArgumentException
-     */
     public function testGetPackshotWithInvalidName()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $batch = new Batch($this->getPackshotFactory(), $this->getDirectoryFactory(), $this->getFilesDir());
         $batch->getPackshot('../some-packshot');
     }

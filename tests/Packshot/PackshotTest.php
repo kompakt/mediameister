@@ -10,8 +10,9 @@
 namespace Kompakt\Tests\Mediameister\Packshot;
 
 use Kompakt\Mediameister\Packshot\Packshot;
+use PHPUnit\Framework\TestCase;
 
-class PackshotTest extends \PHPUnit_Framework_TestCase
+class PackshotTest extends TestCase
 {
     public function testComplete()
     {

@@ -10,8 +10,9 @@
 namespace Kompakt\Tests\Mediameister\Batch\Factory;
 
 use Kompakt\Mediameister\Batch\Factory\BatchFactory;
+use PHPUnit\Framework\TestCase;
 
-class BatchFactoryTest extends \PHPUnit_Framework_TestCase
+class BatchFactoryTest extends TestCase
 {
     public function testGetInstance()
     {

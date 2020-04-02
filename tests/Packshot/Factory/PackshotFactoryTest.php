@@ -10,8 +10,9 @@
 namespace Kompakt\Tests\Mediameister\Packshot\Factory;
 
 use Kompakt\Mediameister\Packshot\Factory\PackshotFactory;
+use PHPUnit\Framework\TestCase;
 
-class PackshotFactoryTest extends \PHPUnit_Framework_TestCase
+class PackshotFactoryTest extends TestCase
 {
     public function testGetInstance()
     {

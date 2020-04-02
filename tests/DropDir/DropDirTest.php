@@ -10,8 +10,10 @@
 namespace Kompakt\Tests\Mediameister\DropDir;
 
 use Kompakt\Mediameister\DropDir\DropDir;
+use Kompakt\Mediameister\DropDir\Exception\InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 
-class DropDirTest extends \PHPUnit_Framework_TestCase
+class DropDirTest extends TestCase
 {
     public function testGetBatches()
     {
@@ -24,11 +26,10 @@ class DropDirTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $dropDir->getBatches());
     }
 
-    /**
-     * @expectedException Kompakt\Mediameister\DropDir\Exception\InvalidArgumentException
-     */
     public function testGetBatchWithInvalidName()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         $dropDir = new DropDir(
             $this->getBatchFactory(),
             $this->getDirectoryFactory(),
