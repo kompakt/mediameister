@@ -26,6 +26,7 @@ class Packshot implements PackshotInterface
     #protected $artworkLocatorFactory = null;
     #protected $audioLocatorFactory = null;
     #protected $zipLocatorFactory = null;
+    protected $dir = null;
     protected $name = null;
     protected $layout = null;
     protected $release = null;
@@ -35,13 +36,14 @@ class Packshot implements PackshotInterface
     #protected $zipLocator = null;
 
     public function __construct(
+        $dir,
         LayoutFactoryInterface $layoutFactory,
         MetadataWriterFactoryInterface $metadataWriterFactory,
-        MetadataLoaderFactoryInterface $metadataLoaderFactory,
+        MetadataLoaderFactoryInterface $metadataLoaderFactory#,
         #ArtworkLocatorFactoryInterface $artworkLocatorFactory,
         #AudioLocatorFactoryInterface $audioLocatorFactory,
         #ZipLocatorFactoryInterface $zipLocatorFactory,
-        $dir
+        #$dir
     )
     {
         $info = new \SplFileInfo($dir);

@@ -47,13 +47,14 @@ class PackshotFactory implements PackshotFactoryInterface
     public function getInstance($dir)
     {
         return new Packshot(
+            $dir,
             $this->layoutFactory,
             $this->metadataWriterFactory,
-            $this->metadataLoaderFactory,
+            $this->metadataLoaderFactory#,
             #$this->artworkLocatorFactory,
             #$this->audioLocatorFactory,
             #$this->zipLocatorFactory,
-            $dir
+            #$dir
         );
     }
 }

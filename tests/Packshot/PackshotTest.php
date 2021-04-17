@@ -17,13 +17,14 @@ class PackshotTest extends TestCase
     public function testComplete()
     {
         $packshot = new Packshot(
+            __DIR__,
             $this->getLayoutFactory(),
             $this->getMetadataWriterFactory(),
-            $this->getMetadataLoaderFactory(),
+            $this->getMetadataLoaderFactory()#,
             #$this->getArtworkLocatorFactory(),
             #$this->getAudioLocatorFactory(),
             #$this->getZipLocatorFactory(),
-            __DIR__
+            #__DIR__
         );
 
         $packshot->load();
