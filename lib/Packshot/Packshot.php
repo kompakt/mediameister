@@ -10,37 +10,37 @@
 namespace Kompakt\Mediameister\Packshot;
 
 use Kompakt\Mediameister\Entity\ReleaseInterface;
-use Kompakt\Mediameister\Packshot\Artwork\Locator\Factory\ArtworkLocatorFactoryInterface;
-use Kompakt\Mediameister\Packshot\Audio\Locator\Factory\AudioLocatorFactoryInterface;
+#use Kompakt\Mediameister\Packshot\Artwork\Locator\Factory\ArtworkLocatorFactoryInterface;
+#use Kompakt\Mediameister\Packshot\Audio\Locator\Factory\AudioLocatorFactoryInterface;
 use Kompakt\Mediameister\Packshot\Exception\InvalidArgumentException;
 use Kompakt\Mediameister\Packshot\Layout\Factory\LayoutFactoryInterface;
 use Kompakt\Mediameister\Packshot\Metadata\Loader\Factory\MetadataLoaderFactoryInterface;
 use Kompakt\Mediameister\Packshot\Metadata\Writer\Factory\WriterFactoryInterface as MetadataWriterFactoryInterface;
 use Kompakt\Mediameister\Packshot\PackshotInterface;
-use Kompakt\Mediameister\Packshot\Zip\Locator\Factory\ZipLocatorFactoryInterface;
+#use Kompakt\Mediameister\Packshot\Zip\Locator\Factory\ZipLocatorFactoryInterface;
 
 class Packshot implements PackshotInterface
 {
     protected $metadataWriterFactory = null;
     protected $metadataLoaderFactory = null;
-    protected $artworkLocatorFactory = null;
-    protected $audioLocatorFactory = null;
-    protected $zipLocatorFactory = null;
+    #protected $artworkLocatorFactory = null;
+    #protected $audioLocatorFactory = null;
+    #protected $zipLocatorFactory = null;
     protected $name = null;
     protected $layout = null;
     protected $release = null;
     protected $metadataLoader = null;
-    protected $artworkLocator = null;
-    protected $audioLocator = null;
-    protected $zipLocator = null;
+    #protected $artworkLocator = null;
+    #protected $audioLocator = null;
+    #protected $zipLocator = null;
 
     public function __construct(
         LayoutFactoryInterface $layoutFactory,
         MetadataWriterFactoryInterface $metadataWriterFactory,
         MetadataLoaderFactoryInterface $metadataLoaderFactory,
-        ArtworkLocatorFactoryInterface $artworkLocatorFactory,
-        AudioLocatorFactoryInterface $audioLocatorFactory,
-        ZipLocatorFactoryInterface $zipLocatorFactory,
+        #ArtworkLocatorFactoryInterface $artworkLocatorFactory,
+        #AudioLocatorFactoryInterface $audioLocatorFactory,
+        #ZipLocatorFactoryInterface $zipLocatorFactory,
         $dir
     )
     {
@@ -63,9 +63,9 @@ class Packshot implements PackshotInterface
 
         $this->metadataWriterFactory = $metadataWriterFactory;
         $this->metadataLoaderFactory = $metadataLoaderFactory;
-        $this->artworkLocatorFactory = $artworkLocatorFactory;
-        $this->audioLocatorFactory = $audioLocatorFactory;
-        $this->zipLocatorFactory = $zipLocatorFactory;
+        #$this->artworkLocatorFactory = $artworkLocatorFactory;
+        #$this->audioLocatorFactory = $audioLocatorFactory;
+        #$this->zipLocatorFactory = $zipLocatorFactory;
 
         $this->dir = $dir;
         $this->name = basename($dir);
@@ -97,7 +97,7 @@ class Packshot implements PackshotInterface
         return $this->metadataLoader;
     }
 
-    public function getArtworkLocator()
+    /*public function getArtworkLocator()
     {
         return $this->artworkLocator;
     }
@@ -110,7 +110,7 @@ class Packshot implements PackshotInterface
     public function getZipLocator()
     {
         return $this->zipLocator;
-    }
+    }*/
 
     public function init(ReleaseInterface $release)
     {
@@ -128,9 +128,9 @@ class Packshot implements PackshotInterface
             $this->release = $this->metadataLoader->load();
         }
 
-        $this->artworkLocator = $this->artworkLocatorFactory->getInstance($this->layout, $this->release);
-        $this->audioLocator = $this->audioLocatorFactory->getInstance($this->layout, $this->release);
-        $this->zipLocator = $this->zipLocatorFactory->getInstance($this->layout, $this->release);
+        #$this->artworkLocator = $this->artworkLocatorFactory->getInstance($this->layout, $this->release);
+        #$this->audioLocator = $this->audioLocatorFactory->getInstance($this->layout, $this->release);
+        #$this->zipLocator = $this->zipLocatorFactory->getInstance($this->layout, $this->release);
         return $this;
     }
 

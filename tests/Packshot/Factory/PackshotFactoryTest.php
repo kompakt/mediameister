@@ -31,7 +31,7 @@ class PackshotFactoryTest extends TestCase
             ->getMock()
         ;
 
-        $artworkLocatorFactory = $this
+        /*$artworkLocatorFactory = $this
             ->getMockBuilder('Kompakt\Mediameister\Packshot\Artwork\Locator\Factory\ArtworkLocatorFactoryInterface')
             ->getMock()
         ;
@@ -44,15 +44,15 @@ class PackshotFactoryTest extends TestCase
         $zipLocatorFactory = $this
             ->getMockBuilder('Kompakt\Mediameister\Packshot\Zip\Locator\Factory\ZipLocatorFactoryInterface')
             ->getMock()
-        ;
+        ;*/
 
         $packshotFactory = new PackshotFactory(
             $layoutFactory,
             $metadataWriterFactory,
-            $metadataLoaderFactory,
-            $artworkLocatorFactory,
-            $audioLocatorFactory,
-            $zipLocatorFactory
+            $metadataLoaderFactory#,
+            #$artworkLocatorFactory,
+            #$audioLocatorFactory,
+            #$zipLocatorFactory
         );
 
         $this->assertInstanceOf('Kompakt\Mediameister\Packshot\Packshot', $packshotFactory->getInstance(__DIR__));

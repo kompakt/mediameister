@@ -20,9 +20,9 @@ class PackshotTest extends TestCase
             $this->getLayoutFactory(),
             $this->getMetadataWriterFactory(),
             $this->getMetadataLoaderFactory(),
-            $this->getArtworkLocatorFactory(),
-            $this->getAudioLocatorFactory(),
-            $this->getZipLocatorFactory(),
+            #$this->getArtworkLocatorFactory(),
+            #$this->getAudioLocatorFactory(),
+            #$this->getZipLocatorFactory(),
             __DIR__
         );
 
@@ -105,7 +105,7 @@ class PackshotTest extends TestCase
         return $factory;
     }
 
-    public function getArtworkLocatorFactory()
+    /*public function getArtworkLocatorFactory()
     {
         return $this
             ->getMockBuilder('Kompakt\Mediameister\Packshot\Artwork\Locator\Factory\ArtworkLocatorFactoryInterface')
@@ -127,5 +127,5 @@ class PackshotTest extends TestCase
             ->getMockBuilder('Kompakt\Mediameister\Packshot\Zip\Locator\Factory\ZipLocatorFactoryInterface')
             ->getMock()
         ;
-    }
+    }*/
 }
