@@ -31,28 +31,10 @@ class PackshotFactoryTest extends TestCase
             ->getMock()
         ;
 
-        /*$artworkLocatorFactory = $this
-            ->getMockBuilder('Kompakt\Mediameister\Packshot\Artwork\Locator\Factory\ArtworkLocatorFactoryInterface')
-            ->getMock()
-        ;
-
-        $audioLocatorFactory = $this
-            ->getMockBuilder('Kompakt\Mediameister\Packshot\Audio\Locator\Factory\AudioLocatorFactoryInterface')
-            ->getMock()
-        ;
-
-        $zipLocatorFactory = $this
-            ->getMockBuilder('Kompakt\Mediameister\Packshot\Zip\Locator\Factory\ZipLocatorFactoryInterface')
-            ->getMock()
-        ;*/
-
         $packshotFactory = new PackshotFactory(
             $layoutFactory,
             $metadataWriterFactory,
-            $metadataLoaderFactory#,
-            #$artworkLocatorFactory,
-            #$audioLocatorFactory,
-            #$zipLocatorFactory
+            $metadataLoaderFactory
         );
 
         $this->assertInstanceOf('Kompakt\Mediameister\Packshot\Packshot', $packshotFactory->getInstance(__DIR__));
