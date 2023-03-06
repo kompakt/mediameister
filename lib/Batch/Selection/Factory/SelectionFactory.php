@@ -17,6 +17,7 @@ use Kompakt\Mediameister\Util\Filesystem\Factory\DirectoryFactory;
 class SelectionFactory
 {
     protected $fileFactory = null;
+    protected $directoryFactory = null;
 
     public function __construct(
         FileFactory $fileFactory,
