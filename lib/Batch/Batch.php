@@ -59,7 +59,7 @@ class Batch implements BatchInterface
         return basename($this->dir);
     }
 
-    public function getPackshots(PackshotFilterInterface $filter = null)
+    public function getPackshots(?PackshotFilterInterface $filter = null)
     {
         $packshots = array();
 

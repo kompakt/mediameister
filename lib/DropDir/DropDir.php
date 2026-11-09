@@ -54,7 +54,7 @@ class DropDir implements DropDirInterface
         return $this->dir;
     }
 
-    public function getBatches(BatchFilterInterface $filter = null)
+    public function getBatches(?BatchFilterInterface $filter = null)
     {
         $batches = array();
 

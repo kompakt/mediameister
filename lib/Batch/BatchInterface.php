@@ -16,7 +16,7 @@ interface BatchInterface
     public function getDir();
     public function getName();
     public function getPackshot($name);
-    public function getPackshots(PackshotFilterInterface $filter = null);
+    public function getPackshots(?PackshotFilterInterface $filter = null);
     public function createPackshot($name);
     public function deletePackshot($name);
 }
